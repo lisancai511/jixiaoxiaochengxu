@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "simulation": "/pages/simulation/index",
+    "mine": "/pages/mine/index"
+  }
+}

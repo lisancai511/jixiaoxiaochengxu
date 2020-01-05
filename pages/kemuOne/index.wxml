@@ -1,0 +1,44 @@
+<view class="cu-card dynamic {{isCard?'no-card':''}}">
+  <view class="cu-item shadow">
+   <view class="main">
+     <view class="main_left">
+       <view class="left_item m-t-20 m-b-20">
+         <view class="t-icon iconvip"></view>
+         <text class="m-t-10">vip课程</text>
+       </view>
+       <view class="left_item m-t-20 m-b-20">
+         <view class="t-icon iconcuoti"></view>
+         <text class="m-t-10">我的错题</text>
+       </view>
+       <view class="left_item m-t-20 m-b-20">
+         <view class="t-icon iconchengji"></view>
+         <text class="m-t-10">我的成绩</text>
+       </view>
+     </view>
+
+     <view class="main_mid">
+       <view class="left_item">
+       222
+       </view>
+     </view>
+
+      <view class="main_right">
+       <view class="left_item m-t-20 m-b-20">
+         <view class="t-icon iconzhuanxianglianxi"></view>
+         <text class="m-t-10">专项练习</text>
+       </view>
+       <view class="left_item m-t-20 m-b-20">
+         <view class="t-icon iconshoucang1"></view>
+         <text class="m-t-10">我的收藏</text>
+       </view>
+       <view class="left_item m-t-20 m-b-20">
+         <view class="t-icon iconchezi"></view>
+         <text class="m-t-10">我的驾校</text>
+       </view>
+     </view>
+
+
+     
+   </view>
+  </view>
+</view>

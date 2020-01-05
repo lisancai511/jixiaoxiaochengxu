@@ -1,0 +1,21 @@
+/* pages/kemuOne/index.wxss */
+.main {
+  display: flex;
+}
+
+.main_left,.main_mid,.main_right {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}
+.main_mid {
+  width: 40%;
+}
+.left_item {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}

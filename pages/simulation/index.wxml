@@ -1,0 +1,16 @@
+<cu-custom bgColor="bg-gradual-pink">
+</cu-custom>
+<scroll-view scroll-x class="bg-white nav">
+  <view class="flex text-center">
+    <view class="cu-item flex-sub {{TabCur==1?'text-orange cur':''}}" bindtap="tabSelect" id="1">
+      科目一
+    </view>
+    <view class="cu-item flex-sub {{TabCur==4?'text-orange cur':''}}" bindtap="tabSelect" id="4">
+      科目四
+    </view>
+  </view>
+</scroll-view>
+<view wx:if="{{TabCur==1}}">
+  <kemuOne></kemuOne>
+</view>
+<view wx:if="{{TabCur==4}}">这里是科目四</view>

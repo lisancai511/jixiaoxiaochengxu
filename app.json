@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/simulation/index",
     "pages/mine/index",
-    "pages/kemuOne/index"
+    "pages/kemuOne/index",
+    "pages/subject/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

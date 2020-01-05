@@ -13,9 +13,39 @@
 .main_mid {
   width: 40%;
 }
-.left_item {
+.bule,.main_content,.left_item,.main_top,.main_bottom {
   display: flex;
+  display: -webkit-flex;
   flex-direction: column;
-  justify-items: center;
-  align-items: center;
+  justify-items:flex-end;
+  align-items: center !important;
+}
+.main_item {
+  height: 100%;
+  width: 100%;
+}
+.main_top,.main_bottom {
+  height: 50%;
+  width: 100%;
+}
+.main_content {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  color: white;
+  background: linear-gradient(to bottom right, rgb(194, 233, 207), rgb(87, 243, 139));
+  margin-top: 30px;
+  line-height: 100px;
+  padding: 5px;
+}
+.bule {
+  width: 100px;
+  color: white;
+  height: 100px;
+  border-radius: 50%;
+  margin-top: 30px;
+  line-height: 100px;
+  padding: 5px;
+  background: rgb(99, 159, 236);
+  background: linear-gradient(to bottom right, rgb(182, 207, 238), rgb(99, 159, 236));
 }

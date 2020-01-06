@@ -64,9 +64,9 @@ Page({
 
   },
   gotoSubject: function(type){
-    console.log(123, type)
+    console.log(123, type.currentTarget.id)
     wx.navigateTo({
-      url: 'pages/subject/index'
+      url: `/pages/subject/index?type=${type.currentTarget.id}`
     })
 
   }

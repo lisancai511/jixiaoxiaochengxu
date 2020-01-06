@@ -1,3 +1,6 @@
-<view class="" hover-class="none" hover-stop-propagation="false">
-  这类似啊
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+ <view slot="backText">返回</view>
+</cu-custom>
+<view>
+  {{ from }}
 </view>

@@ -1,6 +1,37 @@
 <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
  <view slot="backText">返回</view>
 </cu-custom>
-<view>
-  {{ from }}
+<!-- <view class="container1" 
+      wx:if="{{page == 1}}" 
+      bindtouchstart="touchStart" 
+      bindtouchmove="touchMove" 
+      bindtouchend="touchEnd" 
+      animation="{{ani1}}">
+
+container1
+
+</view> -->
+
+<view class="container1" 
+      wx:for="{{ arr }}"
+      wx:if="{{page == item}}" 
+      bindtouchstart="touchStart" 
+      bindtouchmove="touchMove" 
+      bindtouchend="touchEnd" 
+      animation="{{ item % 2 == 0? ani2 : ani1 }}">
+
+container{{ item }}
+
 </view>
+
+<!-- <view class="container1" 
+      wx:if="{{page == 2}}"  
+      bindtouchstart="touchStart" 
+      bindtouchmove="touchMove" 
+      bindtouchend="touchEnd" 
+      animation="{{ani2}}">
+
+container2
+
+</view> -->
+

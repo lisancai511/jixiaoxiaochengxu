@@ -35,7 +35,7 @@
           <text class="m-t-10">我的收藏</text>
         </view>
         <view bindtap="gotoSubject" class="left_item m-t-20 m-b-20">
-          <view class="t-icon iconchezi"></view>
+          <view class="t-icon iconche"></view>
           <text class="m-t-10">我的驾校</text>
         </view>
       </view>

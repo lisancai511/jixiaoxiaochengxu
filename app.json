@@ -1,10 +1,6 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/simulation/index",
-    "pages/mine/index",
-    "pages/kemuOne/index",
-    "pages/subject/index"
+    "pages/index/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

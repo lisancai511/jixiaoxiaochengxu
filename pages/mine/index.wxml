@@ -1,2 +1,36 @@
-<!--pages/mine/index.wxml-->
-<text>pages/mine/index.wxml</text>
+<cu-custom bgColor="bg-gradual-blue">
+  <view slot="content">{{motto}}</view>
+</cu-custom>
+<view class="cu-bar bg-white solid-bottom margin-top">
+  <view class="action">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class='cu-btn round bg-green shadow'>
+      获取头像昵称
+    </button>
+    <block wx:else>
+      <view class='title m-b-10 m-t-10'>
+        <view class="title_img" style="background-image:url({{userInfo.avatarUrl}})"></view>
+        <view class="title_name m-l-10">{{userInfo.nickName}}</view>
+      </view>
+    </block>
+  </view>
+  <view class="action">
+    <button open-type="share" class="share">
+      <text class="t-icon iconfenxiang m-t-10"></text>
+      <text>分享</text>
+    </button>
+  </view>
+</view>
+<view open-type="share" class="cu-bar bg-white solid-bottom margin-top">
+  <view class="action">
+    <text>推荐好友</text>
+  </view>
+  <view class="action">
+   <button class="fontColor" open-type="share">＞</button>
+  </view>
+</view>
+<view class="cu-bar bg-white solid-bottom margin-top">
+  <view class="action">
+    <text>关于我们</text>
+  </view>
+  <view class="action fontColor">＞</view>
+</view>

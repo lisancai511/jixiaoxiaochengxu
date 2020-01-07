@@ -7,14 +7,14 @@ page {
   padding: 30rpx;
   color: #333;
 }
-.exercise-type {
+.question-type {
   padding: 10rpx 20rpx;
   font-size: 12px;
   color: #fff;
   background-color: green;
   margin-right: 12rpx;
 }
-.question {
+.question-dec {
   font-size: 20px;
   line-height: 28px;
 }
@@ -33,4 +33,24 @@ page {
 }
 .swiper-item {
   height: 100%;
+}
+
+.answer {
+  margin-top: 20rpx;
+}
+.answer-item {
+  padding: 12px 20px;
+  font-size: 18px;
+  background: #f5f5f5;
+  margin-bottom: 20rpx;
+  border-radius: 20px;
+}
+.answer-item.success {
+  background-color: #24c28d;
+}
+.answer-item.error {
+  background-color: #ff4849;
+}
+.answer-type {
+  margin-right: 8px;
 }

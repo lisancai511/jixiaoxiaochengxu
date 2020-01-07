@@ -12,10 +12,18 @@ Page({
   },
   _getClassicList() {
     classicModel.getClassic().then(res=> {
+      return res.list.map(item => ({
+        ...item,
+        questionList: item.options.split(', ')
+      }))
+    }).then(res => {
       this.setData({
-        exerciseList: res.list
+        exerciseList: res
       })
     })
+  },
+  clickItem(e) {
+    console.log(e)
   },
   /**
    * 生命周期函数--监听页面加载

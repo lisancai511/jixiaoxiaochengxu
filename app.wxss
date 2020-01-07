@@ -179,6 +179,9 @@
 .fs-22 {
   font-size: 22px;
 }
+page {
+  background-color: #fff;
+}
 
 button {
   background-color: #fff;

@@ -4,9 +4,35 @@
 <swiper class="swiper">
   <block wx:for="{{exerciseList}}" wx:key="*this">
     <swiper-item>
-      <view class="exercise">
-        <text class="exercise-type">单选</text>
-        <text class="question">{{item.question}}</text>
+    <view class="exercise">
+      <view class="question">
+        <text class="question-type">单选</text>
+        <text class="question-dec">{{item.question}}</text>
+      </view>
+      <view class="answer">
+        <view
+          data-set="{{optIdx}}"
+          bind:tap="clickItem"
+          class="answer-item {{item.ta == optIdx+1 ? 'success' : ''}}"
+          wx:for="{{item.questionList}}"
+          wx:for-index="optIdx" wx:for-item="answer">
+        <!-- <text class="answer-type">A</text> {{item.a}} -->
+        <text>{{answer}}</text>
+        </view>
+        <!-- <view class="answer-item error">
+          <text class="answer-type">B</text> {{item.b}}
+        </view>
+        <view class="answer-item">
+          <text class="answer-type">C</text> {{item.c}}
+        </view>
+        <view class="answer-item">
+          <text class="answer-type">D</text> {{item.d}}
+        </view> -->
+      </view>
+      <view>
+      <view>解析：</view>
+      <view>{{item.bestanswer}}</view>
+      </view>
       </view>
     </swiper-item>
   </block>

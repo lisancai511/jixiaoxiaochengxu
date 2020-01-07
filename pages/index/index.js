@@ -9,7 +9,7 @@ Page({
   },
   onShareAppMessage() {
     return {
-      title: 'ColorUI-高颜值的小程序UI组件库',
+      title: '新规题库，精编考题，仿真模拟，轻松get驾考知识点!',
       imageUrl: '/images/share.jpg',
       path: '/pages/index/index'
     }

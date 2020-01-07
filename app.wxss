@@ -179,3 +179,24 @@
 .fs-22 {
   font-size: 22px;
 }
+
+button {
+  background-color: #fff;
+  border: none;
+  padding: 0;
+  margin: 0;
+  border-radius: none;
+}
+
+input {
+  outline: none;
+  border: none;
+  list-style: none;
+}
+
+button::after {
+  border: none;
+}
+.button-hover {
+  background-color: #fff;
+}

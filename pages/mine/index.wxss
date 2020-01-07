@@ -1,1 +1,28 @@
 /* pages/mine/index.wxss */
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.title_img {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background-size: cover;
+  font-size: 8rpx;
+}
+.share {
+  height: 80%;
+  width: 200rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
+  color: #999;
+  border-left: 1px solid rgb(240, 238, 238);
+}
+.fontColor {
+  color: #999 !important;
+  font-size: 30rpx;
+}

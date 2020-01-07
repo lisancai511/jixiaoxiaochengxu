@@ -1,102 +1,163 @@
-// pages/subject/index.js
+const app = getApp()
+
+var startX, endX;
+
+var moveFlag = true; // 判断执行滑动事件
+
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-    from: null
+    arr: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+
+    page: 1,
+
+    ani1: '',
+
+    ani2: ''
+
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function(options) {
-    console.log(options, 123)
-    switch (options.type) {
-      case 'order':
-        this.setData({
-          from: '从顺序练习来的'
-        })
-        break;
-      case 'wrongSubject':
-        this.setData({
-          from: '从我的错题来的'
-        })
-        break;
-      case 'vip':
-        this.setData({
-          from: '从vip课程来的'
-        })
-        break;
-      case 'special':
-        this.setData({
-          from: '从专项练习来的'
-        })
-        break;
-      case 'mockExam':
-        this.setData({
-          from: '从模拟考试来的'
-        })
-        break;
-      case 'collection':
-        this.setData({
-          from: '从我的收藏来的'
-        })
-        break;
+  onLoad: function() {
+
+
+  },
+
+
+
+  touchStart: function(e) {
+
+    startX = e.touches[0].pageX; // 获取触摸时的原点
+
+    moveFlag = true;
+
+  },
+
+  // 触摸移动事件
+
+  touchMove: function(e) {
+
+    endX = e.touches[0].pageX; // 获取触摸时的原点
+
+    if (moveFlag) {
+
+      if (endX - startX > 50) {
+
+        console.log("move right");
+
+        this.move2right();
+
+        moveFlag = false;
+
+      }
+
+      if (startX - endX > 50) {
+
+        console.log("move left");
+
+        this.move2left();
+
+        moveFlag = false;
+
+      }
+
     }
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
 
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
+  // 触摸结束事件
+
+  touchEnd: function(e) {
+
+    moveFlag = true; // 回复滑动事件
 
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
+  //向左滑动操作
+
+  move2left() {
+
+    var that = this;
+
+    if (this.data.page == this.data.arr.length) {
+
+      return
+
+    }
+
+    var animation = wx.createAnimation({
+
+      duration: 1000,
+
+      timingFunction: 'ease',
+
+      delay: 100
+
+    });
+
+    animation.opacity(0.2).translate(-500*this.page, 0).step()
+
+    this.setData({
+
+      ani1: animation.export()
+
+    })
+
+    setTimeout(function() {
+
+      that.setData({
+
+        page: that.data.page + 1,
+
+        ani2: ''
+
+      });
+
+    }, 800)
 
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
+  //向右滑动操作
 
-  },
+  move2right() {
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
+    var that = this;
 
-  },
+    if (this.data.page == 1) {
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
+      return
 
-  },
+    }
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
+    var animation = wx.createAnimation({
 
-  },
+      duration: 1000,
 
-  goBack: function() {
-    wx.navigateBack()
+      timingFunction: 'ease',
+
+      delay: 100
+
+    });
+
+    animation.opacity(0.2).translate(500*this.page, 0).step()
+
+    this.setData({
+
+      ani2: animation.export()
+
+    })
+
+    setTimeout(function() {
+
+      that.setData({
+
+        page: that.data.page - 1,
+
+        ani1: ''
+
+      });
+
+    }, 800)
+
   }
+
 })

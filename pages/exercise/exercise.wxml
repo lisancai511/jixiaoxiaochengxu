@@ -1,0 +1,13 @@
+<cu-custom bgColor="bg-gradual-pink">
+</cu-custom>
+
+<swiper class="swiper">
+  <block wx:for="{{exerciseList}}" wx:key="*this">
+    <swiper-item>
+      <view class="exercise">
+        <text class="exercise-type">单选</text>
+        <text class="question">{{item.question}}</text>
+      </view>
+    </swiper-item>
+  </block>
+</swiper>

@@ -1,39 +1,48 @@
-<cu-custom bgColor="bg-gradual-pink">
-</cu-custom>
-
-<swiper class="swiper">
+<cu-custom bgColor="bg-gradual-pink"></cu-custom>
+<swiper bindchange='onSlideChangeEnd' class="swiper">
   <block wx:for="{{exerciseList}}" wx:key="*this">
-    <swiper-item>
-    <view class="exercise">
-      <view class="question">
-        <text class="question-type">单选</text>
-        <text class="question-dec">{{item.question}}</text>
-      </view>
-      <view class="answer">
-        <view
-          data-set="{{optIdx}}"
-          bind:tap="clickItem"
-          class="answer-item {{item.ta == optIdx+1 ? 'success' : ''}}"
-          wx:for="{{item.questionList}}"
-          wx:for-index="optIdx" wx:for-item="answer">
-        <!-- <text class="answer-type">A</text> {{item.a}} -->
-        <text>{{answer}}</text>
+    <swiper-item item-id="{{item.id}}">
+      <view class="exercise">
+        <view class="question">
+          <text wx:if="{{item.Type==1}}" class="question-type">判断</text>
+          <text wx:if="{{item.Type==2}}" class="question-type">单选</text>
+          <text wx:if="{{item.Type==3}}" class="question-type">多选</text>
+          <text class="question-dec">{{item.question}}</text>
         </view>
-        <!-- <view class="answer-item error">
-          <text class="answer-type">B</text> {{item.b}}
+        <view class="answer">
+          <view data-set="{{optIdx}}" bind:tap="clickItem" class="answer-item {{item.ta == optIdx+1 ? 'success' : ''}}" wx:for="{{item.questionList}}" wx:for-index="optIdx" wx:for-item="answer">
+            <text>{{answer}}</text>
+          </view>
         </view>
-        <view class="answer-item">
-          <text class="answer-type">C</text> {{item.c}}
+        <view>
+          <view>解析：</view>
+          <view>{{item.bestanswer}}</view>
         </view>
-        <view class="answer-item">
-          <text class="answer-type">D</text> {{item.d}}
-        </view> -->
-      </view>
-      <view>
-      <view>解析：</view>
-      <view>{{item.bestanswer}}</view>
-      </view>
       </view>
     </swiper-item>
   </block>
 </swiper>
+<view class="cu-bar tabbar bg-white shadow foot">
+  <view class="action">
+    <text class="n-icon icondui"></text>
+    <view class="">0</view>
+  </view>
+  <view class="action">
+    <text class="n-icon iconicon_huabanfuben"></text>
+    <view class="">0</view>
+  </view>
+  <view class="action">
+    <text class="n-icon iconsuolvetuxianshitubiao"></text>
+    <view class="">{{currentItemId}}/{{exerciseList.length}}</view>
+  </view>
+  <view class="action" bindtap="collectionItem">
+    <text class="n-icon {{collection[currentItemId]? 'iconshoucang': 'iconshoucang2'}}"></text>
+    <view class="">收藏</view>
+  </view>
+  <view class="action">
+    <text class="n-icon iconshoucang2"></text>
+    <view>背题模式</view>
+  </view>
+</view>
+
+<wxs src="./tool.wxs" module="tool"></wxs>

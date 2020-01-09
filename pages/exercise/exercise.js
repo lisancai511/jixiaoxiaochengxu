@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    CustomBar: app.globalData.CustomBar,
     background: ['demo-text-1', 'demo-text-2', 'demo-text-3'],
     exerciseList: [],
     currentItemId: null,
@@ -29,7 +30,6 @@ Page({
   },
 
   onSlideChangeEnd(e) {
-    console.log(e)
     this.data.currentItemId = e.detail.currentItemId
     this.setData({
       currentItemId: e.detail.currentItemId
@@ -44,6 +44,22 @@ Page({
     }
     this.setData({
       collection: this.data.collection
+    })
+  },
+
+  /**
+ * 底部模态框
+ */
+
+  showModal(e) {
+    this.setData({
+      modalName: e.currentTarget.dataset.target
+    })
+  },
+
+  hideModal(e) {
+    this.setData({
+      modalName: null
     })
   },
 

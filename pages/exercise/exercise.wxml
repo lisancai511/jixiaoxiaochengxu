@@ -31,7 +31,7 @@
     <text class="n-icon iconicon_huabanfuben"></text>
     <view class="">0</view>
   </view>
-  <view class="action">
+  <view class="action" bindtap="showModal" data-target="bottomModal">
     <text class="n-icon iconsuolvetuxianshitubiao"></text>
     <view class="">{{currentItemId}}/{{exerciseList.length}}</view>
   </view>
@@ -46,3 +46,17 @@
 </view>
 
 <wxs src="./tool.wxs" module="tool"></wxs>
+
+<view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white">
+      <view class="action text-green">确定</view>
+      <view class="action text-blue" bindtap="hideModal">取消</view>
+    </view>
+    <view class="padding-xl">
+      <view wx:for="{{exerciseList}}">
+        
+      </view>
+    </view>
+  </view>
+</view>

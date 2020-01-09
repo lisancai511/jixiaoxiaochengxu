@@ -1,11 +1,11 @@
 {
   "pages": [
-    "pages/exercise/exercise",
     "pages/index/index",
     "pages/simulation/index",
     "pages/mine/index",
     "pages/kemuOne/index",
-    "pages/subject/index"
+    "pages/subject/index",
+    "pages/exercise/exercise"
   ],
   "window": {
     "backgroundTextStyle": "light",

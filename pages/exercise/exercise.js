@@ -1,6 +1,7 @@
 // pages/exercise/exercise.js
 import ClassicModel from '../../model/classic.js'
 const classicModel = new ClassicModel()
+const app = getApp()
 Page({
 
   /**
@@ -29,7 +30,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this._getClassicList()
+    this.setData({
+      exerciseList: app.globalData.arrOne
+    })
   },
 
   /**

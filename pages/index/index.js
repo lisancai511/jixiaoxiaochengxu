@@ -1,6 +1,13 @@
+import ClassicModel from '../../model/classic.js'
+const classicModel = new ClassicModel()
+const app = getApp()
+
 Page({
   data: {
     PageCur: 'simulation'
+  },
+  onLoad: function () {
+    this.getData()
   },
   NavChange(e) {
     this.setData({
@@ -14,4 +21,28 @@ Page({
       path: '/pages/index/index'
     }
   },
+  getData() {
+    this._getClassicList()
+    this._getFiftySubject()
+  },
+  _getClassicList() {
+    classicModel.getClassic().then(res=> {
+      return res.list.map(item => ({
+        ...item,
+        questionList: item.options.split(', ')
+      }))
+    }).then(res => {
+      app.globalData.arrOne = res
+    })
+  },
+  _getFiftySubject() {
+    classicModel.getFiftySubject().then(res=> {
+      return res.list.map(item => ({
+        ...item,
+        questionList: item.options.split(', ')
+      }))
+    }).then(res => {
+      app.globalData.fiftySubject = res
+    })
+  }
 })

@@ -1,5 +1,6 @@
 // pages/exercise/exercise.js
 import ClassicModel from '../../model/classic.js'
+import { saveUserAnswer, getUserAnswer } from '../../utils/util.js'
 const classicModel = new ClassicModel()
 const app = getApp()
 Page({
@@ -13,10 +14,42 @@ Page({
     exerciseList: [],
     currentItemId: null,
     collection: {},  //收藏
-    currentPage: 1
+    currentPage: 1,
+    isShowResult: false
+  },
+  getDotClassName(item) {
+    const {ta, id} = item
+    let answerObj = getUserAnswer()
+    if (answerObj[id] === ta) {
+      return 'success'
+    } else {
+      return 'error'
+    }
   },
   clickItem(e) {
-    console.log(e)
+    const { item, index, optidx} = e.currentTarget.dataset
+    const { own_res } = this.data.exerciseList[index]
+    if (!own_res) {
+      this.data.exerciseList[index].own_res = optidx + 1 + ''
+      saveUserAnswer(item.id, optidx + 1 + '')
+      console.log(index)
+      let { options } = this.data.exerciseList[index]
+      console.log(options)
+      this.data.exerciseList[index].options[optidx].className = 'error'
+      console.log('---', item.ta - 1)
+      console.log('---options', options)
+      this.data.exerciseList[index].options[item.ta - 1].className = 'success'
+      console.log('this.data.exerciseList', this.data.exerciseList)
+      this.setData({
+        exerciseList: this.data.exerciseList
+      })
+    }
+    
+  },
+  changeRecite() {
+    this.setData({
+      isShowResult: !this.data.isShowResult
+    })
   },
   /**
    * 生命周期函数--监听页面加载

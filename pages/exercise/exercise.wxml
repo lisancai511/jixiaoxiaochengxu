@@ -1,6 +1,6 @@
 <cu-custom bgColor="bg-gradual-pink"></cu-custom>
 <swiper bindchange='onSlideChangeEnd' class="swiper">
-  <block wx:for="{{exerciseList}}" wx:key="*this">
+  <block wx:for="{{exerciseList}}" wx:key="{{item.id}}">
     <swiper-item item-id="{{item.id}}">
       <view class="exercise">
         <view class="question">
@@ -10,11 +10,19 @@
           <text class="question-dec">{{item.question}}</text>
         </view>
         <view class="answer">
-          <view data-set="{{optIdx}}" bind:tap="clickItem" class="answer-item {{item.ta == optIdx+1 ? 'success' : ''}}" wx:for="{{item.questionList}}" wx:for-index="optIdx" wx:for-item="answer">
-            <text>{{answer}}</text>
+          <view
+            data-item="{{item}}"
+            data-index="{{index}}"
+            data-optidx="{{optIdx}}"
+            bind:tap="clickItem"
+            class="answer-item {{isShowResult && item.ta == optIdx+1 ? 'success' : ''}} {{answer.className}}"
+            wx:for="{{item.options}}"
+            wx:for-index="optIdx"
+            wx:for-item="answer">
+            <text>{{answer.description}}</text>
           </view>
         </view>
-        <view>
+        <view wx:if="{{isShowResult || item.own_res}}">
           <view>解析：</view>
           <view>{{item.bestanswer}}</view>
         </view>
@@ -39,8 +47,8 @@
     <text class="n-icon {{collection[currentItemId]? 'iconshoucang': 'iconshoucang2'}}"></text>
     <view class="">收藏</view>
   </view>
-  <view class="action">
-    <text class="n-icon iconshoucang2"></text>
+  <view class="action" bind:tap="changeRecite">
+    <text class="n-icon {{isShowResult ? 'iconshoucang' : 'iconshoucang2'}} "></text>
     <view>背题模式</view>
   </view>
 </view>
@@ -53,9 +61,9 @@
       <view class="action text-green">确定</view>
       <view class="action text-blue" bindtap="hideModal">取消</view>
     </view>
-    <view class="padding-xl">
-      <view wx:for="{{exerciseList}}">
-        
+    <view class="padding classic-list">
+      <view wx:for="{{exerciseList}}" wx:key="{{item.id}}" class="classic-list-item {{getDotClassName(item)}}">
+        <text>{{index + 1}}</text>
       </view>
     </view>
   </view>

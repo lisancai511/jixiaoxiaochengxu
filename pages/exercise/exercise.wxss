@@ -62,3 +62,24 @@ page {
 .answer-type {
   margin-right: 8px;
 }
+.classic-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.classic-list-item {
+  width: 90rpx;
+  height: 90rpx;
+  margin: 0 20rpx 20rpx 0;
+  line-height: 90rpx;
+  border-radius: 50%;
+  border: 1px solid #fff;
+}
+.classic-list-item.success {
+  border: 1px solid #24c28d;
+}
+.classic-list-item.error {
+  border: 1px solid #ff4849;
+}
+.classic-list-item:nth-child(6n) {
+  margin-right: 0;
+}

@@ -29,7 +29,10 @@ Page({
     classicModel.getClassic().then(res=> {
       return res.list.map(item => ({
         ...item,
-        questionList: item.options.split(', ')
+        options: item.options.map(opt => ({
+          description: opt,
+          className: ''
+        }))
       }))
     }).then(res => {
       app.globalData.arrOne = res
@@ -39,7 +42,10 @@ Page({
     classicModel.getFiftySubject().then(res=> {
       return res.list.map(item => ({
         ...item,
-        questionList: item.options.split(', ')
+        options: item.options.map(opt => ({
+          description: opt,
+          className: ''
+        }))
       }))
     }).then(res => {
       app.globalData.fiftySubject = res

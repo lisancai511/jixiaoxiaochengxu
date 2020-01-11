@@ -14,6 +14,22 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
-module.exports = {
-  formatTime: formatTime
+const saveUserAnswer = (id, answer) => {
+  let answerObj = getUserAnswer() || {}
+  console.log('answerObj', answerObj)
+  if (!answerObj[id]) {
+    answerObj[id] = answer
+  }
+  wx.setStorageSync('answerOwnId', answerObj)
 }
+
+const getUserAnswer = (key = 'answerOwnId') => {
+  return wx.getStorageSync(key)
+}
+
+module.exports = {
+  formatTime: formatTime,
+  saveUserAnswer,
+  getUserAnswer
+}
+

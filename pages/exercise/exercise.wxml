@@ -1,5 +1,5 @@
 <cu-custom bgColor="bg-gradual-pink"></cu-custom>
-<swiper bindchange='onSlideChangeEnd' class="swiper">
+<swiper bindchange='onSlideChangeEnd' current="{{currentPage}}" class="swiper">
   <block wx:for="{{exerciseList}}" wx:key="{{item.id}}">
     <swiper-item item-id="{{item.id}}">
       <view class="exercise">
@@ -41,7 +41,7 @@
   </view>
   <view class="action" bindtap="showModal" data-target="bottomModal">
     <text class="n-icon iconsuolvetuxianshitubiao"></text>
-    <view class="">{{currentItemId}}/{{exerciseList.length}}</view>
+    <view class="">{{currentItemId}}/{{total}}</view>
   </view>
   <view class="action" bindtap="collectionItem">
     <text class="n-icon {{collection[currentItemId]? 'iconshoucang': 'iconshoucang2'}}"></text>
@@ -61,10 +61,13 @@
       <view class="action text-green">确定</view>
       <view class="action text-blue" bindtap="hideModal">取消</view>
     </view>
-    <view class="padding classic-list">
-      <view wx:for="{{exerciseList}}" wx:key="{{item.id}}" class="classic-list-item {{getDotClassName(item)}}">
-        <text>{{index + 1}}</text>
+    <scroll-view scroll-y="true" class="" style="height: 100%;">
+      <view class="classic-list">
+
+        <view wx:for="{{total}}" wx:key="{{item}}" class="classic-list-item {{getDotClassName(item)}}">
+          <text>{{index + 1}}</text>
+        </view>
       </view>
-    </view>
+    </scroll-view>
   </view>
 </view>

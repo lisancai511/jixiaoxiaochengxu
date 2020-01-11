@@ -65,6 +65,8 @@ page {
 .classic-list {
   display: flex;
   flex-wrap: wrap;
+  padding: 30rpx;
+  padding-bottom: 130rpx;
 }
 .classic-list-item {
   width: 90rpx;
@@ -82,4 +84,8 @@ page {
 }
 .classic-list-item:nth-child(6n) {
   margin-right: 0;
+}
+
+.cu-dialog {
+  height: 80%;
 }

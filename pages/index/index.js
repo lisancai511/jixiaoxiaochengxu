@@ -27,15 +27,20 @@ Page({
   },
   _getClassicList() {
     classicModel.getClassic().then(res=> {
-      return res.list.map(item => ({
+      const list = res.list.map(item => ({
         ...item,
         options: item.options.map(opt => ({
           description: opt,
           className: ''
         }))
       }))
+      return ({
+        ...res,
+        list,
+      })
     }).then(res => {
-      app.globalData.arrOne = res
+      app.globalData.arrOne = res.list
+      app.globalData.total = res.total
     })
   },
   _getFiftySubject() {

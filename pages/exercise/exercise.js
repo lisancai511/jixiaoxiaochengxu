@@ -13,6 +13,7 @@ Page({
     background: ['demo-text-1', 'demo-text-2', 'demo-text-3'],
     exerciseList: [],
     currentItemId: null,
+    total: 0,
     collection: {},  //收藏
     currentPage: 1,
     isShowResult: false
@@ -28,10 +29,17 @@ Page({
   },
   clickItem(e) {
     const { item, index, optidx} = e.currentTarget.dataset
+    console.log('index', index)
     const { own_res } = this.data.exerciseList[index]
-    if (!own_res) {
+    if (!own_res && !this.data.isShowResult) {
       this.data.exerciseList[index].own_res = optidx + 1 + ''
       saveUserAnswer(item.id, optidx + 1 + '')
+      if (this.data.exerciseList[index].own_res === item.ta) {
+        console.log('in')
+        this.setData({
+          currentPage: index + 1
+        })
+      }
       console.log(index)
       let { options } = this.data.exerciseList[index]
       console.log(options)
@@ -58,7 +66,8 @@ Page({
     console.log(options.type)
     this.setData({
       exerciseList: app.globalData.arrOne,
-      currentItemId: app.globalData.arrOne[0].id
+      currentItemId: app.globalData.arrOne[0].id,
+      total: app.globalData.total
     })
   },
 

@@ -48,7 +48,7 @@
     <view class="">收藏</view>
   </view>
   <view class="action" bind:tap="changeRecite">
-    <text class="n-icon {{isShowResult ? 'iconshoucang' : 'iconshoucang2'}} "></text>
+    <text class="n-icon {{isShowResult ? 'iconshu1' : 'iconshu'}} "></text>
     <view>背题模式</view>
   </view>
 </view>

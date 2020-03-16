@@ -1,59 +1,50 @@
-import ClassicModel from '../../model/classic.js'
-const classicModel = new ClassicModel()
-const app = getApp()
+import ClassicModel from '../../model/classic.js';
+const classicModel = new ClassicModel();
+const app = getApp();
 
 Page({
   data: {
-    PageCur: 'simulation'
+    PageCur: 'simulation',
   },
-  onLoad: function () {
-    this.getData()
+  onLoad: function() {
+    this.getData();
   },
   NavChange(e) {
     this.setData({
-      PageCur: e.currentTarget.dataset.cur
-    })
+      PageCur: e.currentTarget.dataset.cur,
+    });
   },
   onShareAppMessage() {
     return {
       title: '新规题库，精编考题，仿真模拟，轻松get驾考知识点!',
       imageUrl: '/images/share.jpg',
-      path: '/pages/index/index'
-    }
+      path: '/pages/index/index',
+    };
   },
   getData() {
-    this._getClassicList()
-    this._getFiftySubject()
+    this._getClassicList();
+    this._getFiftySubject();
   },
   _getClassicList() {
-    classicModel.getClassic().then(res=> {
-      const list = res.list.map(item => ({
-        ...item,
-        options: item.options.map(opt => ({
-          description: opt,
-          className: ''
-        }))
-      }))
-      return ({
-        ...res,
-        list,
-      })
-    }).then(res => {
-      app.globalData.arrOne = res.list
-      app.globalData.total = res.total
-    })
+    classicModel.getClassic({ limit: 100 }).then(res => {
+      app.globalData.arrOne = res.list;
+      app.globalData.total = res.total;
+    });
   },
   _getFiftySubject() {
-    classicModel.getFiftySubject().then(res=> {
-      return res.list.map(item => ({
-        ...item,
-        options: item.options.map(opt => ({
-          description: opt,
-          className: ''
-        }))
-      }))
-    }).then(res => {
-      app.globalData.fiftySubject = res
-    })
-  }
-})
+    classicModel
+      .getFiftySubject()
+      .then(res => {
+        return res.list.map(item => ({
+          ...item,
+          options: item.options.map(opt => ({
+            description: opt,
+            className: '',
+          })),
+        }));
+      })
+      .then(res => {
+        app.globalData.fiftySubject = res;
+      });
+  },
+});

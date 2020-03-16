@@ -1,7 +1,8 @@
 <cu-custom bgColor="bg-gradual-pink"></cu-custom>
-<swiper bindchange='onSlideChangeEnd' current="{{currentPage}}" class="swiper">
+<swiper bindchange='onSlideChangeEnd' current="{{swiperIndex}}" circular="{{true}}" class="swiper">
   <block wx:for="{{exerciseList}}" wx:key="{{item.id}}">
     <swiper-item item-id="{{item.id}}">
+    <view>当前是第{{currentPage}}页 {{currentIdx}}</view>
       <view class="exercise">
         <view class="question">
           <text wx:if="{{item.Type==1}}" class="question-type">判断</text>
@@ -18,10 +19,12 @@
             class="answer-item {{isShowResult && item.ta == optIdx+1 ? 'success' : ''}} {{answer.className}}"
             wx:for="{{item.options}}"
             wx:for-index="optIdx"
+            wx:key="{{answer}}"
             wx:for-item="answer">
             <text>{{answer.description}}</text>
           </view>
         </view>
+        <view>{{item.id}}</view>
         <view wx:if="{{isShowResult || item.own_res}}">
           <view>解析：</view>
           <view>{{item.bestanswer}}</view>
@@ -63,7 +66,6 @@
     </view>
     <scroll-view scroll-y="true" class="" style="height: 100%;">
       <view class="classic-list">
-
         <view wx:for="{{total}}" wx:key="{{item}}" class="classic-list-item {{getDotClassName(item)}}">
           <text>{{index + 1}}</text>
         </view>

@@ -1,8 +1,8 @@
 <cu-custom bgColor="bg-gradual-pink"></cu-custom>
-<swiper bindchange='onSlideChangeEnd' current="{{swiperIndex}}" circular="{{true}}" class="swiper">
+<swiper bindchange='onSlideChangeEnd' bindanimationfinish="slideFinish" current="{{swiperIndex}}" circular="{{isCircular}}" class="swiper">
   <block wx:for="{{exerciseList}}" wx:key="{{item.id}}">
     <swiper-item item-id="{{item.id}}">
-    <view>当前是第{{currentPage}}页 {{currentIdx}}</view>
+      {{topicIndex}}
       <view class="exercise">
         <view class="question">
           <text wx:if="{{item.Type==1}}" class="question-type">判断</text>
@@ -24,7 +24,6 @@
             <text>{{answer.description}}</text>
           </view>
         </view>
-        <view>{{item.id}}</view>
         <view wx:if="{{isShowResult || item.own_res}}">
           <view>解析：</view>
           <view>{{item.bestanswer}}</view>
@@ -44,7 +43,7 @@
   </view>
   <view class="action" bindtap="showModal" data-target="bottomModal">
     <text class="n-icon iconsuolvetuxianshitubiao"></text>
-    <view class="">{{currentItemId}}/{{total}}</view>
+    <view class="">{{topicIndex===2 && swiperIndex<2 ? swiperIndex + 1 : topicIndex}}/{{total}}</view>
   </view>
   <view class="action" bindtap="collectionItem">
     <text class="n-icon {{collection[currentItemId]? 'iconshoucang': 'iconshoucang2'}}"></text>

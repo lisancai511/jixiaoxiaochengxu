@@ -18,7 +18,9 @@ Page({
     CustomBar: app.globalData.CustomBar,
     exerciseList: [],
     cacheList: [],
-    currentItemId: null,
+    isCircular: true,
+    currentItemId: '',
+    // currentItemIndex: 1,
     total: 0,
     collection: {}, //收藏
     topicIndex: 0,
@@ -39,6 +41,18 @@ Page({
         title: '401-600',
       },
     ],
+  },
+  /**
+   * 获取当前屏幕的题目索引
+   */
+  _getTopicIndex() {
+    const { topicIndex, swiperIndex } = this.data;
+    const currentItemNum = topicIndex === 2 && swiperIndex < 2 ? swiperIndex + 1 : topicIndex;
+    return currentItemNum - 1;
+  },
+  _getTopicId() {
+    const idx = this._getTopicIndex();
+    return this.data.cacheList[idx].id || null;
   },
   _getClassicList(data) {
     return classicModel.getClassic(data).then(res => res.list);
@@ -134,14 +148,17 @@ Page({
       swiperIndex: current,
       currentItemId,
     });
+    console.log('_getTopicIndex', this._getTopicIndex());
   },
   collectionItem(e) {
-    if (!this.data.collection[this.data.currentItemId]) {
-      this.data.collection[this.data.currentItemId] = this.data.currentItemId;
-      saveCollection(this.data.currentItemId);
-    } else {
-      delete this.data.collection[this.data.currentItemId];
-      cancelCollection(this.data.currentItemId);
+    const currentId = this._getTopicId();
+    if (currentId) {
+      if (!this.data.collection[currentId]) {
+        this.data.collection[currentId] = currentId;
+      } else {
+        delete this.data.collection[currentId];
+        cancelCollection(currentId);
+      }
     }
     this.setData({
       collection: this.data.collection,
@@ -163,7 +180,7 @@ Page({
     });
   },
   _initAppData() {
-    const collection = getKeyFromStorage('collectionIds');
+    const collection = getKeyFromStorage('collectionIds') || {};
     const cacheList = app.globalData.arrOne;
     let { topicIndex } = this.data;
     let exerciseList = [];

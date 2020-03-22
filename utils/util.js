@@ -35,8 +35,11 @@ const getKeyFromStorage = key => {
 
 const saveCollection = id => {
   const idObj = getKeyFromStorage('collectionIds') || {};
-  idObj[id] = id;
+  if (id) {
+    idObj[id] = id;
+  }
   wx.setStorageSync('collectionIds', idObj);
+  return idObj;
 };
 
 const cancelCollection = id => {
@@ -45,6 +48,7 @@ const cancelCollection = id => {
     delete idObj[id];
   }
   wx.setStorageSync('collectionIds', idObj);
+  return idObj;
 };
 
 module.exports = {

@@ -47,7 +47,7 @@
     <view class="">{{topicIndex + 1}}/{{total}}</view>
   </view>
   <view class="action" bindtap="collectionItem">
-    <text class="n-icon {{collection[currentItemId]? 'iconshoucang': 'iconshoucang2'}}"></text>
+    <text class="n-icon {{hasCollected ? 'iconshoucang': 'iconshoucang2'}}"></text>
     <view class="">收藏</view>
   </view>
   <view class="action" bind:tap="changeRecite">
@@ -66,7 +66,7 @@
     </view>
     <scroll-view scroll-y="true" class="" style="height: 100%;">
       <view class="classic-list">
-        <view wx:for="{{total}}" wx:key="{{item}}" class="classic-list-item {{getDotClassName(item)}}">
+        <view wx:for="{{48}}" wx:key="{{item}}" class="classic-list-item {{getDotClassName(item)}}">
           <text>{{index + 1}}</text>
         </view>
       </view>

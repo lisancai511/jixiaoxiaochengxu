@@ -29,8 +29,9 @@ class ClassicModel extends Request {
   }
   // getClassic(data) {
   //   const value = getCachedData(CLASSIC_ONE);
+  //   const {page = 1} = data
   //   if (value) {
-  //     return Promise.resolve(value);
+  //     return Promise.resolve(value[page]);
   //   } else {
   //     return this._getClassic(data);
   //   }

@@ -13,4 +13,4 @@
 <view wx:if="{{TabCur==1}}">
   <kemuOne></kemuOne>
 </view>
-<view wx:if="{{TabCur==4}}">这里是科目四</view>
+<view class="container" wx:if="{{TabCur==4}}">暂未开启</view>

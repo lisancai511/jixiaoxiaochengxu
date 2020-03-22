@@ -12,6 +12,7 @@ const MAX_SWIPER_LENGTH = 3;
 const LIMIT_NUMS = 1;
 let cacheList = [];
 let currentPage = 1;
+let collection = {};
 Page({
   /**
    * 页面的初始数据
@@ -22,27 +23,16 @@ Page({
     isCircular: true,
     currentItemId: '',
     total: 0,
-    collection: {}, //收藏
     // 当前屏幕对应的题目索引
     topicIndex: 0,
     swiperIndex: 0,
     answerOwnId: {},
+    hasCollected: false,
     isShowResult: false,
-    buttonPage: [
-      {
-        title: '1-200',
-      },
-      {
-        title: '201-400',
-      },
-      {
-        title: '401-600',
-      },
-    ],
   },
   _getTopicId() {
     const idx = this.data.topicIndex;
-    return cacheList[idx].id || null;
+    return (cacheList[idx] && cacheList[idx].id) || null;
   },
   _getClassicList(data) {
     return classicModel.getClassic(data).then(res => res.list);
@@ -99,17 +89,39 @@ Page({
     // 右滑 0 - 1 1 - 2 2 - 0   左滑 0 - 2 2 - 1 1 - 0
     return currentIdx - swiperIndex === 1 || currentIdx - swiperIndex === -2;
   },
+  _checkBorder(current, topicIndex) {
+    const _this = this;
+    if (!cacheList[topicIndex + 1]) {
+      wx.showModal({
+        title: '提示',
+        content: '已经是最后一题了',
+        showCancel: false,
+        confirmText: '我知道了',
+        success(res) {
+          if (res.confirm) {
+            console.log('用户点击确定');
+            _this.setData({
+              swiperIndex: current - 1,
+            });
+          }
+        },
+      });
+    }
+  },
   _toNextTopic(current) {
     let { topicIndex } = this.data;
+    this._checkBorder(current, topicIndex);
     const idx = current + 1 > 2 ? 0 : current + 1;
     const key = 'exerciseList[' + idx + ']';
     // const casheIdx = topicIndex + 2 > cacheList.length - 1 ? 0 : topicIndex + 2;
     // const index = topicIndex === cacheList.length - 1 ? 0 : topicIndex + 1;
     // console.log('idx---', idx, topicIndex, cacheList.length, index);
+    const topicInfo = cacheList[topicIndex + 2] || {};
     this.setData({
-      [key]: cacheList[topicIndex + 2],
+      [key]: topicInfo,
       topicIndex: topicIndex + 1,
     });
+    console.log('cacheList[topicIndex + 2]', topicInfo);
     return this.data.topicIndex;
   },
   _toLastTopic(current) {
@@ -150,26 +162,71 @@ Page({
       const resIdx = this._toNextTopic(current);
       // if (resIdx % 100 === 3) {
       if (cacheList.length - resIdx === 3) {
-        this._getMoreData(resIdx);
+        // this._getMoreData(resIdx);
       }
       console.log('右滑', resIdx);
     } else {
       this._toLastTopic(current);
     }
+    this._checkStar();
+    this._setCircular();
   },
   collectionItem(e) {
     const currentId = this._getTopicId();
     if (currentId) {
-      if (!this.data.collection[currentId]) {
-        this.data.collection[currentId] = currentId;
+      if (collection[currentId]) {
+        collection[currentId] = null;
+        collection = cancelCollection(currentId);
       } else {
-        delete this.data.collection[currentId];
-        cancelCollection(currentId);
+        collection[currentId] = currentId;
+        collection = saveCollection(currentId);
       }
     }
+    this._checkStar(true);
+    console.log(collection);
+  },
+  _checkStar(showMsg = false) {
+    const currentId = this._getTopicId();
+    const hasStar = !!collection[currentId];
+    const msg = hasStar ? '收藏成功' : '已取消收藏';
+    showMsg &&
+      wx.showToast({
+        title: msg,
+        icon: 'success',
+        duration: 1000,
+      });
     this.setData({
-      collection: this.data.collection,
+      hasCollected: hasStar,
     });
+  },
+  _setCircular() {
+    console.log(this.data.topicIndex);
+    const { topicIndex, isCircular } = this.data;
+    // wx.showModal({
+    //   title: '提示',
+    //   content: '这是一个模态弹窗',
+    //   success (res) {
+    //     if (res.confirm) {
+    //       console.log('用户点击确定')
+    //     } else if (res.cancel) {
+    //       console.log('用户点击取消')
+    //     }
+    //   }
+    // })
+    console.log(cacheList);
+    if (topicIndex === 0 || topicIndex >= cacheList.length - 1) {
+      if (isCircular) {
+        this.setData({
+          isCircular: false,
+        });
+      }
+    } else {
+      if (!isCircular) {
+        this.setData({
+          isCircular: true,
+        });
+      }
+    }
   },
   /**
    * 底部模态框
@@ -187,7 +244,7 @@ Page({
     });
   },
   _initAppData() {
-    const collection = getKeyFromStorage('collectionIds') || {};
+    collection = getKeyFromStorage('collectionIds') || {};
     cacheList = app.globalData.arrOne;
     let { topicIndex } = this.data;
     let exerciseList = [];
@@ -203,7 +260,6 @@ Page({
       topicIndex,
       currentItemId: app.globalData.arrOne[0].id,
       total: app.globalData.total,
-      collection,
     });
   },
   /**
@@ -212,6 +268,8 @@ Page({
   onLoad: function(options) {
     console.log(options.type);
     this._initAppData();
+    this._checkStar();
+    this._setCircular();
   },
 
   /**

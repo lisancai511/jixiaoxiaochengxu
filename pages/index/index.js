@@ -26,7 +26,7 @@ Page({
     this._getFiftySubject();
   },
   _getClassicList() {
-    classicModel.getClassic({ limit: 5 }).then(res => {
+    classicModel.getClassic({ limit: 100 }).then(res => {
       app.globalData.arrOne = res.list;
       app.globalData.total = res.total;
     });

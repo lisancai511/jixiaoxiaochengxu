@@ -22,13 +22,14 @@ Page({
     exerciseList: [],
     isCircular: true,
     currentItemId: '',
-    total: 0,
     // 当前屏幕对应的题目索引
     topicIndex: 0,
+    total: 0,
     swiperIndex: 0,
     answerOwnId: {},
     hasCollected: false,
     isShowResult: false,
+    listNum: 0,
   },
   _getTopicId() {
     const idx = this.data.topicIndex;
@@ -144,7 +145,7 @@ Page({
     currentPage = currentPage + 1;
     const params = {
       page: currentPage,
-      limit: 5,
+      limit: 100,
     };
     this._getClassicList(params).then(res => {
       cacheList = cacheList.concat(res);
@@ -160,9 +161,9 @@ Page({
     });
     if (isRight) {
       const resIdx = this._toNextTopic(current);
-      // if (resIdx % 100 === 3) {
-      if (cacheList.length - resIdx === 3) {
-        // this._getMoreData(resIdx);
+      if (resIdx % 100 === 3) {
+      // if (cacheList.length - resIdx === 3) {
+        this._getMoreData(resIdx);
       }
       console.log('右滑', resIdx);
     } else {
@@ -233,6 +234,9 @@ Page({
    */
 
   showModal(e) {
+    // listNum
+    console.log(e);
+    const { total } = this.data;
     this.setData({
       modalName: e.currentTarget.dataset.target,
     });
@@ -254,7 +258,6 @@ Page({
       start = topicIndex - 1;
     }
     exerciseList = cacheList.slice(start, start + 3);
-    console.log('exerciseList', exerciseList);
     this.setData({
       exerciseList,
       topicIndex,

@@ -1,4 +1,4 @@
-const BASE_URL = 'http://112.126.57.246:7001/api'
+const BASE_URL = 'https//yilianguo.com/api'
 
 class Request {
   request(url, method = 'GET', data) {

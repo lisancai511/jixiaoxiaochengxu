@@ -1,8 +1,11 @@
 import Request from '../utils/http.js';
+import { wrapData, saveCacheData, getCachedData } from '../utils/request';
+const CLASSIC_ONE = 'classicOne';
 class ClassicModel extends Request {
   getClassic(data) {
+    const { page = 1 } = data;
     return this.request('/subjectOne', 'GET', data).then(res => {
-      let { list = [] } = res;
+      let { list = [], total } = res;
       list = list.map(item => ({
         ...item,
         options: item.options.map(opt => ({
@@ -10,12 +13,28 @@ class ClassicModel extends Request {
           className: '',
         })),
       }));
+      // const value = getCachedData(CLASSIC_ONE) || {};
+      // console.log('123', value);
+      // const cacheData = {
+      //   ...value,
+      //   [page]: list,
+      //   total,
+      // };
+      // saveCacheData(CLASSIC_ONE, cacheData);
       return {
         ...res,
         list,
       };
     });
   }
+  // getClassic(data) {
+  //   const value = getCachedData(CLASSIC_ONE);
+  //   if (value) {
+  //     return Promise.resolve(value);
+  //   } else {
+  //     return this._getClassic(data);
+  //   }
+  // }
   getFiftySubject() {
     return this.request('/fiftysubjectOne', 'GET');
   }

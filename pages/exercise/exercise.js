@@ -10,6 +10,8 @@ const classicModel = new ClassicModel();
 const app = getApp();
 const MAX_SWIPER_LENGTH = 3;
 const LIMIT_NUMS = 1;
+let cacheList = [];
+let currentPage = 1;
 Page({
   /**
    * 页面的初始数据
@@ -17,17 +19,13 @@ Page({
   data: {
     CustomBar: app.globalData.CustomBar,
     exerciseList: [],
-    cacheList: [],
     isCircular: true,
     currentItemId: '',
-    // currentItemIndex: 1,
     total: 0,
     collection: {}, //收藏
+    // 当前屏幕对应的题目索引
     topicIndex: 0,
-    currentPage: 1,
-    currentIdx: 0,
     swiperIndex: 0,
-    lastIdx: 0,
     answerOwnId: {},
     isShowResult: false,
     buttonPage: [
@@ -42,17 +40,9 @@ Page({
       },
     ],
   },
-  /**
-   * 获取当前屏幕的题目索引
-   */
-  _getTopicIndex() {
-    const { topicIndex, swiperIndex } = this.data;
-    const currentItemNum = topicIndex === 2 && swiperIndex < 2 ? swiperIndex + 1 : topicIndex;
-    return currentItemNum - 1;
-  },
   _getTopicId() {
-    const idx = this._getTopicIndex();
-    return this.data.cacheList[idx].id || null;
+    const idx = this.data.topicIndex;
+    return cacheList[idx].id || null;
   },
   _getClassicList(data) {
     return classicModel.getClassic(data).then(res => res.list);
@@ -110,45 +100,62 @@ Page({
     return currentIdx - swiperIndex === 1 || currentIdx - swiperIndex === -2;
   },
   _toNextTopic(current) {
-    const { topicIndex, cacheList } = this.data;
-    if (current === 2 && (topicIndex === 2 || topicIndex > 2)) {
-      this.setData({
-        'exerciseList[0]': cacheList[topicIndex + 1],
-        topicIndex: topicIndex + 1,
-      });
-      console.log(this.data.exerciseList.map(item => item.id));
-      return false;
-    }
-    if (current === 0 && topicIndex > 2) {
-      this.setData({
-        'exerciseList[1]': cacheList[topicIndex + 1],
-        topicIndex: topicIndex + 1,
-      });
-      console.log(this.data.exerciseList.map(item => item.id));
-      return false;
-    }
-    if (current === 1 && topicIndex > 2) {
-      this.setData({
-        'exerciseList[2]': cacheList[topicIndex + 1],
-        topicIndex: topicIndex + 1,
-      });
-      console.log(this.data.exerciseList.map(item => item.id));
-      return false;
-    }
+    let { topicIndex } = this.data;
+    const idx = current + 1 > 2 ? 0 : current + 1;
+    const key = 'exerciseList[' + idx + ']';
+    // const casheIdx = topicIndex + 2 > cacheList.length - 1 ? 0 : topicIndex + 2;
+    // const index = topicIndex === cacheList.length - 1 ? 0 : topicIndex + 1;
+    // console.log('idx---', idx, topicIndex, cacheList.length, index);
+    this.setData({
+      [key]: cacheList[topicIndex + 2],
+      topicIndex: topicIndex + 1,
+    });
+    return this.data.topicIndex;
+  },
+  _toLastTopic(current) {
+    const { topicIndex } = this.data;
+    const idx = current - 1 < 0 ? 2 : current - 1;
+    const key = 'exerciseList[' + idx + ']';
+    this.setData({
+      [key]: cacheList[topicIndex - 2],
+      topicIndex: topicIndex - 1,
+    });
+  },
+  _getMoreData(resIdx) {
+    // TODO:后续改成100条数据
+    // const initIdx = Math.floor(resIdx / 100);
+    // const page = initIdx ? 1 : initIdx;
+    // const params = {
+    //   page: page + 1,
+    //   limit: 100,
+    // };
+    currentPage = currentPage + 1;
+    const params = {
+      page: currentPage,
+      limit: 5,
+    };
+    this._getClassicList(params).then(res => {
+      cacheList = cacheList.concat(res);
+    });
   },
   onSlideChangeEnd(e) {
     console.log('e', e);
     const { currentItemId, current } = e.detail;
-    console.log('current', current);
     let isRight = this._checkSwipeDirec(current);
-    if (isRight) {
-      this._toNextTopic(current);
-    }
     this.setData({
       swiperIndex: current,
       currentItemId,
     });
-    console.log('_getTopicIndex', this._getTopicIndex());
+    if (isRight) {
+      const resIdx = this._toNextTopic(current);
+      // if (resIdx % 100 === 3) {
+      if (cacheList.length - resIdx === 3) {
+        this._getMoreData(resIdx);
+      }
+      console.log('右滑', resIdx);
+    } else {
+      this._toLastTopic(current);
+    }
   },
   collectionItem(e) {
     const currentId = this._getTopicId();
@@ -181,18 +188,17 @@ Page({
   },
   _initAppData() {
     const collection = getKeyFromStorage('collectionIds') || {};
-    const cacheList = app.globalData.arrOne;
+    cacheList = app.globalData.arrOne;
     let { topicIndex } = this.data;
     let exerciseList = [];
-    if (topicIndex === 0) {
-      exerciseList = cacheList.slice(0, 3);
-      topicIndex = 2;
-    } else {
-      exerciseList = cacheList.slice(topicIndex - 1, topicIndex + 2);
-      topicIndex = topicIndex + 1;
+    let start = 0;
+    if (topicIndex > 0) {
+      // exerciseList = cacheList.slice(0, 3);
+      start = topicIndex - 1;
     }
+    exerciseList = cacheList.slice(start, start + 3);
+    console.log('exerciseList', exerciseList);
     this.setData({
-      cacheList,
       exerciseList,
       topicIndex,
       currentItemId: app.globalData.arrOne[0].id,

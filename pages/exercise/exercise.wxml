@@ -2,7 +2,8 @@
 <swiper bindchange='onSlideChangeEnd' bindanimationfinish="slideFinish" current="{{swiperIndex}}" circular="{{isCircular}}" class="swiper">
   <block wx:for="{{exerciseList}}" wx:key="{{item.id}}">
     <swiper-item item-id="{{item.id}}">
-      {{topicIndex}}
+      整体题目的索引{{topicIndex}}
+      当前题目的id{{item.id}}
       <view class="exercise">
         <view class="question">
           <text wx:if="{{item.Type==1}}" class="question-type">判断</text>
@@ -43,7 +44,7 @@
   </view>
   <view class="action" bindtap="showModal" data-target="bottomModal">
     <text class="n-icon iconsuolvetuxianshitubiao"></text>
-    <view class="">{{topicIndex===2 && swiperIndex<2 ? swiperIndex + 1 : topicIndex}}/{{total}}</view>
+    <view class="">{{topicIndex + 1}}/{{total}}</view>
   </view>
   <view class="action" bindtap="collectionItem">
     <text class="n-icon {{collection[currentItemId]? 'iconshoucang': 'iconshoucang2'}}"></text>

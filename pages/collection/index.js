@@ -1,12 +1,12 @@
 // pages/exercise/exercise.js
-import ClassicModel from '../../model/classic.js';
+import CollectionModel from '../../model/collection';
 import {
   saveUserAnswer,
   getKeyFromStorage,
   saveCollection,
   cancelCollection,
 } from '../../utils/util.js';
-const classicModel = new ClassicModel();
+const collectionModel = new CollectionModel();
 const app = getApp();
 const MAX_SWIPER_LENGTH = 3;
 const LIMIT_NUMS = 1;
@@ -36,7 +36,7 @@ Page({
     return (cacheList[idx] && cacheList[idx].id) || null;
   },
   _getClassicList(data) {
-    return classicModel.getClassic(data).then(res => res.list);
+    return collectionModel.getColectOne(data).then(res => res.list);
   },
   getDotClassName(item) {
     const { ta, id } = item;
@@ -139,23 +139,6 @@ Page({
       topicIndex: topicIndex - 1,
     });
   },
-  _getMoreData(resIdx) {
-    // TODO:后续改成100条数据
-    // const initIdx = Math.floor(resIdx / 100);
-    // const page = initIdx ? 1 : initIdx;
-    // const params = {
-    //   page: page + 1,
-    //   limit: 100,
-    // };
-    currentPage = currentPage + 1;
-    const params = {
-      page: currentPage,
-      limit: 100,
-    };
-    this._getClassicList(params).then(res => {
-      cacheList = cacheList.concat(res);
-    });
-  },
   onSlideChangeEnd(e) {
     console.log('e', e);
     const { currentItemId, current } = e.detail;
@@ -168,7 +151,7 @@ Page({
       const resIdx = this._toNextTopic(current);
       if (resIdx % 100 === 3) {
         // if (cacheList.length - resIdx === 3) {
-        this._getMoreData(resIdx);
+        // this._getMoreData(resIdx);
       }
       console.log('右滑', resIdx);
     } else {
@@ -252,22 +235,34 @@ Page({
       modalName: null,
     });
   },
-  _initAppData() {
-    collection = getKeyFromStorage('collectionIds') || {};
-    cacheList = app.globalData.arrOne;
-    let { topicIndex } = this.data;
-    let exerciseList = [];
-    let start = 0;
-    if (topicIndex > 0) {
-      // exerciseList = cacheList.slice(0, 3);
-      start = topicIndex - 1;
+  _getCollectionData(type) {
+    let ids = [];
+    if (type === 'collectionOne') {
+      collection = getKeyFromStorage('collectionIds') || {};
+      ids = Object.keys(collection);
+      return this._getClassicList(ids);
+    } else {
+      collection = getKeyFromStorage('collectionFourIds') || {};
+      ids = Object.keys(collection);
+      return this._getClassicList(ids);
     }
-    exerciseList = cacheList.slice(start, start + 3);
-    this.setData({
-      exerciseList,
-      topicIndex,
-      currentItemId: app.globalData.arrOne[0].id,
-      total: app.globalData.total,
+  },
+  _initData(type) {
+    this._getCollectionData(type).then(res => {
+      cacheList = res;
+      let { topicIndex } = this.data;
+      let exerciseList = [];
+      let start = 0;
+      if (topicIndex > 0) {
+        start = topicIndex - 1;
+      }
+      exerciseList = cacheList.slice(start, start + 3);
+      this.setData({
+        exerciseList,
+        topicIndex,
+        currentItemId: cacheList[0].id,
+        total: cacheList.length,
+      });
     });
   },
   _checkObjIsEqual(a, b) {
@@ -290,8 +285,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(options.type);
-    this._initAppData();
+    console.log('-------', options.type);
+    this._initData(options.type);
     this._checkStar();
     this._setCircular();
   },

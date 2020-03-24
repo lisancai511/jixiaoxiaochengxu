@@ -1,9 +1,9 @@
-<cu-custom bgColor="bg-gradual-pink"></cu-custom>
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}"><view slot="backText">返回</view></cu-custom>
 <swiper bindchange='onSlideChangeEnd' bindanimationfinish="slideFinish" current="{{swiperIndex}}" circular="{{isCircular}}" class="swiper">
   <block wx:for="{{exerciseList}}" wx:key="{{item.id}}">
     <swiper-item item-id="{{item.id}}">
-      整体题目的索引{{topicIndex}}
-      当前题目的id{{item.id}}
+      <!--整体题目的索引{{topicIndex}}
+      当前题目的id{{item.id}}-->
       <view class="exercise">
         <view class="question">
           <text wx:if="{{item.Type==1}}" class="question-type">判断</text>

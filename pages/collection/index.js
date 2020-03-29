@@ -40,7 +40,7 @@ Page({
   },
   getDotClassName(item) {
     const { ta, id } = item;
-    let answerObj = getKeyFromStorage('answerOwnId');
+    // let answerObj = getKeyFromStorage('answerOwnId');
     // if (answerObj[id] === ta) {
     //   return 'success';
     // } else {

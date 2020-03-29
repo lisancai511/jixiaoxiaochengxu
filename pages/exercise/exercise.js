@@ -13,6 +13,7 @@ const LIMIT_NUMS = 1;
 let cacheList = [];
 let currentPage = 1;
 let collection = {};
+let errorOneTopic = {};
 Page({
   /**
    * 页面的初始数据
@@ -40,7 +41,7 @@ Page({
   },
   getDotClassName(item) {
     const { ta, id } = item;
-    let answerObj = getKeyFromStorage('answerOwnId');
+    // let answerObj = getKeyFromStorage('answerOwnId');
     // if (answerObj[id] === ta) {
     //   return 'success';
     // } else {
@@ -58,15 +59,7 @@ Page({
     const { own_res } = this.data.exerciseList[index];
     if (!own_res && !this.data.isShowResult) {
       this.data.exerciseList[index].own_res = optidx + 1 + '';
-      saveUserAnswer(item.id, optidx + 1 + '');
-      // if (this.data.exerciseList[index].own_res === item.ta) {
-      //   console.log('in');
-      //   setTimeout(() => {
-      //     this.setData({
-      //       currentPage: index + 1,
-      //     });
-      //   }, 1000);
-      // }
+      saveUserAnswer(item, optidx + 1 + '');
       console.log(index);
       let { options } = this.data.exerciseList[index];
       console.log(options);
@@ -208,17 +201,6 @@ Page({
   _setCircular() {
     console.log(this.data.topicIndex);
     const { topicIndex, isCircular } = this.data;
-    // wx.showModal({
-    //   title: '提示',
-    //   content: '这是一个模态弹窗',
-    //   success (res) {
-    //     if (res.confirm) {
-    //       console.log('用户点击确定')
-    //     } else if (res.cancel) {
-    //       console.log('用户点击取消')
-    //     }
-    //   }
-    // })
     console.log(cacheList);
     if (topicIndex === 0 || topicIndex >= cacheList.length - 1) {
       if (isCircular) {

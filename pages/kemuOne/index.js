@@ -1,5 +1,6 @@
 // pages/kemuOne/index.js
-import { getKeyFromStorage } from '../../utils/util';
+import { getKeyFromStorage, getErrorIdLists } from '../../utils/util';
+import { ERROR_ONE_ID } from '../../utils/constant';
 Page({
   /**
    * 页面的初始数据
@@ -45,25 +46,58 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {},
-
+  _gotoCollection() {
+    const collection = getKeyFromStorage('collectionIds') || {};
+    const ids = Object.keys(collection);
+    if (ids.length) {
+      wx.navigateTo({
+        url: `/pages/collection/index?type=collectionOne`,
+      });
+    } else {
+      wx.showToast({
+        icon: 'none',
+        title: '暂无收藏',
+        duration: 1000,
+      });
+    }
+  },
+  _gotoVip() {
+    wx.navigateTo({
+      url: `/pages/vip/vip?type=vipOne`,
+    });
+  },
+  _gotoError() {
+    const ids = getErrorIdLists(ERROR_ONE_ID);
+    if (ids.length) {
+      wx.navigateTo({
+        url: `/pages/error/error?type=errorOne`,
+      });
+    } else {
+      wx.showToast({
+        icon: 'none',
+        title: '暂无错题',
+        duration: 1000,
+      });
+    }
+  },
+  _gotoMockExam() {
+    wx.navigateTo({
+      url: `/pages/mock/mock?type=mockOne`,
+    });
+  },
   gotoSubject: function(type) {
     switch (type.currentTarget.id) {
-      case 'collection':
-        const collection = getKeyFromStorage('collectionIds') || {};
-        const ids = Object.keys(collection);
-        if (ids.length) {
-          wx.navigateTo({
-            url: `/pages/collection/index?type=collectionOne`,
-          });
-        } else {
-          wx.showToast({
-            icon: 'none',
-            title: '暂无收藏',
-            duration: 1000,
-          });
-        }
+      case 'mockExam':
+        this._gotoMockExam();
         break;
-
+      case 'wrongSubject':
+        this._gotoError();
+        break;
+      case 'collection':
+        this._gotoCollection();
+        break;
+      case 'vip':
+        this._gotoVip();
       default:
         wx.navigateTo({
           url: `/pages/exercise/exercise?type=${type.currentTarget.id}`,

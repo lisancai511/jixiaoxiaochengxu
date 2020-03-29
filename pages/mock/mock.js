@@ -1,12 +1,12 @@
 // pages/exercise/exercise.js
-import VipModel from '../../model/vip.js';
+import MockModel from '../../model/mock.js';
 import {
   saveUserAnswer,
   getKeyFromStorage,
   saveCollection,
   cancelCollection,
 } from '../../utils/util.js';
-const vipModel = new VipModel();
+const mockModel = new MockModel();
 const app = getApp();
 const MAX_SWIPER_LENGTH = 3;
 const LIMIT_NUMS = 1;
@@ -35,16 +35,8 @@ Page({
     const idx = this.data.topicIndex;
     return (cacheList[idx] && cacheList[idx].id) || null;
   },
-  _getClassicList(data) {
-    return vipModel
-      .getVipOne(data)
-      .then(res => {
-        this.setData({
-          total: res.total,
-        });
-        return res;
-      })
-      .then(res => res.list);
+  _getClassicList() {
+    return mockModel.getMockOne();
   },
   getDotClassName(item) {
     const { ta, id } = item;
@@ -239,7 +231,7 @@ Page({
     });
   },
   _getData(type) {
-    if (type === 'vipOne') {
+    if (type === 'mockOne') {
       return this._getClassicList();
     } else {
     }
@@ -247,7 +239,7 @@ Page({
   _initAppData(type) {
     // collection = getKeyFromStorage('collectionIds') || {};
     this._getData(type).then(res => {
-      cacheList = res;
+      cacheList = res.list;
       let { topicIndex } = this.data;
       let exerciseList = [];
       let start = 0;
@@ -259,6 +251,7 @@ Page({
         exerciseList,
         topicIndex,
         currentItemId: exerciseList[0].id,
+        total: res.total,
       });
     });
   },

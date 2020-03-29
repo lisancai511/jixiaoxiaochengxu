@@ -1,3 +1,5 @@
+import { ANSWER_ONE_ID_USER, ERROR_ONE_ID } from '../utils/constant';
+console.log('ANSWER_ONE_ID_USER', ANSWER_ONE_ID_USER);
 const formatTime = date => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -18,11 +20,26 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n;
 };
 
-const saveUserAnswer = (id, answer) => {
-  let answerObj = getKeyFromStorage() || {};
-  console.log('answerObj', answerObj);
+const getErrorIdLists = key => {
+  let errorOneIds = getKeyFromStorage(key) || {};
+  return Object.keys(errorOneIds);
+};
+
+const saveErrorAnswer = (item, answer) => {
+  const { id } = item;
+  let errorOneIds = getKeyFromStorage(ERROR_ONE_ID) || {};
+  if (item.ta !== answer) {
+    errorOneIds[id] = answer;
+    wx.setStorageSync(ERROR_ONE_ID, errorOneIds);
+  }
+};
+
+const saveUserAnswer = (item, answer) => {
+  const { id } = item;
+  let answerObj = getKeyFromStorage(ANSWER_ONE_ID_USER) || {};
   answerObj[id] = answer;
-  wx.setStorageSync('answerOwnId', answerObj);
+  wx.setStorageSync(ANSWER_ONE_ID_USER, answerObj);
+  saveErrorAnswer(item, answer);
 };
 
 const getKeyFromStorage = key => {
@@ -57,4 +74,5 @@ module.exports = {
   getKeyFromStorage,
   saveCollection,
   cancelCollection,
+  getErrorIdLists,
 };

@@ -1,12 +1,12 @@
 // pages/exercise/exercise.js
-import VipModel from '../../model/vip.js';
+import SubjectWrongModel from '../../model/error';
 import {
   saveUserAnswer,
   getKeyFromStorage,
   saveCollection,
   cancelCollection,
 } from '../../utils/util.js';
-const vipModel = new VipModel();
+const subjectWrongModel = new SubjectWrongModel();
 const app = getApp();
 const MAX_SWIPER_LENGTH = 3;
 const LIMIT_NUMS = 1;
@@ -36,15 +36,7 @@ Page({
     return (cacheList[idx] && cacheList[idx].id) || null;
   },
   _getClassicList(data) {
-    return vipModel
-      .getVipOne(data)
-      .then(res => {
-        this.setData({
-          total: res.total,
-        });
-        return res;
-      })
-      .then(res => res.list);
+    return subjectWrongModel.getSubjectOneWrong(data).then(res => res.list);
   },
   getDotClassName(item) {
     const { ta, id } = item;
@@ -157,6 +149,7 @@ Page({
     });
     if (isRight) {
       const resIdx = this._toNextTopic(current);
+      console.log('右滑', resIdx);
     } else {
       this._toLastTopic(current);
     }
@@ -239,17 +232,16 @@ Page({
     });
   },
   _getData(type) {
-    if (type === 'vipOne') {
+    if (type === 'errorOne') {
       return this._getClassicList();
     } else {
+      return this._getClassicList();
     }
   },
   _initAppData(type) {
-    // collection = getKeyFromStorage('collectionIds') || {};
     this._getData(type).then(res => {
       cacheList = res;
-      let { topicIndex } = this.data;
-      let exerciseList = [];
+      let { topicIndex, exerciseList } = this.data;
       let start = 0;
       if (topicIndex > 0) {
         start = topicIndex - 1;
@@ -259,24 +251,9 @@ Page({
         exerciseList,
         topicIndex,
         currentItemId: exerciseList[0].id,
+        total: cacheList.length,
       });
     });
-  },
-  _checkObjIsEqual(a, b) {
-    let hasChanged;
-    if (Object.keys(a).length !== Object.keys(b).length) {
-      hasChanged = true;
-    } else {
-      for (let key in a) {
-        if (b[key] === a[key]) {
-          hasChanged = false;
-        } else {
-          hasChanged = true;
-          break;
-        }
-      }
-    }
-    return hasChanged;
   },
   /**
    * 生命周期函数--监听页面加载

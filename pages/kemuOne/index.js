@@ -85,6 +85,11 @@ Page({
       url: `/pages/mock/mock?type=mockOne`,
     });
   },
+  _gotoSpecial() {
+    wx.navigateTo({
+      url: `/pages/special/special?type=specialOne`,
+    });
+  },
   gotoSubject: function(type) {
     switch (type.currentTarget.id) {
       case 'mockExam':
@@ -92,6 +97,10 @@ Page({
         break;
       case 'wrongSubject':
         this._gotoError();
+        break;
+
+      case 'special':
+        this._gotoSpecial();
         break;
       case 'collection':
         this._gotoCollection();

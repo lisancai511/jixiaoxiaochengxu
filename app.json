@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/special/special",
+    "pages/commonExercise/commonExercise",
     "pages/vip/vip",
     "pages/collection/index",
     "pages/simulation/index",

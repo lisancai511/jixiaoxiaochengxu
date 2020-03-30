@@ -1,0 +1,11 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}"><view slot="backText">返回</view></cu-custom>
+<view class="title">考点</view>
+<view class="container">
+  <view class="item" bindtap="gotoItem" data-item="{{item}}" wx:for="{{list}}" wx:key="{{item.type}}">
+    <view>
+      <text class="idx">{{index + 1}}</text>
+      <text>{{item.title}}</text>
+    </view>
+    <text>{{item.number}}</text>
+  </view>
+</view>

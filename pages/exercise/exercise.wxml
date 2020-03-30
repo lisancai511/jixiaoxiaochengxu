@@ -30,7 +30,6 @@
           <view>{{item.bestanswer}}</view>
         </view>
       </view>
-      <view bind:tap="back">返回</view>
     </swiper-item>
   </block>
 </swiper>

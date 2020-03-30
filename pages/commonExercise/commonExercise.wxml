@@ -34,21 +34,13 @@
   </block>
 </swiper>
 <view class="cu-bar tabbar bg-white shadow foot">
-  <view class="action">
-    <text class="n-icon icondui"></text>
-    <view class="">0</view>
-  </view>
-  <view class="action">
-    <text class="n-icon iconicon_huabanfuben"></text>
-    <view class="">0</view>
+  <view class="action" bindtap="collectionItem">
+    <text class="n-icon {{hasCollected ? 'iconshoucang': 'iconshoucang2'}}"></text>
+    <view class="">收藏</view>
   </view>
   <view class="action" bindtap="showModal" data-target="bottomModal">
     <text class="n-icon iconsuolvetuxianshitubiao"></text>
     <view class="">{{topicIndex + 1}}/{{total}}</view>
-  </view>
-  <view class="action" bindtap="collectionItem">
-    <text class="n-icon {{hasCollected ? 'iconshoucang': 'iconshoucang2'}}"></text>
-    <view class="">收藏</view>
   </view>
   <view class="action" bind:tap="changeRecite">
     <text class="n-icon {{isShowResult ? 'iconshu1' : 'iconshu'}} "></text>

@@ -36,11 +36,11 @@
 <view class="cu-bar tabbar bg-white shadow foot">
   <view class="action">
     <text class="n-icon icondui"></text>
-    <view class="">0</view>
+    <view class="">{{rightNumber}}</view>
   </view>
   <view class="action">
     <text class="n-icon iconicon_huabanfuben"></text>
-    <view class="">0</view>
+    <view class="">{{wrongNumber}}</view>
   </view>
   <view class="action" bindtap="showModal" data-target="bottomModal">
     <text class="n-icon iconsuolvetuxianshitubiao"></text>

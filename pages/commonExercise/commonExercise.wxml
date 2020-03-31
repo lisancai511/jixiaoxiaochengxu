@@ -11,6 +11,7 @@
           <text wx:if="{{item.Type==3}}" class="question-type">多选</text>
           <text class="question-dec">{{item.question}}</text>
         </view>
+        <image class="image" wx:if="{{item.sinaimg}}" src="{{item.sinaimg}}" />
         <view class="answer">
           <view
             data-item="{{item}}"

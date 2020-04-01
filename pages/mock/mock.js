@@ -30,6 +30,8 @@ Page({
     hasCollected: false,
     isShowResult: false,
     listNum: 0,
+    rightNumber: 0,
+    wrongNumber: 0
   },
   _getTopicId() {
     const idx = this.data.topicIndex;
@@ -39,7 +41,10 @@ Page({
     return mockModel.getMockOne();
   },
   getDotClassName(item) {
-    const { ta, id } = item;
+    const {
+      ta,
+      id
+    } = item;
     // let answerObj = getKeyFromStorage('answerOwnId');
     // if (answerObj[id] === ta) {
     //   return 'success';
@@ -53,9 +58,15 @@ Page({
     });
   },
   clickItem(e) {
-    const { item, index, optidx } = e.currentTarget.dataset;
+    const {
+      item,
+      index,
+      optidx
+    } = e.currentTarget.dataset;
     console.log('index', index);
-    const { own_res } = this.data.exerciseList[index];
+    const {
+      own_res
+    } = this.data.exerciseList[index];
     if (!own_res && !this.data.isShowResult) {
       this.data.exerciseList[index].own_res = optidx + 1 + '';
       saveUserAnswer(item.id, optidx + 1 + '');
@@ -68,8 +79,11 @@ Page({
       //   }, 1000);
       // }
       console.log(index);
-      let { options } = this.data.exerciseList[index];
+      let {
+        options
+      } = this.data.exerciseList[index];
       console.log(options);
+
       this.data.exerciseList[index].options[optidx].className = 'error';
       console.log('---', item.ta - 1);
       console.log('---options', options);
@@ -81,9 +95,7 @@ Page({
     }
   },
   changeRecite() {
-    this.setData({
-      isShowResult: !this.data.isShowResult,
-    });
+
   },
   /**
    * 判断滑动的方向
@@ -91,7 +103,9 @@ Page({
    * @return true - 向右滑动 false - 向左滑动
    */
   _checkSwipeDirec(currentIdx) {
-    const { swiperIndex } = this.data;
+    const {
+      swiperIndex
+    } = this.data;
     // 右滑 0 - 1 1 - 2 2 - 0   左滑 0 - 2 2 - 1 1 - 0
     return currentIdx - swiperIndex === 1 || currentIdx - swiperIndex === -2;
   },
@@ -115,7 +129,9 @@ Page({
     }
   },
   _toNextTopic(current) {
-    let { topicIndex } = this.data;
+    let {
+      topicIndex
+    } = this.data;
     this._checkBorder(current, topicIndex);
     const idx = current + 1 > 2 ? 0 : current + 1;
     const key = 'exerciseList[' + idx + ']';
@@ -131,7 +147,9 @@ Page({
     return this.data.topicIndex;
   },
   _toLastTopic(current) {
-    const { topicIndex } = this.data;
+    const {
+      topicIndex
+    } = this.data;
     const idx = current - 1 < 0 ? 2 : current - 1;
     const key = 'exerciseList[' + idx + ']';
     this.setData({
@@ -141,7 +159,10 @@ Page({
   },
   onSlideChangeEnd(e) {
     console.log('e', e);
-    const { currentItemId, current } = e.detail;
+    const {
+      currentItemId,
+      current
+    } = e.detail;
     let isRight = this._checkSwipeDirec(current);
     this.setData({
       swiperIndex: current,
@@ -185,7 +206,10 @@ Page({
   },
   _setCircular() {
     console.log(this.data.topicIndex);
-    const { topicIndex, isCircular } = this.data;
+    const {
+      topicIndex,
+      isCircular
+    } = this.data;
     // wx.showModal({
     //   title: '提示',
     //   content: '这是一个模态弹窗',
@@ -219,7 +243,9 @@ Page({
   showModal(e) {
     // listNum
     console.log(e);
-    const { total } = this.data;
+    const {
+      total
+    } = this.data;
     this.setData({
       modalName: e.currentTarget.dataset.target,
     });
@@ -233,14 +259,15 @@ Page({
   _getData(type) {
     if (type === 'mockOne') {
       return this._getClassicList();
-    } else {
-    }
+    } else {}
   },
   _initAppData(type) {
     // collection = getKeyFromStorage('collectionIds') || {};
     this._getData(type).then(res => {
       cacheList = res.list;
-      let { topicIndex } = this.data;
+      let {
+        topicIndex
+      } = this.data;
       let exerciseList = [];
       let start = 0;
       if (topicIndex > 0) {
@@ -274,7 +301,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     console.log(options.type);
     this._initAppData(options.type);
     this._checkStar();
@@ -284,35 +311,35 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {},
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {},
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {},
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {},
+  onUnload: function () {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {},
+  onPullDownRefresh: function () {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {},
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {},
+  onShareAppMessage: function () {},
 });

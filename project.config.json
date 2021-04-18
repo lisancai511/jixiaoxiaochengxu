@@ -11,45 +11,18 @@
     "newFeature": true,
     "coverView": true,
     "autoAudits": false,
-<<<<<<< HEAD
     "checkInvalidKey": true,
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
-=======
-    "scopeDataCheck": false,
-    "checkInvalidKey": true,
-    "checkSiteMap": true,
-    "uploadWithSourceMap": true,
-    "useMultiFrameRuntime": true,
-    "useApiHook": true,
-    "useApiHostProcess": true,
->>>>>>> 5dc46023b25f04513127b6e15898ef440b3fa667
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
-<<<<<<< HEAD
     }
   },
   "compileType": "miniprogram",
   "libVersion": "2.10.0",
   "appid": "wxd86018bce893b3ed",
-=======
-    },
-    "bundle": false,
-    "useIsolateContext": true,
-    "useCompilerModule": true,
-    "userConfirmedUseCompilerModuleSwitch": false,
-    "userConfirmedBundleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
-    "minifyWXSS": true,
-    "enhance": true
-  },
-  "compileType": "miniprogram",
-  "libVersion": "2.10.0",
-  "appid": "wx15821d9f138dc80b",
->>>>>>> 5dc46023b25f04513127b6e15898ef440b3fa667
   "projectname": "jixiaoxiaochengxu",
   "debugOptions": {
     "hidedInDevtools": []

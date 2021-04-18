@@ -6,9 +6,9 @@
       当前题目的id{{item.id}}-->
       <view class="exercise">
         <view class="question">
-          <text wx:if="{{item.Type==1}}" class="question-type">判断</text>
-          <text wx:if="{{item.Type==2}}" class="question-type">单选</text>
-          <text wx:if="{{item.Type==3}}" class="question-type">多选</text>
+          <text wx:if="{{item.Type==1}}" class="question-type">判断题</text>
+          <text wx:if="{{item.Type==2}}" class="question-type">单选题</text>
+          <text wx:if="{{item.Type==3}}" class="question-type">多选题</text>
           <text class="question-dec">{{item.question}}</text>
         </view>
         <view class="answer">
@@ -22,12 +22,12 @@
             wx:for-index="optIdx"
             wx:key="{{answer}}"
             wx:for-item="answer">
-            <text>{{answer.description}}</text>
+            <text> {{answer.description}} </text>
           </view>
         </view>
         <view wx:if="{{isShowResult || item.own_res}}">
           <view>解析：</view>
-          <view>{{item.bestanswer}}</view>
+          <view class="bestanswer">{{item.bestanswer}}</view>
         </view>
       </view>
     </swiper-item>

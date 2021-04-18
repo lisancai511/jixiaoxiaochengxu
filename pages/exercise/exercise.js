@@ -6,6 +6,7 @@ import {
   saveCollection,
   cancelCollection,
 } from '../../utils/util.js';
+import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
 const classicModel = new ClassicModel();
 const app = getApp();
 const MAX_SWIPER_LENGTH = 3;
@@ -106,6 +107,18 @@ Page({
   },
   _checkBorder(current, topicIndex) {
     const _this = this;
+    if (topicIndex === 0) {
+      console.log('000')
+      wx.showToast({
+        title: '已经是第一题了',
+        icon: 'none'
+      })
+      _this.setData({
+        swiperIndex: current + 1,
+        topicIndex: 0
+      });
+      return false
+    }
     if (!cacheList[topicIndex + 1]) {
       wx.showModal({
         title: '提示',
@@ -121,19 +134,17 @@ Page({
           }
         },
       });
+      return false
     }
+    return true
   },
   // 下一道题目
   _toNextTopic(current) {
-    let {
-      topicIndex
-    } = this.data;
-    this._checkBorder(current, topicIndex);
+    let { topicIndex } = this.data;
+    const res = this._checkBorder(current, topicIndex);
+    if(!res) return
     const idx = current + 1 > 2 ? 0 : current + 1;
     const key = 'exerciseList[' + idx + ']';
-    // const casheIdx = topicIndex + 2 > cacheList.length - 1 ? 0 : topicIndex + 2;
-    // const index = topicIndex === cacheList.length - 1 ? 0 : topicIndex + 1;
-    // console.log('idx---', idx, topicIndex, cacheList.length, index);
     const topicInfo = cacheList[topicIndex + 2] || {};
     this.setData({
       [key]: topicInfo,
@@ -147,6 +158,9 @@ Page({
     const {
       topicIndex
     } = this.data;
+    const res = this._checkBorder(current, topicIndex)
+    if(!res) return
+    console.log('last', topicIndex)
     const idx = current - 1 < 0 ? 2 : current - 1;
     const key = 'exerciseList[' + idx + ']';
     this.setData({
@@ -173,10 +187,7 @@ Page({
   },
   onSlideChangeEnd(e) {
     console.log('e', e);
-    const {
-      currentItemId,
-      current
-    } = e.detail;
+    const { currentItemId,current } = e.detail;
     let isRight = this._checkSwipeDirec(current);
     this.setData({
       swiperIndex: current,
@@ -184,15 +195,11 @@ Page({
     });
     if (isRight) {
       const resIdx = this._toNextTopic(current);
-      // if (resIdx % 100 === 3) {
-      //   this._getMoreData(resIdx);
-      // }
-      // console.log('右滑', resIdx);
     } else {
       this._toLastTopic(current);
     }
-    this._checkStar();
     this._setCircular();
+    this._checkStar();
   },
   collectionItem(e) {
     const currentId = this._getTopicId();
@@ -229,7 +236,7 @@ Page({
       isCircular
     } = this.data;
     console.log('topicIndex', topicIndex);
-    if (topicIndex === 0 || topicIndex >= cacheList.length - 1) {
+    if (topicIndex === 0 || topicIndex > cacheList.length - 1) {
       console.log('in', isCircular)
       if (isCircular) {
         this.setData({
@@ -264,25 +271,45 @@ Page({
       modalName: null,
     });
   },
-  _initAppData() {
-    collection = getKeyFromStorage('collectionIds') || {};
-    cacheList = app.globalData.arrOne;
-    let {
-      topicIndex
-    } = this.data;
+  async _initSubject(topicIndex = 0) {
+    const {list, total} = await getSubjectOne()
+    // 将数据存储在内存中，不放置在data里面这里是全部的数据无需在页面渲染
+    cacheList = list
     let exerciseList = [];
     let start = 0;
-    if (topicIndex > 0) {
-      // exerciseList = cacheList.slice(0, 3);
-      start = topicIndex - 1;
+    let swiperIndex = 0
+    let end = 0
+    // 如果为0，则查前三道题目
+    if (topicIndex === 0) {
+      end = start + 3
     }
-    exerciseList = cacheList.slice(start, start + 3);
+    // 大于0，始终保持当前页面的swiper索引为1
+    if (topicIndex > 0) {
+      start = topicIndex - 1;
+      end = start + 3
+      swiperIndex = 1
+      // 超过边界后，索引设置为2.
+      if (end > list.length) {
+        end = list.length
+        start = end - 3
+        swiperIndex = 2
+      }
+    }
+    // console.log('start', start, end)
+    exerciseList = cacheList.slice(start, end);
+    // console.log('exerciseList', exerciseList)
     this.setData({
-      exerciseList,
+      total,
+      swiperIndex,
       topicIndex,
-      currentItemId: app.globalData.arrOne[0].id,
-      total: app.globalData.total,
-    });
+      exerciseList,
+      currentItemId: exerciseList[0].id
+    })
+  },
+
+  async _initAppData() {
+    this._initSubject(2)
+    collection = await getSubjectOneCollection()
   },
   _checkObjIsEqual(a, b) {
     let hasChanged;
@@ -306,42 +333,42 @@ Page({
   onLoad: function (options) {
     console.log(options.type);
     this._initAppData();
-    this._checkStar();
-    this._setCircular();
+    // this._checkStar();
+    // this._setCircular();
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {},
+  onReady: function () { },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {},
+  onShow: function () { },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {},
+  onHide: function () { },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {},
+  onUnload: function () { },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {},
+  onPullDownRefresh: function () { },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {},
+  onReachBottom: function () { },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {},
+  onShareAppMessage: function () { },
 });

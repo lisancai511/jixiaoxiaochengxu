@@ -21,6 +21,7 @@ Page({
   data: {
     CustomBar: app.globalData.CustomBar,
     exerciseList: [],
+    // 是否循环
     isCircular: true,
     currentItemId: '',
     // 当前屏幕对应的题目索引
@@ -122,6 +123,7 @@ Page({
       });
     }
   },
+  // 下一道题目
   _toNextTopic(current) {
     let {
       topicIndex
@@ -140,6 +142,7 @@ Page({
     console.log('cacheList[topicIndex + 2]', topicInfo);
     return this.data.topicIndex;
   },
+  // 上一道题目
   _toLastTopic(current) {
     const {
       topicIndex
@@ -181,11 +184,10 @@ Page({
     });
     if (isRight) {
       const resIdx = this._toNextTopic(current);
-      if (resIdx % 100 === 3) {
-        // if (cacheList.length - resIdx === 3) {
-        this._getMoreData(resIdx);
-      }
-      console.log('右滑', resIdx);
+      // if (resIdx % 100 === 3) {
+      //   this._getMoreData(resIdx);
+      // }
+      // console.log('右滑', resIdx);
     } else {
       this._toLastTopic(current);
     }
@@ -226,8 +228,9 @@ Page({
       topicIndex,
       isCircular
     } = this.data;
-    console.log(cacheList);
+    console.log('topicIndex', topicIndex);
     if (topicIndex === 0 || topicIndex >= cacheList.length - 1) {
+      console.log('in', isCircular)
       if (isCircular) {
         this.setData({
           isCircular: false,

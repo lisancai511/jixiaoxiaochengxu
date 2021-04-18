@@ -7,7 +7,7 @@ Page({
     PageCur: 'simulation',
   },
   onLoad: function() {
-    this.getData();
+    // this.getData();
   },
   NavChange(e) {
     this.setData({

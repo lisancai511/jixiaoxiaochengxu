@@ -1,5 +1,4 @@
-import { ANSWER_ONE_ID_USER, ERROR_ONE_ID } from '../utils/constant';
-console.log('ANSWER_ONE_ID_USER', ANSWER_ONE_ID_USER);
+import { ANSWER_ONE_ID_USER, ERROR_ONE_ID, SUBJECT_ONE } from '../utils/constant';
 const formatTime = date => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -67,6 +66,14 @@ const cancelCollection = id => {
   wx.setStorageSync('collectionIds', idObj);
   return idObj;
 };
+
+const getSubjectOneList = () => {
+  const list = getKeyFromStorage(SUBJECT_ONE)
+  if (list) {
+    return list
+  }
+  
+}
 
 module.exports = {
   formatTime: formatTime,

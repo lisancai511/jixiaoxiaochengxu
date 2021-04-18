@@ -2,8 +2,8 @@
 <swiper bindchange='onSlideChangeEnd' bindanimationfinish="slideFinish" current="{{swiperIndex}}" circular="{{isCircular}}" class="swiper">
   <block wx:for="{{exerciseList}}" wx:key="{{item.id}}">
     <swiper-item item-id="{{item.id}}">
-      <!--整体题目的索引{{topicIndex}}
-      当前题目的id{{item.id}}-->
+      整体题目的索引{{topicIndex}}
+      当前题目的id{{item.id}}
       <view class="exercise">
         <view class="question">
           <text wx:if="{{item.Type==1}}" class="question-type">判断题</text>
@@ -58,7 +58,7 @@
 
 <wxs src="./tool.wxs" module="tool"></wxs>
 
-<view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
+<!-- <view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
   <view class="cu-dialog">
     <view class="cu-bar bg-white">
       <view class="action text-green">确定</view>
@@ -72,4 +72,4 @@
       </view>
     </scroll-view>
   </view>
-</view>
+</view> -->

@@ -155,17 +155,34 @@ Page({
   },
   // 上一道题目
   _toLastTopic(current) {
-    const {
-      topicIndex
-    } = this.data;
-    const res = this._checkBorder(current, topicIndex)
-    if(!res) return
+    let { topicIndex } = this.data;
+    // const res = this._checkBorder(current, topicIndex)
+    // if(!res) return
     console.log('last', topicIndex)
     const idx = current - 1 < 0 ? 2 : current - 1;
     const key = 'exerciseList[' + idx + ']';
+    topicIndex = topicIndex - 1
+    // if (topicIndex === 0) {
+    //   console.log(123)
+    //   const exerciseList = [cacheList[0], cacheList[1], cacheList[2]]
+    //   this.setData({
+    //     exerciseList,
+    //     swiperIndex: 0,
+    //     isCircular: false,
+    //     topicIndex: 0
+    //   })
+    // } else {
+    // }
+    if (topicIndex < 0) {
+      wx.showToast({
+        title: '已经是第一题了',
+        icon: 'none'
+      })
+      topicIndex = 0
+    }
     this.setData({
       [key]: cacheList[topicIndex - 2],
-      topicIndex: topicIndex - 1,
+      topicIndex
     });
   },
   _getMoreData(resIdx) {
@@ -198,8 +215,8 @@ Page({
     } else {
       this._toLastTopic(current);
     }
-    this._setCircular();
-    this._checkStar();
+    // this._setCircular();
+    // this._checkStar();
   },
   collectionItem(e) {
     const currentId = this._getTopicId();

@@ -7,6 +7,7 @@ import {
   cancelCollection,
 } from '../../utils/util.js';
 import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
+import { SUBJECT_ONE_ERROR, SUBJECT_ONE_SUCCESS, SUBJECT_ONE_TOPIC_INDEX, SUBJECT_ONE_ERROR_NUMBER, SUBJECT_ONE_SUCCESS_NUMBER } from '../../utils/constant'
 const classicModel = new ClassicModel();
 const app = getApp();
 const MAX_SWIPER_LENGTH = 3;
@@ -33,7 +34,7 @@ Page({
     hasCollected: false,
     isShowResult: false,
     listNum: 0,
-    rightNumber: 0,
+    successNumber: 0,
     wrongNumber: 0
   },
   _getTopicId() {
@@ -60,6 +61,42 @@ Page({
       delta: 1,
     });
   },
+  // TODO: 待完善
+  _saveSuccess() {
+    let {topicIndex, successNumber, wrongNumber} = this.data
+    const successClassic =  wx.getStorageSync(SUBJECT_ONE_SUCCESS) || {}
+    const errorClassic =  wx.getStorageSync(SUBJECT_ONE_ERROR) || {}
+    console.log('typeof', successClassic[topicIndex])
+    successNumber++
+    if(successClassic[topicIndex] || errorClassic[topicIndex]) {
+      wrongNumber--
+    } 
+    successClassic[topicIndex] = true
+    wx.setStorageSync(SUBJECT_ONE_SUCCESS, successClassic)
+    wx.setStorageSync(SUBJECT_ONE_SUCCESS_NUMBER, successNumber)
+    wx.setStorageSync(SUBJECT_ONE_ERROR_NUMBER, wrongNumber)
+    this.setData({
+      successNumber,
+      wrongNumber
+    })
+  },
+  _saveError(optidx) {
+    let {topicIndex, successNumber, wrongNumber} = this.data
+    const successClassic =  wx.getStorageSync(SUBJECT_ONE_SUCCESS) || {}
+    const errorClassic =  wx.getStorageSync(SUBJECT_ONE_ERROR) || {}
+    wrongNumber++
+    if(errorClassic[topicIndex] || successClassic[topicIndex]) {
+      successNumber--
+    }
+    errorClassic[topicIndex] = optidx
+    wx.setStorageSync(SUBJECT_ONE_ERROR, errorClassic)
+    wx.setStorageSync(SUBJECT_ONE_SUCCESS_NUMBER, successNumber)
+    wx.setStorageSync(SUBJECT_ONE_ERROR_NUMBER, wrongNumber)
+    this.setData({
+      successNumber,
+      wrongNumber
+    })
+  },
   clickItem(e) {
     const {
       item,
@@ -73,13 +110,19 @@ Page({
       this.data.exerciseList[index].own_res = optidx + 1 + '';
       saveUserAnswer(item, optidx + 1 + '');
       if (Number(optidx) + 1 == Number(item.ta)) {
-        this.setData({
-          rightNumber: this.data.rightNumber + 1
-        })
+        // const successNumber = this.data.successNumber + 1
+        // wx.setStorageSync(SUBJECT_ONE_SUCCESS_NUMBER, successNumber)
+        // this.setData({
+        //   successNumber
+        // })
+        this._saveSuccess()
       } else {
-        this.setData({
-          wrongNumber: this.data.wrongNumber + 1
-        })
+        // const wrongNumber = this.data.wrongNumber + 1
+        // wx.setStorageSync(SUBJECT_ONE_ERROR_NUMBER, wrongNumber)
+        // this.setData({
+        //   wrongNumber
+        // })
+        this._saveError(optidx)
       }
       this.data.exerciseList[index].options[optidx].className = 'error';
       this.data.exerciseList[index].options[item.ta - 1].className = 'success';
@@ -107,18 +150,6 @@ Page({
   },
   _checkBorder(current, topicIndex) {
     const _this = this;
-    if (topicIndex === 0) {
-      console.log('000')
-      wx.showToast({
-        title: '已经是第一题了',
-        icon: 'none'
-      })
-      _this.setData({
-        swiperIndex: current + 1,
-        topicIndex: 0
-      });
-      return false
-    }
     if (!cacheList[topicIndex + 1]) {
       wx.showModal({
         title: '提示',
@@ -142,7 +173,7 @@ Page({
   _toNextTopic(current) {
     let { topicIndex } = this.data;
     const res = this._checkBorder(current, topicIndex);
-    if(!res) return
+    // if(!res) return
     const idx = current + 1 > 2 ? 0 : current + 1;
     const key = 'exerciseList[' + idx + ']';
     const topicInfo = cacheList[topicIndex + 2] || {};
@@ -155,33 +186,24 @@ Page({
   },
   // 上一道题目
   _toLastTopic(current) {
+    let timer = null
+    if (timer) {
+      clearTimeout(timer)
+    }
     let { topicIndex } = this.data;
-    // const res = this._checkBorder(current, topicIndex)
-    // if(!res) return
+    if (topicIndex === 1) {
+      timer = setTimeout(() => {
+        this.setData({
+          isCircular: false
+        })
+      }, 300)
+    }
     console.log('last', topicIndex)
     const idx = current - 1 < 0 ? 2 : current - 1;
     const key = 'exerciseList[' + idx + ']';
     topicIndex = topicIndex - 1
-    // if (topicIndex === 0) {
-    //   console.log(123)
-    //   const exerciseList = [cacheList[0], cacheList[1], cacheList[2]]
-    //   this.setData({
-    //     exerciseList,
-    //     swiperIndex: 0,
-    //     isCircular: false,
-    //     topicIndex: 0
-    //   })
-    // } else {
-    // }
-    if (topicIndex < 0) {
-      wx.showToast({
-        title: '已经是第一题了',
-        icon: 'none'
-      })
-      topicIndex = 0
-    }
     this.setData({
-      [key]: cacheList[topicIndex - 2],
+      [key]: cacheList[topicIndex - 1],
       topicIndex
     });
   },
@@ -204,7 +226,7 @@ Page({
   },
   onSlideChangeEnd(e) {
     console.log('e', e);
-    const { currentItemId,current } = e.detail;
+    const { currentItemId, current } = e.detail;
     let isRight = this._checkSwipeDirec(current);
     this.setData({
       swiperIndex: current,
@@ -215,8 +237,14 @@ Page({
     } else {
       this._toLastTopic(current);
     }
-    // this._setCircular();
+    console.log('end topicIndex', this.data.topicIndex)
+    this._setCircular();
     // this._checkStar();
+    this._saveTopicIndex()
+  },
+  _saveTopicIndex() {
+    const { topicIndex } = this.data
+    wx.setStorageSync(SUBJECT_ONE_TOPIC_INDEX, topicIndex)
   },
   collectionItem(e) {
     const currentId = this._getTopicId();
@@ -248,23 +276,31 @@ Page({
   },
   _setCircular() {
     console.log(this.data.topicIndex);
+    let timer = null
     const {
       topicIndex,
       isCircular
     } = this.data;
     console.log('topicIndex', topicIndex);
-    if (topicIndex === 0 || topicIndex > cacheList.length - 1) {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    if (topicIndex === 0 || topicIndex >= cacheList.length - 1) {
       console.log('in', isCircular)
       if (isCircular) {
-        this.setData({
-          isCircular: false,
-        });
+        timer = setTimeout(() => {
+          this.setData({
+            isCircular: false,
+          });
+        }, 300)
       }
     } else {
       if (!isCircular) {
-        this.setData({
-          isCircular: true,
-        });
+        timer = setTimeout(() => {
+          this.setData({
+            isCircular: true,
+          });
+        }, 300)
       }
     }
   },
@@ -289,35 +325,41 @@ Page({
     });
   },
   async _initSubject(topicIndex = 0) {
-    const {list, total} = await getSubjectOne()
+    const { list, total } = await getSubjectOne()
     // 将数据存储在内存中，不放置在data里面这里是全部的数据无需在页面渲染
     cacheList = list
-    let exerciseList = [];
-    let start = 0;
-    let swiperIndex = 0
-    let end = 0
-    // 如果为0，则查前三道题目
-    if (topicIndex === 0) {
-      end = start + 3
+    if (topicIndex > cacheList.length - 1) {
+      topicIndex = cacheList.length - 1
     }
-    // 大于0，始终保持当前页面的swiper索引为1
-    if (topicIndex > 0) {
-      start = topicIndex - 1;
-      end = start + 3
-      swiperIndex = 1
-      // 超过边界后，索引设置为2.
-      if (end > list.length) {
-        end = list.length
-        start = end - 3
-        swiperIndex = 2
+    let exerciseList = [];
+    let swiperIndex = 0
+    let start = 0
+    let end = start + 3
+    let restIndex = topicIndex % 3
+    if (topicIndex === 0) {
+      swiperIndex = 0
+      exerciseList = cacheList.slice(start, end)
+    } else {
+      if (restIndex === 0) {
+        exerciseList[0] = cacheList[topicIndex]
+        exerciseList[1] = cacheList[topicIndex + 1]
+        exerciseList[2] = cacheList[topicIndex - 1]
+      }
+      if (restIndex === 1) {
+        exerciseList[0] = cacheList[topicIndex - 1]
+        exerciseList[1] = cacheList[topicIndex]
+        exerciseList[2] = cacheList[topicIndex + 1]
+      }
+      if (restIndex === 2) {
+        exerciseList[0] = cacheList[topicIndex + 1]
+        exerciseList[1] = cacheList[topicIndex - 1]
+        exerciseList[2] = cacheList[topicIndex]
       }
     }
-    // console.log('start', start, end)
-    exerciseList = cacheList.slice(start, end);
-    // console.log('exerciseList', exerciseList)
+    console.log('exerciseList', exerciseList)
     this.setData({
       total,
-      swiperIndex,
+      swiperIndex: restIndex,
       topicIndex,
       exerciseList,
       currentItemId: exerciseList[0].id
@@ -325,7 +367,8 @@ Page({
   },
 
   async _initAppData() {
-    this._initSubject(2)
+    const topicIndex = wx.getStorageSync(SUBJECT_ONE_TOPIC_INDEX) || 0
+    this._initSubject(topicIndex)
     collection = await getSubjectOneCollection()
   },
   _checkObjIsEqual(a, b) {
@@ -344,12 +387,21 @@ Page({
     }
     return hasChanged;
   },
+  _initErrorAndSuccess() {
+    const successNumber = wx.getStorageSync('SUBJECT_ONE_SUCCESS_NUMBER') || 0
+    const wrongNumber = wx.getStorageSync('SUBJECT_ONE_ERROR_NUMBER') || 0
+    this.setData({
+      successNumber,
+      wrongNumber
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     console.log(options.type);
     this._initAppData();
+    this._initErrorAndSuccess()
     // this._checkStar();
     // this._setCircular();
   },

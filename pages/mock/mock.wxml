@@ -9,7 +9,7 @@
           <text wx:if="{{item.Type==1}}" class="question-type">判断</text>
           <text wx:if="{{item.Type==2}}" class="question-type">单选</text>
           <text wx:if="{{item.Type==3}}" class="question-type">多选</text>
-          <text class="question-dec">{{item.question}}</text>
+          <text class="question-dec">{{topicIndex}}. {{item.question}}</text>
         </view>
         <view class="answer">
           <view

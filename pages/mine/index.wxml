@@ -1,36 +1,69 @@
-<cu-custom bgColor="bg-gradual-blue">
-  <view slot="content">{{motto}}</view>
-</cu-custom>
-<view class="cu-bar bg-white solid-bottom margin-top">
-  <view class="action">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class='cu-btn round bg-green shadow'>
-      获取头像昵称
-    </button>
-    <block wx:else>
-      <view class='title m-b-10 m-t-10'>
-        <view class="title_img" style="background-image:url({{userInfo.avatarUrl}})"></view>
-        <view class="title_name m-l-10">{{userInfo.nickName}}</view>
+<scroll-view scroll-y class="scrollPage">
+  <view class="UCenter-bg">
+  </view>
+
+  <view class="zhanwei"></view>
+
+  <view class="wx_info">
+    <view class="wx_info_wrap">
+    2355
+    </view>
+  </view>
+
+  <view class="user_info">
+    <view class="user_info_title">
+      <view class="left">科一</view>
+      <view class="right active">科四</view>
+    </view>
+    <view class="user_info_main">
+      <view class="wrap">
+        <text class="wrap_top">0</text>
+        <text class="wrap_mid">累计答题数</text>
+        <view class="wrap_foot">
+          <text>正确率</text>
+          <text class="color m-l-5">0%</text>
+        </view>
       </view>
-    </block>
+      <view class="wrap">
+        <text class="wrap_top">0</text>
+        <text class="wrap_mid">考试平均分</text>
+        <view class="wrap_foot">
+          <text>累计考试</text>
+          <text class="color m-l-5">0次</text>
+        </view>
+      </view>
+      <view class="wrap">
+        <text class="wrap_top btn">去考试</text>
+        <text class="wrap_mid">进阶模拟考试</text>
+        <text class="wrap_foot">45分钟全力冲刺</text>
+      </view>
+    </view>
   </view>
-  <view class="action">
-    <button open-type="share" class="share">
-      <text class="t-icon iconfenxiang m-t-10"></text>
-      <text>分享</text>
-    </button>
+  
+  <view class="cu-list menu margin-top-xl margin-bottom-xl shadow-lg radius">
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="feedback">
+        <text class="cuIcon-writefill text-cyan"></text>
+        <text class="text-grey">意见反馈</text>
+      </button>
+    </view>
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="feedback">
+        <text class="cuIcon-creativefill text-orange"></text>
+        <text class="text-grey">报名驾校</text>
+      </button>
+    </view>
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="feedback">
+        <text class="cuIcon-favorfill text-yellow"></text>
+        <text class="text-grey">我的收藏</text>
+      </button>
+    </view>
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="feedback">
+        <text class="cuIcon-emojifill text-red"></text>
+        <text class="text-grey">关于我们</text>
+      </button>
+    </view>
   </view>
-</view>
-<view open-type="share" class="cu-bar bg-white solid-bottom margin-top">
-  <view class="action">
-    <text>推荐好友</text>
-  </view>
-  <view class="action">
-   <button class="fontColor" open-type="share">＞</button>
-  </view>
-</view>
-<view class="cu-bar bg-white solid-bottom margin-top">
-  <view class="action">
-    <text>关于我们</text>
-  </view>
-  <view class="action fontColor">＞</view>
-</view>
+</scroll-view>

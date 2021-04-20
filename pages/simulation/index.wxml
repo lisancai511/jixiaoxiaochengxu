@@ -1,12 +1,12 @@
-<cu-custom bgColor="bg-gradual-pink">
+<cu-custom bgColor="">
 </cu-custom>
 <scroll-view scroll-x class="bg-white nav">
   <view class="flex text-center">
-    <view class="cu-item flex-sub {{TabCur==1?'text-orange cur':''}}" bindtap="tabSelect" id="1">
-      科目一
+    <view class="cu-item flex-sub {{TabCur==1?'active cur':''}}" bindtap="tabSelect" id="1">
+      科一
     </view>
-    <view class="cu-item flex-sub {{TabCur==4?'text-orange cur':''}}" bindtap="tabSelect" id="4">
-      科目四
+    <view class="cu-item flex-sub {{TabCur==4?'active cur':''}}" bindtap="tabSelect" id="4">
+      科四
     </view>
   </view>
 </scroll-view>

@@ -1,6 +1,8 @@
 /* pages/kemuOne/index.wxss */
 .main {
   display: flex;
+  background: #fff;
+  padding-bottom: 40rpx;
 }
 
 .main_left,
@@ -15,7 +17,6 @@
 .main_mid {
   width: 40%;
 }
-.bule,
 .main_content,
 .left_item,
 .main_top,
@@ -29,40 +30,43 @@
 .main_item {
   height: 100%;
   width: 100%;
+  padding-top: 20px;
 }
 .main_top,
 .main_bottom {
   height: 50%;
   width: 100%;
+  position: relative;
+}
+.bg {
+  position: absolute;
+  width: 120px;
+  height: 120px;
 }
 .main_content {
-  width: 110px;
-  height: 110px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   color: black;
-  border: 5px dashed red;
-  /* padding: 5px; */
-  /* background: linear-gradient(
-    to bottom right,
-    rgb(194, 233, 207),
-    rgb(87, 243, 139)
-  ); */
-  margin-top: 30px;
+  background: #fff;
   line-height: 100px;
   padding: 5px;
+  background: transparent;
+  position: absolute;
+  z-index: 10;
 }
-.bule {
-  width: 100px;
-  color: white;
-  height: 100px;
-  border-radius: 50%;
-  margin-top: 30px;
-  line-height: 100px;
-  padding: 5px;
-  background: rgb(99, 159, 236);
-  background: linear-gradient(
-    to bottom right,
-    rgb(182, 207, 238),
-    rgb(99, 159, 236)
-  );
+.dynamic {
+  height: calc(100vh - 240rpx);
+  background: #f4f4f4;
+}
+
+.botClass {
+  display: flex;
+  color: #cfcfcf;
+  padding-top: 20rpx;
+  align-items: center;
+  flex-direction: column;
+}
+.bottom {
+  margin-top: -24rpx;
 }

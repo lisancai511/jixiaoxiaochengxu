@@ -2,7 +2,7 @@ import Request from '../utils/http.js';
 class SpecialModel extends Request {
   getSpecialOne(type) {
     const data = { type };
-    return this.request('/specialExercises', 'GET', data).then(res => {
+    return this.request(`/${type}`, 'GET').then(res => {
       let { list = [], total } = res;
       list = list.map(item => ({
         ...item,

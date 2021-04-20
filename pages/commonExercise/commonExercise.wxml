@@ -2,16 +2,14 @@
 <swiper bindchange='onSlideChangeEnd' bindanimationfinish="slideFinish" current="{{swiperIndex}}" circular="{{isCircular}}" class="swiper">
   <block wx:for="{{exerciseList}}" wx:key="{{item.id}}">
     <swiper-item item-id="{{item.id}}">
-      <!--整体题目的索引{{topicIndex}}
-      当前题目的id{{item.id}}-->
       <view class="exercise">
         <view class="question">
           <text wx:if="{{item.Type==1}}" class="question-type">判断</text>
           <text wx:if="{{item.Type==2}}" class="question-type">单选</text>
           <text wx:if="{{item.Type==3}}" class="question-type">多选</text>
-          <text class="question-dec">{{item.question}}</text>
+          <text class="question-dec">{{topicIndex}}. {{item.question}}</text>
         </view>
-        <image class="image" wx:if="{{item.sinaimg}}" src="{{item.sinaimg}}" />
+        <image class="image" wx:if="{{item.imageurl}}" src="{{item.imageurl}}" />
         <view class="answer">
           <view
             data-item="{{item}}"

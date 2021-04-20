@@ -1,15 +1,16 @@
 {
   "pages": [
+    "pages/mine/index",
     "pages/index/index",
     "pages/special/special",
     "pages/commonExercise/commonExercise",
     "pages/vip/vip",
     "pages/collection/index",
     "pages/simulation/index",
-    "pages/mine/index",
     "pages/kemuOne/index",
     "pages/subject/index",
-    "pages/exercise/exercise"
+    "pages/exercise/exercise",
+    "pages/litest/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

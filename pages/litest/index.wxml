@@ -1,14 +1,14 @@
-<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}"><view slot="backText">返回</view></cu-custom>
-<swiper bindchange='onSlideChangeEnd' bindanimationfinish="slideFinish" current="{{swiperIndex}}" circular="{{isCircular}}" class="swiper">
+<cu-custom bgColor="" isBack="{{true}}"><view slot="backText">返回</view></cu-custom>
+<swiper bindchange='onSlideChangeEnd' current="{{liIndex}}" circular="{{isCircular}}" class="swiper">
   <block wx:for="{{exerciseList}}" wx:key="{{item.id}}">
     <swiper-item item-id="{{item.id}}">
-      <!--整体题目的索引{{topicIndex}}
-      当前题目的id{{item.id}}-->
+      整体题目的索引{{liNum}}
+      当前题目的id{{item.id}}
       <view class="exercise">
         <view class="question">
-          <text wx:if="{{item.Type==1}}" class="question-type">判断</text>
-          <text wx:if="{{item.Type==2}}" class="question-type">单选</text>
-          <text wx:if="{{item.Type==3}}" class="question-type">多选</text>
+          <text wx:if="{{item.Type==1}}" class="question-type">判断题</text>
+          <text wx:if="{{item.Type==2}}" class="question-type">单选题</text>
+          <text wx:if="{{item.Type==3}}" class="question-type">多选题</text>
           <text class="question-dec">{{topicIndex}}. {{item.question}}</text>
         </view>
         <view class="answer">
@@ -22,12 +22,12 @@
             wx:for-index="optIdx"
             wx:key="{{answer}}"
             wx:for-item="answer">
-            <text>{{answer.description}}</text>
+            <text> {{answer.description}} </text>
           </view>
         </view>
         <view wx:if="{{isShowResult || item.own_res}}">
           <view>解析：</view>
-          <view>{{item.bestanswer}}</view>
+          <view class="bestanswer">{{item.bestanswer}}</view>
         </view>
       </view>
     </swiper-item>
@@ -52,12 +52,13 @@
   </view>
   <view class="action" bind:tap="changeRecite">
     <text class="n-icon {{isShowResult ? 'iconshu1' : 'iconshu'}} "></text>
-    <view>交卷</view>
+    <view>背题模式</view>
   </view>
 </view>
 
+<wxs src="./tool.wxs" module="tool"></wxs>
 
-<view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
+<!-- <view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
   <view class="cu-dialog">
     <view class="cu-bar bg-white">
       <view class="action text-green">确定</view>
@@ -71,4 +72,4 @@
       </view>
     </scroll-view>
   </view>
-</view>
+</view> -->

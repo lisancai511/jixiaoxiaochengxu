@@ -15,7 +15,7 @@ Page({
     wx.showLoading({
       title: '数据加载中...',
     })
-    const { list, total } = await getSubjectOne({ limit: 5 })
+    const { list, total } = await getSubjectOne({ limit: 100000 })
     app.globalData.arrOne = list;
     app.globalData.total = total;
     wx.hideLoading()

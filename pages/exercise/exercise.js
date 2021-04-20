@@ -110,19 +110,19 @@ Page({
       this.data.exerciseList[index].own_res = optidx + 1 + '';
       saveUserAnswer(item, optidx + 1 + '');
       if (Number(optidx) + 1 == Number(item.ta)) {
-        // const successNumber = this.data.successNumber + 1
-        // wx.setStorageSync(SUBJECT_ONE_SUCCESS_NUMBER, successNumber)
-        // this.setData({
-        //   successNumber
-        // })
-        this._saveSuccess()
+        const successNumber = this.data.successNumber + 1
+        wx.setStorageSync(SUBJECT_ONE_SUCCESS_NUMBER, successNumber)
+        this.setData({
+          successNumber
+        })
+        // this._saveSuccess()
       } else {
-        // const wrongNumber = this.data.wrongNumber + 1
-        // wx.setStorageSync(SUBJECT_ONE_ERROR_NUMBER, wrongNumber)
-        // this.setData({
-        //   wrongNumber
-        // })
-        this._saveError(optidx)
+        const wrongNumber = this.data.wrongNumber + 1
+        wx.setStorageSync(SUBJECT_ONE_ERROR_NUMBER, wrongNumber)
+        this.setData({
+          wrongNumber
+        })
+        // this._saveError(optidx)
       }
       this.data.exerciseList[index].options[optidx].className = 'error';
       this.data.exerciseList[index].options[item.ta - 1].className = 'success';
@@ -244,6 +244,7 @@ Page({
   },
   _saveTopicIndex() {
     const { topicIndex } = this.data
+    console.log('111111', this.data.exerciseList[topicIndex % 3])
     wx.setStorageSync(SUBJECT_ONE_TOPIC_INDEX, topicIndex)
   },
   collectionItem(e) {

@@ -1,4 +1,3 @@
-// const BASE_URL = 'http://127.0.0.1:7001/api';
 const BASE_URL = 'https://www.cwerp.top:8000/api';
 function request(method) {
   return function (url, data = {}) {
@@ -10,9 +9,9 @@ function request(method) {
         url: BASE_URL + url,
         method,
         data,
-        header: {
-          'X-Token': Token,
-        },
+        // header: {
+        //   'X-Token': Token,
+        // },
         success(res) {
           if (res.statusCode >= 200 && res.statusCode <= 300) {
             resolve(res.data);
@@ -27,6 +26,7 @@ function request(method) {
           }
         },
         fail(err) {
+          console.log(234234)
           wx.showToast({
             icon: 'none',
             title: '网络异常',

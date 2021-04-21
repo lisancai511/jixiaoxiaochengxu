@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/mine/index",
     "pages/index/index",
+    "pages/mine/index",
     "pages/special/special",
     "pages/commonExercise/commonExercise",
     "pages/vip/vip",

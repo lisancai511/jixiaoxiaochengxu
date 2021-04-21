@@ -72,7 +72,6 @@ const getSubjectOneList = () => {
   if (list) {
     return list
   }
-  
 }
 
 module.exports = {

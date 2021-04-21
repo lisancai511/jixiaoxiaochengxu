@@ -118,6 +118,9 @@ Page({
       });
     }
   },
+  gotoItem(index) {
+    console.log(index)
+  },
   takeResult(topicIndex, res) {
     const subjectResult = wx.getStorageSync(SUBJECT_ONE_RESULT) || {}
     let successNumber = wx.getStorageSync(SUBJECT_ONE_SUCCESS_NUMBER) || 0
@@ -242,23 +245,22 @@ Page({
     wx.setStorageSync(SUBJECT_ONE_TOPIC_INDEX, topicIndex)
   },
   collectionItem(e) {
-    const currentId = this._getTopicId();
-    if (currentId) {
-      if (collection[currentId]) {
-        collection[currentId] = null;
-        collection = cancelCollection(currentId);
-      } else {
-        collection[currentId] = currentId;
-        collection = saveCollection(currentId);
-      }
+    const {topicIndex} = this.data
+    if (collection[topicIndex]) {
+      collection[topicIndex] = null;
+      collection = cancelCollection(topicIndex + '');
+    } else {
+      collection[topicIndex] = true;
+      collection = saveCollection(topicIndex + '');
     }
     this._checkStar(true);
     console.log(collection);
   },
   _checkStar(showMsg = false) {
-    const currentId = this._getTopicId();
-    console.log(111, collection[currentId])
-    const hasStar = !!collection[currentId];
+    const {topicIndex} = this.data
+    collection = getSubjectOneCollection()
+    console.log(111, collection, topicIndex)
+    const hasStar = !!collection[topicIndex];
     const msg = hasStar ? '收藏成功' : '已取消收藏';
     showMsg &&
       wx.showToast({
@@ -352,12 +354,12 @@ Page({
       exerciseList,
       currentItemId: exerciseList[0].id
     })
+    this._checkStar();
   },
 
   async _initAppData() {
     const topicIndex = wx.getStorageSync(SUBJECT_ONE_TOPIC_INDEX) || 0
     this._initSubject(topicIndex)
-    collection = await getSubjectOneCollection()
     console.log('init', collection)
   },
   _checkObjIsEqual(a, b) {
@@ -394,11 +396,10 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: async function (options) {
     console.log(options.type);
-    this._initAppData();
+    await this._initAppData();
     this._initErrorAndSuccess()
-    this._checkStar();
     this._setCircular();
     this._renderModal()
   },

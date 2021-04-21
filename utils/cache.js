@@ -26,6 +26,6 @@ export async function getSubjectOne(data) {
   } 
 }
 
-export async function getSubjectOneCollection() {
+export function getSubjectOneCollection() {
   return wx.getStorageSync(constant.SUBJECT_ONE_COLLECTION) || {}
 }

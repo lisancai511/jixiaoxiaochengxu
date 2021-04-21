@@ -58,7 +58,7 @@
 
 <wxs src="./tool.wxs" module="tool"></wxs>
 
-<!-- <view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
+<view wx:if="{{renderModal}}" class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
   <view class="cu-dialog">
     <view class="cu-bar bg-white">
       <view class="action text-green">确定</view>
@@ -72,4 +72,4 @@
       </view>
     </scroll-view>
   </view>
-</view> -->
+</view>

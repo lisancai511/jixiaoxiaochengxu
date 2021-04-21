@@ -1,4 +1,5 @@
-const BASE_URL = 'http://127.0.0.1:7001/api';
+// const BASE_URL = 'http://127.0.0.1:7001/api';
+const BASE_URL = 'https://www.cwerp.top:8000/api';
 function request(method) {
   return function (url, data = {}) {
     let user = wx.getStorageSync('user');

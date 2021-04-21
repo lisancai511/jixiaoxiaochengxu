@@ -1,13 +1,11 @@
 // pages/exercise/exercise.js
 import ClassicModel from '../../model/classic.js';
 import {
-  saveUserAnswer,
-  getKeyFromStorage,
   saveCollection,
   cancelCollection,
 } from '../../utils/util.js';
 import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
-import { SUBJECT_ONE_ERROR, SUBJECT_ONE_SUCCESS, SUBJECT_ONE_TOPIC_INDEX, SUBJECT_ONE_ERROR_NUMBER, SUBJECT_ONE_SUCCESS_NUMBER } from '../../utils/constant'
+import { SUBJECT_ONE_ERROR, SUBJECT_ONE_RESULT, SUBJECT_ONE_SUCCESS, SUBJECT_ONE_TOPIC_INDEX, SUBJECT_ONE_ERROR_NUMBER, SUBJECT_ONE_SUCCESS_NUMBER } from '../../utils/constant'
 const classicModel = new ClassicModel();
 const app = getApp();
 const MAX_SWIPER_LENGTH = 3;
@@ -26,6 +24,7 @@ Page({
     // 是否循环
     isCircular: true,
     currentItemId: '',
+    renderModal: false,
     // 当前屏幕对应的题目索引
     topicIndex: 0,
     total: 0,
@@ -63,14 +62,14 @@ Page({
   },
   // TODO: 待完善
   _saveSuccess() {
-    let {topicIndex, successNumber, wrongNumber} = this.data
-    const successClassic =  wx.getStorageSync(SUBJECT_ONE_SUCCESS) || {}
-    const errorClassic =  wx.getStorageSync(SUBJECT_ONE_ERROR) || {}
+    let { topicIndex, successNumber, wrongNumber } = this.data
+    const successClassic = wx.getStorageSync(SUBJECT_ONE_SUCCESS) || {}
+    const errorClassic = wx.getStorageSync(SUBJECT_ONE_ERROR) || {}
     console.log('typeof', successClassic[topicIndex])
     successNumber++
-    if(successClassic[topicIndex] || errorClassic[topicIndex]) {
+    if (successClassic[topicIndex] || errorClassic[topicIndex]) {
       wrongNumber--
-    } 
+    }
     successClassic[topicIndex] = true
     wx.setStorageSync(SUBJECT_ONE_SUCCESS, successClassic)
     wx.setStorageSync(SUBJECT_ONE_SUCCESS_NUMBER, successNumber)
@@ -81,11 +80,11 @@ Page({
     })
   },
   _saveError(optidx) {
-    let {topicIndex, successNumber, wrongNumber} = this.data
-    const successClassic =  wx.getStorageSync(SUBJECT_ONE_SUCCESS) || {}
-    const errorClassic =  wx.getStorageSync(SUBJECT_ONE_ERROR) || {}
+    let { topicIndex, successNumber, wrongNumber } = this.data
+    const successClassic = wx.getStorageSync(SUBJECT_ONE_SUCCESS) || {}
+    const errorClassic = wx.getStorageSync(SUBJECT_ONE_ERROR) || {}
     wrongNumber++
-    if(errorClassic[topicIndex] || successClassic[topicIndex]) {
+    if (errorClassic[topicIndex] || successClassic[topicIndex]) {
       successNumber--
     }
     errorClassic[topicIndex] = optidx
@@ -98,38 +97,57 @@ Page({
     })
   },
   clickItem(e) {
-    const {
-      item,
-      index,
-      optidx
-    } = e.currentTarget.dataset;
-    const {
-      own_res
-    } = this.data.exerciseList[index];
+    const { item, index, optidx } = e.currentTarget.dataset;
+    const { topicIndex, exerciseList } = this.data
+    const { own_res } = exerciseList[index];
+    let successNumber = 0
+    let wrongNumber = 0
     if (!own_res && !this.data.isShowResult) {
       this.data.exerciseList[index].own_res = optidx + 1 + '';
-      saveUserAnswer(item, optidx + 1 + '');
       if (Number(optidx) + 1 == Number(item.ta)) {
-        const successNumber = this.data.successNumber + 1
-        wx.setStorageSync(SUBJECT_ONE_SUCCESS_NUMBER, successNumber)
-        this.setData({
-          successNumber
-        })
-        // this._saveSuccess()
+        [successNumber, wrongNumber] = this.takeResult(topicIndex, true)
       } else {
-        const wrongNumber = this.data.wrongNumber + 1
-        wx.setStorageSync(SUBJECT_ONE_ERROR_NUMBER, wrongNumber)
-        this.setData({
-          wrongNumber
-        })
-        // this._saveError(optidx)
+        [successNumber, wrongNumber] = this.takeResult(topicIndex, optidx + '')
       }
       this.data.exerciseList[index].options[optidx].className = 'error';
       this.data.exerciseList[index].options[item.ta - 1].className = 'success';
       this.setData({
         exerciseList: this.data.exerciseList,
+        successNumber,
+        wrongNumber
       });
     }
+  },
+  takeResult(topicIndex, res) {
+    const subjectResult = wx.getStorageSync(SUBJECT_ONE_RESULT) || {}
+    let successNumber = wx.getStorageSync(SUBJECT_ONE_SUCCESS_NUMBER) || 0
+    let wrongNumber = wx.getStorageSync(SUBJECT_ONE_ERROR_NUMBER) || 0
+    if (subjectResult[topicIndex]) {
+      if (subjectResult[topicIndex] === true) {
+        // 之前都是作对的题目
+        if (res !== true) {
+          successNumber--
+          wrongNumber++
+        }
+      } else {
+        // 之前做错了
+        if (res === true) {
+          successNumber++
+          wrongNumber--
+        }
+      }
+    } else {
+      if (res === true) {
+        successNumber++
+      } else {
+        wrongNumber++
+      }
+    }
+    subjectResult[topicIndex] = res
+    wx.setStorageSync(SUBJECT_ONE_RESULT, subjectResult)
+    wx.setStorageSync(SUBJECT_ONE_SUCCESS_NUMBER, successNumber)
+    wx.setStorageSync(SUBJECT_ONE_ERROR_NUMBER, wrongNumber)
+    return [successNumber, wrongNumber]
   },
   changeRecite() {
     this.setData({
@@ -172,8 +190,7 @@ Page({
   // 下一道题目
   _toNextTopic(current) {
     let { topicIndex } = this.data;
-    const res = this._checkBorder(current, topicIndex);
-    // if(!res) return
+    this._checkBorder(current, topicIndex);
     const idx = current + 1 > 2 ? 0 : current + 1;
     const key = 'exerciseList[' + idx + ']';
     const topicInfo = cacheList[topicIndex + 2] || {};
@@ -186,17 +203,11 @@ Page({
   },
   // 上一道题目
   _toLastTopic(current) {
-    let timer = null
-    if (timer) {
-      clearTimeout(timer)
-    }
     let { topicIndex } = this.data;
     if (topicIndex === 1) {
-      timer = setTimeout(() => {
-        this.setData({
-          isCircular: false
-        })
-      }, 300)
+      this.setData({
+        isCircular: false
+      })
     }
     console.log('last', topicIndex)
     const idx = current - 1 < 0 ? 2 : current - 1;
@@ -205,23 +216,6 @@ Page({
     this.setData({
       [key]: cacheList[topicIndex - 1],
       topicIndex
-    });
-  },
-  _getMoreData(resIdx) {
-    // TODO:后续改成100条数据
-    // const initIdx = Math.floor(resIdx / 100);
-    // const page = initIdx ? 1 : initIdx;
-    // const params = {
-    //   page: page + 1,
-    //   limit: 100,
-    // };
-    currentPage = currentPage + 1;
-    const params = {
-      page: currentPage,
-      limit: 100,
-    };
-    this._getClassicList(params).then(res => {
-      cacheList = cacheList.concat(res);
     });
   },
   onSlideChangeEnd(e) {
@@ -239,7 +233,7 @@ Page({
     }
     console.log('end topicIndex', this.data.topicIndex)
     this._setCircular();
-    // this._checkStar();
+    this._checkStar();
     this._saveTopicIndex()
   },
   _saveTopicIndex() {
@@ -263,6 +257,7 @@ Page({
   },
   _checkStar(showMsg = false) {
     const currentId = this._getTopicId();
+    console.log(111, collection[currentId])
     const hasStar = !!collection[currentId];
     const msg = hasStar ? '收藏成功' : '已取消收藏';
     showMsg &&
@@ -277,31 +272,23 @@ Page({
   },
   _setCircular() {
     console.log(this.data.topicIndex);
-    let timer = null
     const {
       topicIndex,
       isCircular
     } = this.data;
     console.log('topicIndex', topicIndex);
-    if (timer) {
-      clearTimeout(timer)
-    }
     if (topicIndex === 0 || topicIndex >= cacheList.length - 1) {
       console.log('in', isCircular)
       if (isCircular) {
-        timer = setTimeout(() => {
-          this.setData({
-            isCircular: false,
-          });
-        }, 300)
+        this.setData({
+          isCircular: false,
+        });
       }
     } else {
       if (!isCircular) {
-        timer = setTimeout(() => {
-          this.setData({
-            isCircular: true,
-          });
-        }, 300)
+        this.setData({
+          isCircular: true,
+        });
       }
     }
   },
@@ -371,6 +358,7 @@ Page({
     const topicIndex = wx.getStorageSync(SUBJECT_ONE_TOPIC_INDEX) || 0
     this._initSubject(topicIndex)
     collection = await getSubjectOneCollection()
+    console.log('init', collection)
   },
   _checkObjIsEqual(a, b) {
     let hasChanged;
@@ -396,6 +384,13 @@ Page({
       wrongNumber
     })
   },
+  _renderModal() {
+    setTimeout(() => {
+      this.setData({
+        renderModal: true
+      })
+    }, 300)
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -403,8 +398,9 @@ Page({
     console.log(options.type);
     this._initAppData();
     this._initErrorAndSuccess()
-    // this._checkStar();
-    // this._setCircular();
+    this._checkStar();
+    this._setCircular();
+    this._renderModal()
   },
 
   /**

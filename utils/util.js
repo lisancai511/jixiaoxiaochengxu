@@ -1,4 +1,4 @@
-import { ANSWER_ONE_ID_USER, ERROR_ONE_ID, SUBJECT_ONE } from '../utils/constant';
+import { ANSWER_ONE_ID_USER, ERROR_ONE_ID, SUBJECT_ONE, SUBJECT_ONE_COLLECTION } from '../utils/constant';
 const formatTime = date => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -50,20 +50,20 @@ const getKeyFromStorage = key => {
 };
 
 const saveCollection = id => {
-  const idObj = getKeyFromStorage('collectionIds') || {};
+  const idObj = getKeyFromStorage(SUBJECT_ONE_COLLECTION) || {};
   if (id) {
     idObj[id] = id;
   }
-  wx.setStorageSync('collectionIds', idObj);
+  wx.setStorageSync(SUBJECT_ONE_COLLECTION, idObj);
   return idObj;
 };
 
 const cancelCollection = id => {
-  const idObj = getKeyFromStorage('collectionIds') || {};
+  const idObj = getKeyFromStorage(SUBJECT_ONE_COLLECTION) || {};
   if (idObj[id]) {
     delete idObj[id];
   }
-  wx.setStorageSync('collectionIds', idObj);
+  wx.setStorageSync(SUBJECT_ONE_COLLECTION, idObj);
   return idObj;
 };
 

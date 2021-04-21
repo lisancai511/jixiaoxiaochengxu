@@ -133,7 +133,7 @@ map,
   border-radius: 0px 24px 24px 0px;
 }
 
-.active {
+.myactive {
   color: #4facfe;
   background: #fff;
 }

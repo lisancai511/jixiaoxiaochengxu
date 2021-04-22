@@ -3,7 +3,21 @@
   <cu-custom bgColor="bg-white" isBack="{{true}}"><view slot="backText">返回</view>
   </cu-custom>
   <view class="title">VIP速成课</view>
-
+  <view class="main_bg">
+    <image src="../../images/topbg.png" />
+  </view>
+  <view class="center main_wrap">
+    <button class="cu-btn round wrap_btn">限时特惠<text class="m-r-5">¥45</text><text class="m-r-5">¥155</text></button>
+  </view>
+  <view>
+    <image class="img-wrap" src="../../images/min-bg.png" />
+  </view>
+  <view>
+    <image class="img-wrap1" src="../../images/main-bg01.png" />
+    <image class="img-wrap2" src="../../images/main-bg02.png" />
+    <image class="img-wrap3" src="../../images/main-bg03.png" />
+    <image class="img-wrap4" src="../../images/main-bg04.png" />
+  </view>
   <view class="footer">
     <button class="cu-btn round pink"><text class="m-r-5">¥45</text>立即开通</button>
   </view>

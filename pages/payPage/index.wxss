@@ -2,6 +2,7 @@
 .scrollPage {
   height: 100vh;
   background: #f4f4f4;
+  padding-bottom: 140rpx;
 }
 .title {
   font-size: 32rpx;
@@ -11,6 +12,11 @@
   color: #fff;
   text-align: center;
   line-height: 120rpx;
+  position: fixed;
+  top: 60px;
+  z-index: 10;
+  width: 100%;
+  background-image: linear-gradient(to right, #312727, #2b2323);
 }
 
 .footer {
@@ -25,7 +31,51 @@
 }
 
 .pink {
-  width: 80%;
+  width: 90%;
   color: #713d0c;
   background: #f5bd95 !important;
+}
+.main_bg {
+  margin-top: 120rpx;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main_wrap {
+  width: 100%;
+  /* background: red; */
+  margin-top: -60rpx;
+}
+
+.wrap_btn {
+  width: 86%;
+  height: 80rpx;
+  background: #ef5b49 !important;
+  background-image: linear-gradient(to right, #f98063, #ed5846) !important;
+  color: #fff;
+}
+
+.img-wrap {
+  width: 100%;
+  height: 800rpx !important;
+  margin-top: 40rpx;
+}
+
+.img-wrap1 {
+  height: 640rpx !important;
+}
+.img-wrap2 {
+  height: 740rpx !important;
+}
+
+.img-wrap3 {
+  height: 720rpx !important;
+}
+
+.img-wrap4 {
+  height: 500rpx !important;
 }

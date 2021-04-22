@@ -1,0 +1,10 @@
+
+<scroll-view scroll-y class="scrollPage">
+  <cu-custom bgColor="bg-white" isBack="{{true}}"><view slot="backText">返回</view>
+  </cu-custom>
+  <view class="title">VIP速成课</view>
+
+  <view class="footer">
+    <button class="cu-btn round pink"><text class="m-r-5">¥45</text>立即开通</button>
+  </view>
+</scroll-view>

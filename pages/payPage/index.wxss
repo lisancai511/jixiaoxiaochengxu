@@ -1,0 +1,31 @@
+/* pages/payPage/index.wxss */
+.scrollPage {
+  height: 100vh;
+  background: #f4f4f4;
+}
+.title {
+  font-size: 32rpx;
+  font-weight: normal;
+  height: 120rpx;
+  background: #2b2323;
+  color: #fff;
+  text-align: center;
+  line-height: 120rpx;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120rpx;
+  background: #fff;
+  width: 100%;
+}
+
+.pink {
+  width: 80%;
+  color: #713d0c;
+  background: #f5bd95 !important;
+}

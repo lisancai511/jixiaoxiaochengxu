@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/payPage/index",
     "pages/index/index",
     "pages/mine/index",
     "pages/special/special",

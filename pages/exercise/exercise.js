@@ -1,19 +1,14 @@
 // pages/exercise/exercise.js
-import ClassicModel from '../../model/classic.js';
 import {
   saveCollection,
   cancelCollection,
 } from '../../utils/util.js';
 import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
 import { SUBJECT_ONE_ERROR, SUBJECT_ONE_RESULT, SUBJECT_ONE_SUCCESS, SUBJECT_ONE_TOPIC_INDEX, SUBJECT_ONE_ERROR_NUMBER, SUBJECT_ONE_SUCCESS_NUMBER } from '../../utils/constant'
-const classicModel = new ClassicModel();
 const app = getApp();
 const MAX_SWIPER_LENGTH = 3;
-const LIMIT_NUMS = 1;
 let cacheList = [];
-let currentPage = 1;
 let collection = {};
-let errorOneTopic = {};
 Page({
   /**
    * 页面的初始数据
@@ -23,7 +18,6 @@ Page({
     exerciseList: [],
     // 是否循环
     isCircular: true,
-    currentItemId: '',
     renderModal: false,
     // 当前屏幕对应的题目索引
     topicIndex: 0,
@@ -34,80 +28,28 @@ Page({
     isShowResult: false,
     listNum: 0,
     successNumber: 0,
-    wrongNumber: 0
+    wrongNumber: 0,
+    classicList: [],
+    answerList: []
   },
-  _getTopicId() {
-    const idx = this.data.topicIndex;
-    return (cacheList[idx] && cacheList[idx].id) || null;
-  },
-  _getClassicList(data) {
-    return classicModel.getClassic(data).then(res => res.list);
-  },
-  getDotClassName(item) {
-    const {
-      ta,
-      id
-    } = item;
-    // let answerObj = getKeyFromStorage('answerOwnId');
-    // if (answerObj[id] === ta) {
-    //   return 'success';
-    // } else {
-    //   return 'error';
-    // }
-  },
-  back() {
-    wx.navigateBack({
-      delta: 1,
-    });
-  },
-  // TODO: 待完善
-  _saveSuccess() {
-    let { topicIndex, successNumber, wrongNumber } = this.data
-    const successClassic = wx.getStorageSync(SUBJECT_ONE_SUCCESS) || {}
-    const errorClassic = wx.getStorageSync(SUBJECT_ONE_ERROR) || {}
-    console.log('typeof', successClassic[topicIndex])
-    successNumber++
-    if (successClassic[topicIndex] || errorClassic[topicIndex]) {
-      wrongNumber--
-    }
-    successClassic[topicIndex] = true
-    wx.setStorageSync(SUBJECT_ONE_SUCCESS, successClassic)
-    wx.setStorageSync(SUBJECT_ONE_SUCCESS_NUMBER, successNumber)
-    wx.setStorageSync(SUBJECT_ONE_ERROR_NUMBER, wrongNumber)
+  toggle() {
     this.setData({
-      successNumber,
-      wrongNumber
+      swiperIndex: 1
     })
   },
-  _saveError(optidx) {
-    let { topicIndex, successNumber, wrongNumber } = this.data
-    const successClassic = wx.getStorageSync(SUBJECT_ONE_SUCCESS) || {}
-    const errorClassic = wx.getStorageSync(SUBJECT_ONE_ERROR) || {}
-    wrongNumber++
-    if (errorClassic[topicIndex] || successClassic[topicIndex]) {
-      successNumber--
-    }
-    errorClassic[topicIndex] = optidx
-    wx.setStorageSync(SUBJECT_ONE_ERROR, errorClassic)
-    wx.setStorageSync(SUBJECT_ONE_SUCCESS_NUMBER, successNumber)
-    wx.setStorageSync(SUBJECT_ONE_ERROR_NUMBER, wrongNumber)
-    this.setData({
-      successNumber,
-      wrongNumber
-    })
-  },
+  // 点击每一个选项
   clickItem(e) {
     const { item, index, optidx } = e.currentTarget.dataset;
-    const { topicIndex, exerciseList } = this.data
+    const { topicIndex, exerciseList, isShowResult } = this.data
     const { own_res } = exerciseList[index];
     let successNumber = 0
     let wrongNumber = 0
-    if (!own_res && !this.data.isShowResult) {
+    if (!own_res && !isShowResult) {
       this.data.exerciseList[index].own_res = optidx + 1 + '';
       if (Number(optidx) + 1 == Number(item.ta)) {
-        [successNumber, wrongNumber] = this.takeResult(topicIndex, true)
+        [successNumber, wrongNumber] = this._getTopicRecord(topicIndex, true)
       } else {
-        [successNumber, wrongNumber] = this.takeResult(topicIndex, optidx + '')
+        [successNumber, wrongNumber] = this._getTopicRecord(topicIndex, optidx + '')
       }
       this.data.exerciseList[index].options[optidx].className = 'error';
       this.data.exerciseList[index].options[item.ta - 1].className = 'success';
@@ -118,10 +60,14 @@ Page({
       });
     }
   },
-  gotoItem(index) {
-    console.log(index)
+  gotoItem(e) {
+    const {index} = e.target.dataset
+    wx.setStorageSync(SUBJECT_ONE_TOPIC_INDEX, index)
+    // console.log(index)
+    // this.onLoad()
+    // this._initSubject(index)
   },
-  takeResult(topicIndex, res) {
+  _getTopicRecord(topicIndex, res) {
     const subjectResult = wx.getStorageSync(SUBJECT_ONE_RESULT) || {}
     let successNumber = wx.getStorageSync(SUBJECT_ONE_SUCCESS_NUMBER) || 0
     let wrongNumber = wx.getStorageSync(SUBJECT_ONE_ERROR_NUMBER) || 0
@@ -221,13 +167,13 @@ Page({
       topicIndex
     });
   },
+  // 滑动滑块结束
   onSlideChangeEnd(e) {
-    console.log('e', e);
-    const { currentItemId, current } = e.detail;
+    console.log('eeeeeeeeeee-------eeeeee', e);
+    const { current } = e.detail;
     let isRight = this._checkSwipeDirec(current);
     this.setData({
       swiperIndex: current,
-      currentItemId,
     });
     if (isRight) {
       const resIdx = this._toNextTopic(current);
@@ -241,11 +187,10 @@ Page({
   },
   _saveTopicIndex() {
     const { topicIndex } = this.data
-    console.log('111111', this.data.exerciseList[topicIndex % 3])
     wx.setStorageSync(SUBJECT_ONE_TOPIC_INDEX, topicIndex)
   },
   collectionItem(e) {
-    const {topicIndex} = this.data
+    const { topicIndex } = this.data
     if (collection[topicIndex]) {
       collection[topicIndex] = null;
       collection = cancelCollection(topicIndex + '');
@@ -257,7 +202,7 @@ Page({
     console.log(collection);
   },
   _checkStar(showMsg = false) {
-    const {topicIndex} = this.data
+    const { topicIndex } = this.data
     collection = getSubjectOneCollection()
     console.log(111, collection, topicIndex)
     const hasStar = !!collection[topicIndex];
@@ -315,19 +260,17 @@ Page({
     });
   },
   async _initSubject(topicIndex = 0) {
-    const { list, total } = await getSubjectOne()
-    // 将数据存储在内存中，不放置在data里面这里是全部的数据无需在页面渲染
-    cacheList = list
     if (topicIndex > cacheList.length - 1) {
       topicIndex = cacheList.length - 1
     }
     let exerciseList = [];
-    let swiperIndex = 0
     let start = 0
     let end = start + 3
+    // let swiperIndex = 0
     let restIndex = topicIndex % 3
+    console.log('--------',topicIndex, restIndex)
     if (topicIndex === 0) {
-      swiperIndex = 0
+      // swiperIndex = 0
       exerciseList = cacheList.slice(start, end)
     } else {
       if (restIndex === 0) {
@@ -346,21 +289,25 @@ Page({
         exerciseList[2] = cacheList[topicIndex]
       }
     }
-    console.log('exerciseList', exerciseList)
     this.setData({
-      total,
       swiperIndex: restIndex,
       topicIndex,
       exerciseList,
-      currentItemId: exerciseList[0].id
     })
+    this._setCircular();
     this._checkStar();
   },
 
   async _initAppData() {
-    const topicIndex = wx.getStorageSync(SUBJECT_ONE_TOPIC_INDEX) || 0
+    const { list, total } = await getSubjectOne()
+    this.setData({
+      total
+    })
+    cacheList = list
+    const index = wx.getStorageSync(SUBJECT_ONE_TOPIC_INDEX) || 0
+    const topicIndex =  index < 0 ? 0 : index
     this._initSubject(topicIndex)
-    console.log('init', collection)
+    this._renderModal()
   },
   _checkObjIsEqual(a, b) {
     let hasChanged;
@@ -387,21 +334,43 @@ Page({
     })
   },
   _renderModal() {
-    setTimeout(() => {
-      this.setData({
-        renderModal: true
+    let { total } = this.data
+    let list = []
+    const subjectOneResult = wx.getStorageSync(SUBJECT_ONE_RESULT) || {}
+    for (let i = 0; i < total; i++) {
+      if (subjectOneResult[i] === true) {
+        list.push({
+          index: i,
+          class: 'success'
+        })
+        continue
+      }
+      if (subjectOneResult[i]) {
+        list.push({
+          index: i,
+          class: 'error'
+        })
+        continue
+      }
+      // if()
+      list.push({
+        index: i,
+        class: ''
       })
-    }, 300)
+    }
+    console.log(list)
+    this.setData({
+      answerList: list,
+      renderModal: true
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function (options) {
-    console.log(options.type);
-    await this._initAppData();
+  onLoad: function (options) {
+    // console.log(options.type);
+    this._initAppData();
     this._initErrorAndSuccess()
-    this._setCircular();
-    this._renderModal()
   },
 
   /**
@@ -417,12 +386,16 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () { },
+  onHide: function () {
+    console.log('onHide')
+  },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () { },
+  onUnload: function () {
+    console.log('onUnload')
+  },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作

@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/payPage/index",
     "pages/index/index",
     "pages/mine/index",
     "pages/special/special",
@@ -11,7 +10,8 @@
     "pages/kemuOne/index",
     "pages/subject/index",
     "pages/exercise/exercise",
-    "pages/litest/index"
+    "pages/litest/index",
+    "pages/payPage/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

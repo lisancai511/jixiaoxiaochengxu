@@ -65,7 +65,7 @@ Page({
     wx.setStorageSync(SUBJECT_ONE_TOPIC_INDEX, index)
     // console.log(index)
     // this.onLoad()
-    // this._initSubject(index)
+    this._initSubject(index)
   },
   _getTopicRecord(topicIndex, res) {
     const subjectResult = wx.getStorageSync(SUBJECT_ONE_RESULT) || {}

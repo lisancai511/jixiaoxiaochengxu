@@ -15,3 +15,18 @@ export async function getSubjectOneList(data) {
     list
   }
 }
+
+export async function getMockSubjectOne(data) {
+  let {list, ...other} = await get(api.mockSubjectOne, data)
+  list = list.map(item => ({
+    ...item,
+    options: item.options.map(opt => ({
+      description: opt,
+      className: '',
+    })),
+  }));
+  return {
+    ...other,
+    list,
+  };
+}

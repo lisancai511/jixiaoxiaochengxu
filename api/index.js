@@ -1,3 +1,5 @@
 module.exports = {
-  subjectOne: '/subjectOne'
+  subjectOne: '/subjectOne',
+  mockSubjectOne: '/mockSubjectOne',
+  fiftysubjectOne: '/fiftysubjectOne',
 }

@@ -10,7 +10,8 @@
     "pages/kemuOne/index",
     "pages/subject/index",
     "pages/exercise/exercise",
-    "pages/litest/index"
+    "pages/litest/index",
+    "pages/error/error"
   ],
   "window": {
     "backgroundTextStyle": "light",

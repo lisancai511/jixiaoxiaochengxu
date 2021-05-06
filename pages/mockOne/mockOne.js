@@ -3,13 +3,14 @@ import {
   saveCollection,
   cancelCollection,
 } from '../../utils/util.js';
+import {getMockSubjectOne} from '../../service/subjectone'
 import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
-import {   SUBJECT_ONE_ERROR_NUMBER } from '../../utils/constant'
-import {getSubjectOneErrorList} from '../../utils/one'
+import {  SUBJECT_ONE_MOCK, SUBJECT_ONE_MOCK_RESULT,  SUBJECT_ONE_MOCK_TOPIC_INDEX } from '../../utils/constant'
 const app = getApp();
 const MAX_SWIPER_LENGTH = 3;
 let cacheList = [];
 let collection = {};
+let timer = null
 Page({
   /**
    * 页面的初始数据
@@ -30,13 +31,21 @@ Page({
     listNum: 0,
     successNumber: 0,
     wrongNumber: 0,
+    classicList: [],
     answerList: []
+  },
+  toggle() {
+    this.setData({
+      swiperIndex: 1
+    })
   },
   // 点击每一个选项
   clickItem(e) {
     const { item, index, optidx } = e.currentTarget.dataset;
-    let { topicIndex, exerciseList, isShowResult } = this.data
+    let { topicIndex, exerciseList, isShowResult, answerList } = this.data
     const { own_res } = exerciseList[index];
+    let successNumber = 0
+    let wrongNumber = 0
     let key = 'answerList[' + topicIndex + ']';
     let value = {
       index: topicIndex,
@@ -46,23 +55,64 @@ Page({
       this.data.exerciseList[index].own_res = optidx + 1 + '';
       if (Number(optidx) + 1 == Number(item.ta)) {
         value.class = 'success'
+        const res = this._getTopicRecord(topicIndex, true)
+        successNumber = res.successNumber
+        wrongNumber = res.wrongNumber
+        console.log('success', this.data.answerList[topicIndex])
       } else {
         value.class = 'error'
+        const res = this._getTopicRecord(topicIndex, optidx + '')
+        successNumber = res.successNumber
+        wrongNumber = res.wrongNumber
       }
       this.data.exerciseList[index].options[optidx].className = 'error';
       this.data.exerciseList[index].options[item.ta - 1].className = 'success';
       this.setData({
         [key]: value,
-        exerciseList: this.data.exerciseList
+        exerciseList: this.data.exerciseList,
+        successNumber,
+        wrongNumber
       });
 
     }
   },
   gotoItem(e) {
     const { index } = e.target.dataset
+    wx.setStorageSync(SUBJECT_ONE_MOCK_TOPIC_INDEX, index)
     this._initSubject(index)
     this.hideModal()
 
+  },
+  _getTopicRecord(topicIndex, res) {
+    const subjectResult = wx.getStorageSync(SUBJECT_ONE_MOCK_RESULT) || {}
+    let {successNumber, wrongNumber} = this.data
+    // let successNumber = wx.getStorageSync(SUBJECT_ONE_SUCCESS_NUMBER) || 0
+    // let wrongNumber = wx.getStorageSync(SUBJECT_ONE_ERROR_NUMBER) || 0
+    if (subjectResult[topicIndex]) {
+      if (subjectResult[topicIndex] === true) {
+        // 之前都是作对的题目
+        if (res !== true) {
+          successNumber--
+          wrongNumber++
+        }
+      } else {
+        // 之前做错了
+        if (res === true) {
+          successNumber++
+          wrongNumber--
+        }
+      }
+    } else {
+      if (res === true) {
+        successNumber++
+      } else {
+        wrongNumber++
+      }
+    }
+    console.log('ininini---')
+    subjectResult[topicIndex] = res
+    wx.setStorageSync(SUBJECT_ONE_MOCK_RESULT, subjectResult)
+    return {successNumber, wrongNumber}
   },
   changeRecite() {
     this.setData({
@@ -150,7 +200,12 @@ Page({
       console.log('end topicIndex', this.data.topicIndex)
       this._setCircular();
       this._checkStar();
+      this._saveTopicIndex()
     }
+  },
+  _saveTopicIndex() {
+    const { topicIndex } = this.data
+    wx.setStorageSync(SUBJECT_ONE_MOCK_TOPIC_INDEX, topicIndex)
   },
   collectionItem(e) {
     const { topicIndex } = this.data
@@ -260,21 +315,34 @@ Page({
     this._setCircular();
     this._checkStar();
   },
-
-  async _initAppData() {
-    wx.showLoading({
-      title: '数据加载中',
-    })
-    const errorNums = wx.getStorageSync(SUBJECT_ONE_ERROR_NUMBER)
-    const list = getSubjectOneErrorList()
-    console.log(errorNums, list)
-    this.setData({
-      total: errorNums
-    })
-    cacheList = list
-    this._initSubject()
-    this._renderModal()
-    wx.hideLoading()
+  async getMockSubjectOne(reset) {
+    const cache = wx.getStorageSync(SUBJECT_ONE_MOCK)
+    if (cache && !reset) {
+      return cache
+    }
+    let res = await getMockSubjectOne()
+    wx.setStorageSync(SUBJECT_ONE_MOCK, res)
+    return res
+  },
+  async _initAppData(reset = false) {
+    try {
+      wx.showLoading({
+        title: '数据加载中',
+      })
+      let res = await this.getMockSubjectOne(reset)
+      const {total, list} = res
+      this.setData({
+        total
+      })
+      cacheList = list
+      const index = wx.getStorageSync(SUBJECT_ONE_MOCK_TOPIC_INDEX) || 0
+      const topicIndex = index < 0 ? 0 : index
+      this._initSubject(topicIndex)
+      this._renderModal()
+      wx.hideLoading()
+    } catch(e) {
+      wx.hideLoading()
+    }
   },
   _checkObjIsEqual(a, b) {
     let hasChanged;
@@ -292,18 +360,106 @@ Page({
     }
     return hasChanged;
   },
+  _initErrorAndSuccess() {
+    const subjectOneMockResult = wx.getStorageSync(SUBJECT_ONE_MOCK_RESULT) || {}
+    let successNumber = 0
+    let wrongNumber = 0
+    for(let key in subjectOneMockResult) {
+      if(subjectOneMockResult[key] === true) {
+        successNumber++
+      } else {
+        wrongNumber++
+      }
+    }
+    this.setData({
+      successNumber,
+      wrongNumber
+    })
+  },
   _renderModal() {
     let { total } = this.data
     let list = []
+    const subjectOneResult = wx.getStorageSync(SUBJECT_ONE_MOCK_RESULT) || {}
     for (let i = 0; i < total; i++) {
+      if (subjectOneResult[i] === true) {
+        list.push({
+          index: i,
+          class: 'success'
+        })
+        continue
+      }
+      if (subjectOneResult[i]) {
+        list.push({
+          index: i,
+          class: 'error'
+        })
+        continue
+      }
+      // if()
       list.push({
         index: i,
         class: ''
       })
     }
+    console.log(list)
     this.setData({
       answerList: list,
       renderModal: true
+    })
+  },
+  _resetMock() {
+    wx.removeStorageSync(SUBJECT_ONE_MOCK)
+    wx.removeStorageSync(SUBJECT_ONE_MOCK_RESULT)
+    wx.removeStorageSync(SUBJECT_ONE_MOCK_TOPIC_INDEX)
+  },
+  _checkCache() {
+    const cache = wx.getStorageSync(SUBJECT_ONE_MOCK)
+    if(cache) {
+      wx.showModal({
+        title: '温馨提示',
+        content: '你有正在进行的考试，是否继续？',
+        cancelText: '重新进行',
+        confirmText: '继续考试',
+        success: (res) => {
+          if (res.confirm) {
+            this._initAppData()
+          } else if (res.cancel) {
+            this._resetMock()
+            this._initAppData(true)
+          }
+        }
+      })
+    } else {
+      this._initAppData()
+    }
+  },
+  takeSubmit() {
+    const {successNumber, wrongNumber,total} = this.data
+    const reset = total - (successNumber + wrongNumber)
+    let content = '是否确认提交试卷？'
+    if(reset !== 0) {
+      content = `您还有 ${reset} 道题目未完成，是否确认提交试卷？`
+    }
+    wx.showModal({
+      content,
+      cancelText: '确认提交',
+      confirmText: '继续答题',
+      success: (res) => {
+        if (res.cancel) {
+          this._resetMock()
+          wx.showToast({
+            title: '提交成功',
+            icon: 'success'
+          })
+          if(timer) {
+            clearTimeout(timer)
+          }
+          timer = setTimeout(() => {
+            console.log('123')
+            wx.navigateBack()
+          }, 3000)
+        }
+      }
     })
   },
   /**
@@ -311,7 +467,10 @@ Page({
    */
   onLoad: function (options) {
     // console.log(options.type);
-    this._initAppData();
+    // 判断是否正在考试未交卷的情况
+    this._checkCache()
+    // this._initAppData();
+    this._initErrorAndSuccess()
   },
 
   /**
@@ -336,6 +495,9 @@ Page({
    */
   onUnload: function () {
     console.log('onUnload')
+    if(timer) {
+      clearTimeout(timer)
+    }
   },
 
   /**

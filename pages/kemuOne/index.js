@@ -1,6 +1,6 @@
 // pages/kemuOne/index.js
 import { getKeyFromStorage, getErrorIdLists } from '../../utils/util';
-import { ERROR_ONE_ID } from '../../utils/constant';
+import { ERROR_ONE_ID, SUBJECT_ONE_ERROR_NUMBER } from '../../utils/constant';
 import ClassicModel from '../../model/classic.js';
 const classicModel = new ClassicModel();
 import { getSubjectOneList } from '../../service/subjectone'
@@ -42,22 +42,23 @@ Page({
     });
   },
   _gotoError() {
-    const ids = getErrorIdLists(ERROR_ONE_ID);
-    if (ids.length) {
+    const errNums = wx.getStorageSync(SUBJECT_ONE_ERROR_NUMBER)
+    console.log(errNums)
+    if (errNums > 0) {
       wx.navigateTo({
         url: `/pages/error/error?type=errorOne`,
       });
-    } else {
-      wx.showToast({
-        icon: 'none',
-        title: '暂无错题',
-        duration: 1000,
-      });
+      return false
     }
+    wx.showToast({
+      icon: 'none',
+      title: '暂无错题',
+      duration: 1000,
+    });
   },
   _gotoMockExam() {
     wx.navigateTo({
-      url: `/pages/mock/mock?type=mockOne`,
+      url: `/pages/mockOne/mockOne?type=mockOne`,
     });
   },
   _gotoSpecial() {

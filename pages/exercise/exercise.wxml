@@ -50,7 +50,7 @@
 <view wx:if="{{renderModal}}" class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
   <view class="cu-dialog">
     <view class="cu-bar bg-white">
-      <view class="action text-green">确定</view>
+      <view class="action text-green"></view>
       <view class="action text-blue" bindtap="hideModal">取消</view>
     </view>
     <!-- <scroll-view scroll-y="true" class="" style="height: 100%;">
@@ -62,7 +62,9 @@
     </scroll-view> -->
     <recycle-view batch="{{batchSetRecycleData}}" id="recycleId">
       <recycle-item wx:for="{{answerList}}" wx:key="index">
-        <view data-index="{{index}}" bind:tap="gotoItem" class="classic-list-item {{item.class}}">{{item.index + 1}}</view>
+        <view data-index="{{index}}" bind:tap="gotoItem" class="classic-list-item {{item.class}}">
+          {{item.index + 1}}
+        </view>
       </recycle-item>
     </recycle-view>
   </view>

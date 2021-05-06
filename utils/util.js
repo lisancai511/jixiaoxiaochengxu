@@ -72,6 +72,7 @@ const getSubjectOneList = () => {
   if (list) {
     return list
   }
+  return []
 }
 
 module.exports = {
@@ -81,4 +82,5 @@ module.exports = {
   saveCollection,
   cancelCollection,
   getErrorIdLists,
+  getSubjectOneList
 };

@@ -40,32 +40,46 @@ Page({
   // 点击每一个选项
   clickItem(e) {
     const { item, index, optidx } = e.currentTarget.dataset;
-    const { topicIndex, exerciseList, isShowResult } = this.data
+    let { topicIndex, exerciseList, isShowResult, answerList } = this.data
     const { own_res } = exerciseList[index];
     let successNumber = 0
     let wrongNumber = 0
+    let key = 'answerList[' + topicIndex + ']';
+    let value = {
+      index: topicIndex,
+      class: ''
+    }
     if (!own_res && !isShowResult) {
       this.data.exerciseList[index].own_res = optidx + 1 + '';
       if (Number(optidx) + 1 == Number(item.ta)) {
-        [successNumber, wrongNumber] = this._getTopicRecord(topicIndex, true)
+        value.class = 'success'
+        const res = this._getTopicRecord(topicIndex, true)
+        successNumber = res.successNumber
+        wrongNumber = res.wrongNumber
+        console.log('success', this.data.answerList[topicIndex])
       } else {
-        [successNumber, wrongNumber] = this._getTopicRecord(topicIndex, optidx + '')
+        value.class = 'error'
+        const res = this._getTopicRecord(topicIndex, optidx + '')
+        successNumber = res.successNumber
+        wrongNumber = res.wrongNumber
       }
       this.data.exerciseList[index].options[optidx].className = 'error';
       this.data.exerciseList[index].options[item.ta - 1].className = 'success';
       this.setData({
+        [key]: value,
         exerciseList: this.data.exerciseList,
         successNumber,
         wrongNumber
       });
+
     }
   },
   gotoItem(e) {
-    const {index} = e.target.dataset
+    const { index } = e.target.dataset
     wx.setStorageSync(SUBJECT_ONE_TOPIC_INDEX, index)
-    // console.log(index)
-    // this.onLoad()
-    // this._initSubject(index)
+    this._initSubject(index)
+    this.hideModal()
+
   },
   _getTopicRecord(topicIndex, res) {
     const subjectResult = wx.getStorageSync(SUBJECT_ONE_RESULT) || {}
@@ -92,11 +106,12 @@ Page({
         wrongNumber++
       }
     }
+    console.log('ininini---')
     subjectResult[topicIndex] = res
     wx.setStorageSync(SUBJECT_ONE_RESULT, subjectResult)
     wx.setStorageSync(SUBJECT_ONE_SUCCESS_NUMBER, successNumber)
     wx.setStorageSync(SUBJECT_ONE_ERROR_NUMBER, wrongNumber)
-    return [successNumber, wrongNumber]
+    return {successNumber, wrongNumber}
   },
   changeRecite() {
     this.setData({
@@ -170,20 +185,22 @@ Page({
   // 滑动滑块结束
   onSlideChangeEnd(e) {
     console.log('eeeeeeeeeee-------eeeeee', e);
-    const { current } = e.detail;
-    let isRight = this._checkSwipeDirec(current);
-    this.setData({
-      swiperIndex: current,
-    });
-    if (isRight) {
-      const resIdx = this._toNextTopic(current);
-    } else {
-      this._toLastTopic(current);
+    const { current, source } = e.detail;
+    if (source === 'touch') {
+      let isRight = this._checkSwipeDirec(current);
+      this.setData({
+        swiperIndex: current,
+      });
+      if (isRight) {
+        this._toNextTopic(current);
+      } else {
+        this._toLastTopic(current);
+      }
+      console.log('end topicIndex', this.data.topicIndex)
+      this._setCircular();
+      this._checkStar();
+      this._saveTopicIndex()
     }
-    console.log('end topicIndex', this.data.topicIndex)
-    this._setCircular();
-    this._checkStar();
-    this._saveTopicIndex()
   },
   _saveTopicIndex() {
     const { topicIndex } = this.data
@@ -254,7 +271,7 @@ Page({
     });
   },
 
-  hideModal(e) {
+  hideModal() {
     this.setData({
       modalName: null,
     });
@@ -268,7 +285,7 @@ Page({
     let end = start + 3
     // let swiperIndex = 0
     let restIndex = topicIndex % 3
-    console.log('--------',topicIndex, restIndex)
+    console.log('--------', topicIndex, restIndex)
     if (topicIndex === 0) {
       // swiperIndex = 0
       exerciseList = cacheList.slice(start, end)
@@ -305,7 +322,7 @@ Page({
     })
     cacheList = list
     const index = wx.getStorageSync(SUBJECT_ONE_TOPIC_INDEX) || 0
-    const topicIndex =  index < 0 ? 0 : index
+    const topicIndex = index < 0 ? 0 : index
     this._initSubject(topicIndex)
     this._renderModal()
   },

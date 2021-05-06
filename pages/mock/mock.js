@@ -6,6 +6,7 @@ import {
   saveCollection,
   cancelCollection,
 } from '../../utils/util.js';
+import {getMockSubjectOne} from '../../service/subjectone'
 const mockModel = new MockModel();
 const app = getApp();
 const MAX_SWIPER_LENGTH = 3;
@@ -37,8 +38,9 @@ Page({
     const idx = this.data.topicIndex;
     return (cacheList[idx] && cacheList[idx].id) || null;
   },
-  _getClassicList() {
-    return mockModel.getMockOne();
+  async _getClassicList() {
+    const res = await getMockSubjectOne();
+    console.log('res', res)
   },
   getDotClassName(item) {
     const {

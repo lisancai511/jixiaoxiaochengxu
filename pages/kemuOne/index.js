@@ -38,7 +38,7 @@ Page({
   },
   _gotoVip() {
     wx.navigateTo({
-      url: `/pages/vip/vip?type=vipOne`,
+      url: `/pages/payPage/index?type=vipOne`,
     });
   },
   _gotoError() {

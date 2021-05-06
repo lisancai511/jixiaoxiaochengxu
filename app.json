@@ -11,7 +11,8 @@
     "pages/subject/index",
     "pages/exercise/exercise",
     "pages/litest/index",
-    "pages/error/error"
+    "pages/error/error",
+    "pages/payPage/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

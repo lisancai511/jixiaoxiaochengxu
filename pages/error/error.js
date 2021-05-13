@@ -82,19 +82,19 @@ Page({
     return currentIdx - swiperIndex === 1 || currentIdx - swiperIndex === -2;
   },
   _checkBorder(current, topicIndex) {
-    const _this = this;
     if (!cacheList[topicIndex + 1]) {
       wx.showModal({
         title: '提示',
         content: '已经是最后一题了',
         showCancel: false,
         confirmText: '我知道了',
-        success(res) {
+        success: (res) => {
           if (res.confirm) {
             console.log('用户点击确定');
-            _this.setData({
+            this.setData({
               swiperIndex: current - 1,
             });
+            this._slideItem(current - 1)
           }
         },
       });
@@ -133,23 +133,25 @@ Page({
       topicIndex
     });
   },
+  _slideItem(current) {
+    let isRight = this._checkSwipeDirec(current);
+    this.setData({
+      swiperIndex: current,
+    });
+    if (isRight) {
+      this._toNextTopic(current);
+    } else {
+      this._toLastTopic(current);
+    }
+    this._setCircular();
+    this._checkStar();
+  },
   // 滑动滑块结束
   onSlideChangeEnd(e) {
     console.log('eeeeeeeeeee-------eeeeee', e);
     const { current, source } = e.detail;
     if (source === 'touch') {
-      let isRight = this._checkSwipeDirec(current);
-      this.setData({
-        swiperIndex: current,
-      });
-      if (isRight) {
-        this._toNextTopic(current);
-      } else {
-        this._toLastTopic(current);
-      }
-      console.log('end topicIndex', this.data.topicIndex)
-      this._setCircular();
-      this._checkStar();
+      this._slideItem(current)
     }
   },
   collectionItem(e) {
@@ -187,7 +189,7 @@ Page({
       isCircular
     } = this.data;
     console.log('topicIndex', topicIndex);
-    if (topicIndex === 0 || topicIndex >= cacheList.length - 1) {
+    if (topicIndex === 0 || topicIndex > cacheList.length - 1) {
       console.log('in', isCircular)
       if (isCircular) {
         this.setData({

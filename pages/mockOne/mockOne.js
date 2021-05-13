@@ -413,7 +413,7 @@ Page({
     wx.removeStorageSync(SUBJECT_ONE_MOCK_TOPIC_INDEX)
   },
   _checkCache() {
-    const cache = wx.getStorageSync(SUBJECT_ONE_MOCK)
+    const cache = wx.getStorageSync(SUBJECT_ONE_MOCK_RESULT)
     if(cache) {
       wx.showModal({
         title: '温馨提示',
@@ -446,18 +446,21 @@ Page({
       confirmText: '继续答题',
       success: (res) => {
         if (res.cancel) {
-          this._resetMock()
-          wx.showToast({
-            title: '提交成功',
-            icon: 'success'
+          // this._resetMock()
+          wx.redirectTo({
+            url: '/pages/record/record'
           })
-          if(timer) {
-            clearTimeout(timer)
-          }
-          timer = setTimeout(() => {
-            console.log('123')
-            wx.navigateBack()
-          }, 3000)
+          // wx.showToast({
+          //   title: '提交成功',
+          //   icon: 'success'
+          // })
+          // if(timer) {
+          //   clearTimeout(timer)
+          // }
+          // timer = setTimeout(() => {
+          //   console.log('123')
+          //   wx.navigateBack()
+          // }, 3000)
         }
       }
     })

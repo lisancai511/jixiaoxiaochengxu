@@ -1,14 +1,15 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/record/record",
     "pages/mine/index",
     "pages/special/special",
     "pages/commonExercise/commonExercise",
     "pages/vip/vip",
-    "pages/collection/index",
     "pages/simulation/index",
     "pages/kemuOne/index",
     "pages/subject/index",
+    "pages/collection/collection",
     "pages/exercise/exercise",
     "pages/litest/index",
     "pages/error/error",

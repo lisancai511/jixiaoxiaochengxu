@@ -1,6 +1,6 @@
 // pages/kemuOne/index.js
 import { getKeyFromStorage, getErrorIdLists } from '../../utils/util';
-import { ERROR_ONE_ID, SUBJECT_ONE_ERROR_NUMBER } from '../../utils/constant';
+import { SUBJECT_ONE_COLLECTION, SUBJECT_ONE_ERROR_NUMBER } from '../../utils/constant';
 import ClassicModel from '../../model/classic.js';
 const classicModel = new ClassicModel();
 import { getSubjectOneList } from '../../service/subjectone'
@@ -22,11 +22,11 @@ Page({
 
   },
   _gotoCollection() {
-    const collection = getKeyFromStorage('collectionIds') || {};
+    const collection = getKeyFromStorage(SUBJECT_ONE_COLLECTION) || {};
     const ids = Object.keys(collection);
     if (ids.length) {
       wx.navigateTo({
-        url: `/pages/collection/index?type=collectionOne`,
+        url: `/pages/collection/collection?type=collectionOne`,
       });
     } else {
       wx.showToast({

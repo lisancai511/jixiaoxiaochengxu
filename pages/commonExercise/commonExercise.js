@@ -249,10 +249,10 @@ Page({
     wx.showLoading({
       title: '数据加载中',
     })
-    const {list, total} = await getSpecialOne(type)
+    const {list} = await getSpecialOne(type)
     // console.log('list', list)
     this.setData({
-      total
+      total: list.length
     })
     cacheList = list
     this._initSubject()

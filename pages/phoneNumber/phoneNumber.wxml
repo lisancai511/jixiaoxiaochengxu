@@ -1,0 +1,9 @@
+<mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+<mp-form id="form" rules="{{rules}}" models="{{formData}}">
+  <mp-cells title="填写手机号码">
+    <mp-cell prop="phone" title="手机号码：" ext-class="">
+      <input bindinput="formInputChange" type="number" data-field="phone" class="weui-input" placeholder="请输入手机号码"/>
+    </mp-cell>
+  </mp-cells>
+  <button class="createBtn" loading="{{loading}}" type="primary" bindtap="submitForm">确定绑定</button>
+</mp-form>

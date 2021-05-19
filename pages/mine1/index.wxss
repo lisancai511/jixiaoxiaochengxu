@@ -1,4 +1,4 @@
-/* .UCenter-bg {
+.UCenter-bg {
   background-image: url(https://img-u-0.51miz.com/Element/00/81/19/43/63187c84_E811943_c41a1154.jpg);
   background-size: cover;
   height: 250rpx;
@@ -56,6 +56,7 @@ map,
   position: absolute;
   height: 80px;
   width: 100%;
+  /* background: red; */
   z-index: 1000;
   top: 180rpx;
   padding: 0px 20rpx;
@@ -69,6 +70,7 @@ map,
 }
 
 .user_info {
+  /* margin-top: 120rpx; */
   height: 300rpx;
   width: 100%;
   background: #fff;
@@ -157,47 +159,4 @@ map,
 
 .color {
   color: #4facfe;
-} */
-
-page {
-  padding-top: 40px;
-  color: #9c9c9c;
-}
-.user {
-  width: 80%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-}
-.avatar {
-  width: 80px;
-  height: 80px;
-  margin: 40rpx auto;
-}
-.login-icon {
-  display: inline-block;
-  /* width: 100%;
-  height: 100%; */
-}
-.no-login-icon {
-  font-size: 80px;
-  vertical-align: top;
-}
-.login {
-  margin: 20rpx auto;
-  font-size: 20px;
-}
-
-.name {
-  display: inline-block;
-  height: 42px;
-  line-height: 42px;
-}
-
-.loginBtn {
-  color: #9c9c9c!important;
-  font-weight: normal;
-  border-color: #9c9c9c!important;
-  border-radius: 24px!important;
-  padding: 0 32px;
 }

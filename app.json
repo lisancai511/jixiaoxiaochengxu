@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/record/record",
     "pages/mine/index",
+    "pages/record/record",
     "pages/special/special",
     "pages/commonExercise/commonExercise",
     "pages/vip/vip",
@@ -13,7 +13,8 @@
     "pages/exercise/exercise",
     "pages/litest/index",
     "pages/error/error",
-    "pages/payPage/index"
+    "pages/payPage/index",
+    "pages/phoneNumber/phoneNumber"
   ],
   "window": {
     "backgroundTextStyle": "light",

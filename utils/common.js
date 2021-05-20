@@ -87,6 +87,7 @@ export async function getCurrentUser(refresh = false) {
       }
     }
     user = await getUserFromopenid()
+    wx.setStorageSync('currentUser', user)
     return user
   } catch(e) {
     console.log('getCurrentUser fail', e)

@@ -1,5 +1,5 @@
-<simulation wx:if="{{PageCur=='simulation'}}"></simulation>
-<mine wx:if="{{PageCur=='mine'}}"></mine>
+<simulation id="simulation" wx:if="{{PageCur=='simulation'}}"></simulation>
+<mine id="mine" wx:i="{{PageCur=='mine'}}"></mine>
 <view class="cu-bar tabbar bg-white shadow foot">
   <view class="action" bindtap="NavChange" data-cur="simulation">
     <view class='cuIcon-cu-image'>

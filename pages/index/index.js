@@ -10,9 +10,12 @@ Page({
     // this.getData();
   },
   NavChange(e) {
+    const PageCur = e.currentTarget.dataset.cur
     this.setData({
-      PageCur: e.currentTarget.dataset.cur,
+      PageCur,
     });
+    let myComponent = this.selectComponent(`#${PageCur}`); // 页面获取自定义组件实例
+    myComponent.onLoad && myComponent.onLoad()
   },
   onShareAppMessage() {
     return {
@@ -47,4 +50,14 @@ Page({
         app.globalData.fiftySubject = res;
       });
   },
+  onLoad() {
+    console.log('onload')
+    
+  },
+  onShow() {
+    if(this.data.PageCur === 'mine') {
+      let myComponent = this.selectComponent('#mine'); // 页面获取自定义组件实例
+      myComponent.onLoad && myComponent.onLoad()
+    }
+  }
 });

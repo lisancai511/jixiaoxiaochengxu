@@ -1,5 +1,5 @@
 // pages/mine/mine.js
-// const { checkLoginFromLocal, getCurrentUser,getPhoneNumber } = require('../../utils/common')
+const { checkLoginFromLocal, getCurrentUser,getPhoneNumber } = require('../../utils/common')
 Page({
 
   /**
@@ -48,10 +48,11 @@ Page({
   },
   // 通过openid查看手机号是否存在
   async userInit() {
+    console.log('userInit')
     const user = await getCurrentUser()
     if(user) {
       this.setData({
-        isCheckPhone: !!user.userPhone
+        isCheckPhone: !!user.phone
       })
       return false
     }
@@ -66,14 +67,14 @@ Page({
    */
   onLoad: function (options) {
     console.log('options', options)
-    // this.userInit()
+    this.userInit()
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    console.log('in')
   },
 
   /**

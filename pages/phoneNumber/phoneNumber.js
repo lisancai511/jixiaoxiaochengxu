@@ -34,27 +34,25 @@ Page({
         ...this.data.formData,
         openid: wx.getStorageSync('openid')
       }
-      await bindPhone(params)
-      // TODO:需要重新存入用户人员信息
-      wx.showToast({
-        title: '手机号绑定成功',
-        icon: "success"
-      })
-      this.setData({
-        loading: false
-      })
-      setTimeout(() => {
-        wx.switchTab({
-          url: '/pages/mine/mine',
-          success: function (res) {
-            let page = getCurrentPages().pop();
-            if (page == undefined || page == null) {
-              return;
-            }
-            page.onLoad();
-          }
+      const {code, data} = await bindPhone(params)
+      if(code === 0) {
+        wx.setStorageSync('currentUser', data)
+        wx.showToast({
+          title: '手机号绑定成功',
+          icon: "success"
         })
-      }, 300)
+        this.setData({
+          loading: false
+        })
+        setTimeout(() => {
+          wx.navigateBack()
+        }, 300)
+      } else {
+        wx.showToast({
+          title: '手机号绑定失败',
+          icon: 'error'
+        })
+      }
     } catch (e) {
       this.setData({
         error: e.msg || '手机号绑定失败'

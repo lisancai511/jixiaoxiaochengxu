@@ -1,19 +1,78 @@
-<view>
-  <view class="user">
-    <view class="avatar">
-      <open-data type="userAvatarUrl" class="login-icon"></open-data>
-    </view>
-    <view class="login">
-      <button wx:if="{{ !isCheckPhone}}" plain class="loginBtn" bindtap="inputPhoneNumber">绑定手机号</button>
-      <open-data wx:else type="userNickName" class="name"></open-data>
+<scroll-view scroll-y class="scrollPage">
+  <view class="UCenter-bg">
+  </view>
+
+  <view class="zhanwei"></view>
+
+  <view class="wx_info">
+    <view class="wx_info_out">
+        <button wx:if="{{ !isCheckPhone}}" plain class="loginBtn" bindtap="inputPhoneNumber">绑定手机号</button>
+        <view class="wx_info_wrap">
+          <open-data type="userAvatarUrl" class="login-icon"></open-data>
+        </view>
+        <view class="wx_info_userName">
+          <open-data wx:if="{{ isCheckPhone}}" type="userNickName" class="name"></open-data>
+          <text class="wx_info_text">
+            找驾校 考驾照 就用驾考一练过
+          </text>
+        </view>
     </view>
   </view>
-  <mp-cells ext-class="my-cells" title="">
-    <mp-cell link data-url="/pages/choiceTeam/choiceTeam" bindtap="gotoItem" hover value="报名驾校" />
-    <mp-cell link data-url="/pages/billList/billList" bindtap="gotoItem" hover value="意见反馈" />
-    <!-- <mp-cell link data-url="/pages/billList/billList" bindtap="gotoItem" hover value="查看录入发票" />
-    <mp-cell link data-url="/pages/billList/billList" bindtap="gotoItem" hover value="查看录入发票" /> -->
-  </mp-cells>
-  <!-- <button type="warn" open-type="contact">客服</button>
-  <button type="warn" open-type="share">分享</button> -->
-</view>
+
+  <view class="user_info">
+    <view class="user_info_title">
+      <view class="left">科一</view>
+      <view class="right myactive">科四</view>
+    </view>
+    <view class="user_info_main">
+      <view class="wrap">
+        <text class="wrap_top">0</text>
+        <text class="wrap_mid">累计答题数</text>
+        <view class="wrap_foot">
+          <text>正确率</text>
+          <text class="color m-l-5">0%</text>
+        </view>
+      </view>
+      <view class="wrap">
+        <text class="wrap_top">0</text>
+        <text class="wrap_mid">考试平均分</text>
+        <view class="wrap_foot">
+          <text>累计考试</text>
+          <text class="color m-l-5">0次</text>
+        </view>
+      </view>
+      <view class="wrap">
+        <text class="wrap_top btn">去考试</text>
+        <text class="wrap_mid">进阶模拟考试</text>
+        <text class="wrap_foot">45分钟全力冲刺</text>
+      </view>
+    </view>
+  </view>
+  
+  <view class="cu-list menu margin-top-xl margin-bottom-xl shadow-lg radius">
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="feedback">
+        <text class="cuIcon-writefill text-cyan"></text>
+        <text class="text-grey">意见反馈</text>
+      </button>
+    </view>
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="feedback">
+        <text class="cuIcon-creativefill text-orange"></text>
+        <text class="text-grey">报名驾校</text>
+      </button>
+    </view>
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="feedback">
+        <text class="cuIcon-favorfill text-yellow"></text>
+        <text class="text-grey">我的收藏</text>
+      </button>
+    </view>
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="feedback">
+        <text class="cuIcon-emojifill text-red"></text>
+        <text class="text-grey">关于我们</text>
+      </button>
+    </view>
+  </view>
+</scroll-view>

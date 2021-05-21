@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "kemuOne": "/pages/kemuOne/index"
+    "kemuOne": "/pages/kemuOne/index",
+    "kemuFour": "/pages/kemuFour/index"
   }
 }

@@ -1,0 +1,17 @@
+<view>
+  <view class="user">
+    <view class="avatar">
+      <open-data type="userAvatarUrl" class="login-icon"></open-data>
+    </view>
+    <view class="login">
+      <button wx:if="{{ !isCheckPhone}}" plain class="loginBtn" bindtap="inputPhoneNumber">绑定手机号</button>
+      <open-data wx:else type="userNickName" class="name"></open-data>
+    </view>
+  </view>
+  <mp-cells ext-class="my-cells" title="">
+    <mp-cell link data-url="/pages/choiceTeam/choiceTeam" bindtap="gotoItem" hover value="报名驾校" />
+    <mp-cell link data-url="/pages/billList/billList" bindtap="gotoItem" hover value="意见反馈" />
+  </mp-cells>
+  <!-- <button type="warn" open-type="contact">客服</button>
+  <button type="warn" open-type="share">分享</button> -->
+</view>

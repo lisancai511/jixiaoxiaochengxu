@@ -1,0 +1,40 @@
+page {
+  padding-top: 40px;
+  color: #9c9c9c;
+}
+.user {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.avatar {
+  width: 80px;
+  height: 80px;
+  margin: 40rpx auto;
+}
+.login-icon {
+  display: inline-block;
+}
+.no-login-icon {
+  font-size: 80px;
+  vertical-align: top;
+}
+.login {
+  margin: 20rpx auto;
+  font-size: 20px;
+}
+
+.name {
+  display: inline-block;
+  height: 42px;
+  line-height: 42px;
+}
+
+.loginBtn {
+  color: #9c9c9c!important;
+  font-weight: normal;
+  border-color: #9c9c9c!important;
+  border-radius: 24px!important;
+  padding: 0 32px;
+}

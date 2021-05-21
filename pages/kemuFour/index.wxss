@@ -1,0 +1,72 @@
+/* pages/kemuOne/index.wxss */
+.main {
+  display: flex;
+  background: #fff;
+  padding-bottom: 40rpx;
+}
+
+.main_left,
+.main_mid,
+.main_right {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}
+.main_mid {
+  width: 40%;
+}
+.main_content,
+.left_item,
+.main_top,
+.main_bottom {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  justify-items: flex-end;
+  align-items: center !important;
+}
+.main_item {
+  height: 100%;
+  width: 100%;
+  padding-top: 20px;
+}
+.main_top,
+.main_bottom {
+  height: 50%;
+  width: 100%;
+  position: relative;
+}
+.bg {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+}
+.main_content {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  color: black;
+  background: #fff;
+  line-height: 100px;
+  padding: 5px;
+  background: transparent;
+  position: absolute;
+  z-index: 10;
+}
+.dynamic {
+  height: calc(100vh - 240rpx);
+  background: #f4f4f4;
+}
+
+.botClass {
+  display: flex;
+  color: #cfcfcf;
+  padding-top: 20rpx;
+  align-items: center;
+  flex-direction: column;
+}
+.bottom {
+  margin-top: -24rpx;
+}

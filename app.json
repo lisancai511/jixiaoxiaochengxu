@@ -1,11 +1,22 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/simulation/index",
     "pages/mine/index",
+    "pages/record/record",
+    "pages/special/special",
+    "pages/commonExercise/commonExercise",
+    "pages/vip/vip",
+    "pages/simulation/index",
     "pages/kemuOne/index",
+    "pages/kemuFour/index",
     "pages/subject/index",
-    "pages/exercise/exercise"
+    "pages/collection/collection",
+    "pages/exercise/exercise",
+    "pages/exerciseFour/exerciseFour",
+    "pages/litest/index",
+    "pages/error/error",
+    "pages/payPage/index",
+    "pages/phoneNumber/phoneNumber"
   ],
   "window": {
     "backgroundTextStyle": "light",

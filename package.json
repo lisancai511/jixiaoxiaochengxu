@@ -1,0 +1,28 @@
+{
+  "name": "jixiaoxiaochengxu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "miniprogram-recycle-view": "^0.1.5",
+    "weui-miniprogram": "^1.0.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "useExtendedLib": {
+    "weui": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lisancai511/jixiaoxiaochengxu.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lisancai511/jixiaoxiaochengxu/issues"
+  },
+  "homepage": "https://github.com/lisancai511/jixiaoxiaochengxu#readme"
+}

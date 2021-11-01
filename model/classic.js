@@ -13,14 +13,6 @@ class ClassicModel extends Request {
           className: '',
         })),
       }));
-      // const value = getCachedData(CLASSIC_ONE) || {};
-      // console.log('123', value);
-      // const cacheData = {
-      //   ...value,
-      //   [page]: list,
-      //   total,
-      // };
-      // saveCacheData(CLASSIC_ONE, cacheData);
       return {
         ...res,
         list,

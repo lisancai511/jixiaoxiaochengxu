@@ -1,0 +1,29 @@
+.title {
+  padding: 6px 12px;
+  border-bottom: 1px solid #eee;
+  font-weight: bold;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  padding: 24px 18px;
+  border-bottom: 1px solid #eee;
+}
+
+.idx {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  margin-right: 4px;
+  border: 1px solid green;
+  border-radius: 50%;
+}

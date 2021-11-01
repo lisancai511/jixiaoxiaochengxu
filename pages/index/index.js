@@ -7,12 +7,15 @@ Page({
     PageCur: 'simulation',
   },
   onLoad: function() {
-    this.getData();
+    // this.getData();
   },
   NavChange(e) {
+    const PageCur = e.currentTarget.dataset.cur
     this.setData({
-      PageCur: e.currentTarget.dataset.cur,
+      PageCur,
     });
+    let myComponent = this.selectComponent(`#${PageCur}`); // 页面获取自定义组件实例
+    myComponent.onLoad && myComponent.onLoad()
   },
   onShareAppMessage() {
     return {
@@ -26,7 +29,7 @@ Page({
     this._getFiftySubject();
   },
   _getClassicList() {
-    classicModel.getClassic({ limit: 100 }).then(res => {
+    classicModel.getClassic({ limit: 5 }).then(res => {
       app.globalData.arrOne = res.list;
       app.globalData.total = res.total;
     });
@@ -47,4 +50,14 @@ Page({
         app.globalData.fiftySubject = res;
       });
   },
+  onLoad() {
+    console.log('onload')
+    
+  },
+  onShow() {
+    if(this.data.PageCur === 'mine') {
+      let myComponent = this.selectComponent('#mine'); // 页面获取自定义组件实例
+      myComponent.onLoad && myComponent.onLoad()
+    }
+  }
 });

@@ -1,0 +1,5 @@
+<cu-custom bgColor=""></cu-custom>
+<view class="main">
+  分数：{{record}}
+  <button type="primary" class="btn" bindtap="takeAgain">再考一次</button>
+</view>

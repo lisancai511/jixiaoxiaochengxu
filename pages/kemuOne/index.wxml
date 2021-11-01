@@ -1,4 +1,4 @@
-<view class="cu-card dynamic {{isCard?'no-card':''}}">
+<view class="dynamic">
   <view class="cu-item shadow">
     <view class="main">
       <view class="main_left">
@@ -18,10 +18,12 @@
       <view class="main_mid">
         <view class="main_item">
           <view bindtap="gotoSubject" id="order" class="main_top">
+            <image class="bg" src="../../images/2.png" />
             <view class="main_content">顺序练习</view>
           </view>
           <view bindtap="gotoSubject" id="mockExam" class="main_bottom">
-            <view class="bule">模拟考试</view>
+            <image class="bg" src="../../images/3.png" />
+            <view class="main_content">模拟考试</view>
           </view>
         </view>
       </view>
@@ -40,5 +42,13 @@
         </view>
       </view>
     </view>
+  </view>
+  <view class="botClass">
+    <text>
+      考驾照，就用驾考一练过
+    </text>
+    <text class="bottom">
+      www.yilianguo.com
+    </text>
   </view>
 </view>

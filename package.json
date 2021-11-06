@@ -1,13 +1,11 @@
 {
   "name": "jixiaoxiaochengxu",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "dependencies": {
     "miniprogram-recycle-view": "^0.1.5",
-    "weui-miniprogram": "^1.0.8"
+    "weui-miniprogram": "^1.1.1"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,5 +22,6 @@
   "bugs": {
     "url": "https://github.com/lisancai511/jixiaoxiaochengxu/issues"
   },
-  "homepage": "https://github.com/lisancai511/jixiaoxiaochengxu#readme"
+  "homepage": "https://github.com/lisancai511/jixiaoxiaochengxu#readme",
+  "description": ""
 }

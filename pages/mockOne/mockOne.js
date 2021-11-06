@@ -109,7 +109,6 @@ Page({
         wrongNumber++
       }
     }
-    console.log('ininini---')
     subjectResult[topicIndex] = res
     wx.setStorageSync(SUBJECT_ONE_MOCK_RESULT, subjectResult)
     return {successNumber, wrongNumber}
@@ -185,7 +184,6 @@ Page({
   },
   // 滑动滑块结束
   onSlideChangeEnd(e) {
-    console.log('eeeeeeeeeee-------eeeeee', e);
     const { current, source } = e.detail;
     if (source === 'touch') {
       let isRight = this._checkSwipeDirec(current);

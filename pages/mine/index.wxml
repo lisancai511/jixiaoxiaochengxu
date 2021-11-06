@@ -6,7 +6,7 @@
 
   <view class="wx_info">
     <view class="wx_info_out">
-        <button wx:if="{{ !isCheckPhone}}" plain class="loginBtn" bindtap="inputPhoneNumber">绑定手机号</button>
+       <!-- <button wx:if="{{ !isCheckPhone}}" plain class="loginBtn" bindtap="inputPhoneNumber">绑定手机号</button> -->
         <view class="wx_info_wrap">
           <open-data type="userAvatarUrl" class="login-icon"></open-data>
         </view>

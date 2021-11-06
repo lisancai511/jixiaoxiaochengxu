@@ -3,15 +3,15 @@
     <view class="main">
       <view class="main_left">
         <view bindtap="gotoSubject" id="vip" class="left_item m-t-20 m-b-20">
-          <view class="t-icon iconvip"></view>
+          <image class="icon" src="../../images/vip.png" />
           <text class="m-t-10">vip课程</text>
         </view>
         <view bindtap="gotoSubject" id="wrongSubject" class="left_item m-t-20 m-b-20">
-          <view class="t-icon iconcuoti"></view>
+          <image class="icon" src="../../images/cuoti.png" />
           <text class="m-t-10">我的错题</text>
         </view>
         <view class="left_item m-t-20 m-b-20">
-          <view class="t-icon iconchengji"></view>
+          <image class="icon" src="../../images/chengji.png" />
           <text class="m-t-10">我的成绩</text>
         </view>
       </view>
@@ -33,12 +33,8 @@
           <text class="m-t-10">专项练习</text>
         </view>
         <view bindtap="gotoSubject" id="collection" class="left_item m-t-20 m-b-20">
-          <view class="t-icon iconshoucang1"></view>
+          <image class="icon" src="../../images/shoucang.png" />
           <text class="m-t-10">我的收藏</text>
-        </view>
-        <view bindtap="gotoSubject" class="left_item m-t-20 m-b-20">
-          <view class="t-icon iconche"></view>
-          <text class="m-t-10">我的驾校</text>
         </view>
       </view>
     </view>

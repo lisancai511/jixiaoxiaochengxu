@@ -4,10 +4,11 @@ Page({
     scrollLeft: 0
   },
   tabSelect(e) {
-    console.log(e.currentTarget.id)
+    const { id } = e.currentTarget
+    console.log(e.currentTarget)
     this.setData({
-      TabCur: e.currentTarget.id,
-      scrollLeft: (e.currentTarget.id - 1) * 60
+      TabCur: id,
+      scrollLeft: (id - 1) * 60
     })
   }
 })

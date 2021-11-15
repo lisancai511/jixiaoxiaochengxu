@@ -1,6 +1,9 @@
 <cu-custom bgColor="" isBack="{{true}}">
   <view slot="backText">返回</view>
 </cu-custom>
+<view class="text-center">
+  <text>倒计时：{{countDownTime}}</text>
+</view>
 <swiper bindchange='onSlideChangeEnd' current="{{swiperIndex}}" circular="{{isCircular}}" class="swiper">
   <block wx:for="{{exerciseList}}" wx:key="{{item.id}}">
     <swiper-item item-id="{{item.id}}">

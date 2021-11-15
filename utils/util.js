@@ -52,7 +52,7 @@ const getKeyFromStorage = key => {
 const saveCollection = id => {
   const idObj = getKeyFromStorage(SUBJECT_ONE_COLLECTION) || {};
   if (id) {
-    idObj[id] = id;
+    idObj[id] = true;
   }
   wx.setStorageSync(SUBJECT_ONE_COLLECTION, idObj);
   return idObj;

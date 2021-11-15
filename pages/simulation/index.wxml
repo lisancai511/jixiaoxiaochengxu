@@ -1,6 +1,4 @@
-<view class="title">
-  驾考一练过
-</view>
+<view class="title">驾考一练过</view>
 <scroll-view scroll-x class="bg-white nav">
   <view class="flex text-center">
     <view class="cu-item flex-sub {{TabCur==1?'active cur':''}}" bindtap="tabSelect" id="1">

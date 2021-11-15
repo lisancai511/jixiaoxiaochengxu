@@ -1,19 +1,32 @@
-const { wxLogin } = require('../service/login')
+const { wxLogin, getUserInfoByOpenId } = require('../service/login')
 const { post } = require('../utils/request1')
-export async function getopenid() {
-  try {
-    let openid = wx.getStorageSync('openid')
-    if (openid) {
-      return openid
-    }
-    openid = await wechatLogin()
-    return openid
-  } catch (e) {
-    console.log('getopenid fail', e)
-    throw new Error(e)
-  }
+/**
+ * 判断是session是否有效
+ * @returns {Promise} string openid
+ */
+export function checkLoginFromWechat() {
+  return new Promise((resolve, reject) => {
+    wx.checkSession({
+      success() {
+        // 如果有效，但是本地没有openid，则视为失败
+        const openid = wx.getStorageSync('openid')
+        if (openid) {
+          resolve(openid)
+        } else {
+          reject()
+        }
+      },
+      fail(err) {
+        reject()
+      }
+    })
+  })
 }
-// 获取并存储openid
+
+/**
+ * 微信登录，获取openid和session_key
+ * @returns {Promise} 
+ */
 export function wechatLogin() {
   return new Promise((resolve, reject) => {
     checkLoginFromWechat().then((openid) => {
@@ -37,24 +50,21 @@ export function wechatLogin() {
     })
   })
 }
-// 检查微信session是否失效，失效或者本地没有openid 则为失败
-export function checkLoginFromWechat() {
-  return new Promise((resolve, reject) => {
-    wx.checkSession({
-      success() {
-        const openid = wx.getStorageSync('openid')
-        if (openid) {
-          resolve(openid)
-        } else {
-          reject()
-        }
-      },
-      fail(err) {
-        reject()
-      }
-    })
-  })
+export async function getopenid() {
+  try {
+    let openid = wx.getStorageSync('openid')
+    if (openid) {
+      return openid
+    }
+    openid = await wechatLogin()
+    return openid
+  } catch (e) {
+    console.log('getopenid fail', e)
+    throw new Error(e)
+  }
 }
+
+
 
 // 通过openid获取用户信息，如果有返回，如果没有返回null
 export async function getUserFromopenid() {
@@ -62,8 +72,8 @@ export async function getUserFromopenid() {
     // 获取openid
     const openid = await getopenid()
     // 通过openid获取用户信息
-    if(openid) {
-      const res = await post('/getUserInfoByOpenId', { openid })
+    if (openid) {
+      const res = await getUserInfoByOpenId(openid)
       if (res.data) {
         // 如果有存储本地信息
         wx.setStorageSync('currentUser', res.data)
@@ -80,16 +90,15 @@ export async function getUserFromopenid() {
 export async function getCurrentUser(refresh = false) {
   try {
     let user = ''
-    if(!refresh) {
+    if (!refresh) {
       user = wx.getStorageSync('currentUser')
-      if(user) {
+      if (user) {
         return user
       }
     }
     user = await getUserFromopenid()
-    wx.setStorageSync('currentUser', user)
     return user
-  } catch(e) {
+  } catch (e) {
     console.log('getCurrentUser fail', e)
     throw new Error(e)
   }

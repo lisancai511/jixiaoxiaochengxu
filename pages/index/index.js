@@ -6,7 +6,7 @@ Page({
   data: {
     PageCur: 'simulation',
   },
-  onLoad: function() {
+  onLoad: function () {
     // this.getData();
   },
   NavChange(e) {
@@ -51,11 +51,10 @@ Page({
       });
   },
   onLoad() {
-    console.log('onload')
-    
+    console.log('onload ---')
   },
   onShow() {
-    if(this.data.PageCur === 'mine') {
+    if (this.data.PageCur === 'mine') {
       let myComponent = this.selectComponent('#mine'); // 页面获取自定义组件实例
       myComponent.onLoad && myComponent.onLoad()
     }

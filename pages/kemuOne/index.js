@@ -87,7 +87,7 @@ Page({
       default:
         this._getClassicList().then(() => {
           wx.navigateTo({
-            url: `/pages/exercise/exercise?type=${type.currentTarget.id}`,
+            url: `/pages/test/test?type=${type.currentTarget.id}`,
           });
         })
         break;

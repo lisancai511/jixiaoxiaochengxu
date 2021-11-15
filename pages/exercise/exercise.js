@@ -41,6 +41,7 @@ Page({
   clickItem(e) {
     const { item, index, optidx } = e.currentTarget.dataset;
     let { topicIndex, exerciseList, isShowResult, answerList } = this.data
+    console.log('exerciseList===', exerciseList)
     const { own_res } = exerciseList[index];
     let successNumber = 0
     let wrongNumber = 0
@@ -52,13 +53,13 @@ Page({
     if (!own_res && !isShowResult) {
       this.data.exerciseList[index].own_res = optidx + 1 + '';
       if (Number(optidx) + 1 == Number(item.ta)) {
-        value.class = 'success'
+        value.className = 'success'
         const res = this._getTopicRecord(topicIndex, true)
         successNumber = res.successNumber
         wrongNumber = res.wrongNumber
         console.log('success', this.data.answerList[topicIndex])
       } else {
-        value.class = 'error'
+        value.className = 'error'
         const res = this._getTopicRecord(topicIndex, optidx + '')
         successNumber = res.successNumber
         wrongNumber = res.wrongNumber
@@ -82,11 +83,12 @@ Page({
 
   },
   _getTopicRecord(topicIndex, res) {
+    const key = this._getTopicId()
     const subjectResult = wx.getStorageSync(SUBJECT_ONE_RESULT) || {}
     let successNumber = wx.getStorageSync(SUBJECT_ONE_SUCCESS_NUMBER) || 0
     let wrongNumber = wx.getStorageSync(SUBJECT_ONE_ERROR_NUMBER) || 0
-    if (subjectResult[topicIndex]) {
-      if (subjectResult[topicIndex] === true) {
+    if (subjectResult[key]) {
+      if (subjectResult[key] === true) {
         // 之前都是作对的题目
         if (res !== true) {
           successNumber--
@@ -107,11 +109,11 @@ Page({
       }
     }
     console.log('ininini---')
-    subjectResult[topicIndex] = res
+    subjectResult[key] = res
     wx.setStorageSync(SUBJECT_ONE_RESULT, subjectResult)
     wx.setStorageSync(SUBJECT_ONE_SUCCESS_NUMBER, successNumber)
     wx.setStorageSync(SUBJECT_ONE_ERROR_NUMBER, wrongNumber)
-    return {successNumber, wrongNumber}
+    return { successNumber, wrongNumber }
   },
   changeRecite() {
     this.setData({
@@ -185,17 +187,18 @@ Page({
   },
   _slideItem(current) {
     let isRight = this._checkSwipeDirec(current);
-      this.setData({
-        swiperIndex: current,
-      });
-      if (isRight) {
-        this._toNextTopic(current);
-      } else {
-        this._toLastTopic(current);
-      }
-      this._setCircular();
-      this._checkStar();
-      this._saveTopicIndex()
+    this.setData({
+      swiperIndex: current,
+    });
+    if (isRight) {
+      this._toNextTopic(current);
+    } else {
+      this._toLastTopic(current);
+    }
+    console.log(this.data.exerciseList)
+    this._setCircular();
+    this._checkStar();
+    this._saveTopicIndex()
   },
   // 滑动滑块结束
   onSlideChangeEnd(e) {
@@ -209,23 +212,34 @@ Page({
     const { topicIndex } = this.data
     wx.setStorageSync(SUBJECT_ONE_TOPIC_INDEX, topicIndex)
   },
-  collectionItem(e) {
+  _getTopicId() {
     const { topicIndex } = this.data
-    if (collection[topicIndex]) {
-      collection[topicIndex] = null;
-      collection = cancelCollection(topicIndex + '');
-    } else {
-      collection[topicIndex] = true;
-      collection = saveCollection(topicIndex + '');
+    const id = cacheList[topicIndex] && cacheList[topicIndex].id
+    return id || null
+  },
+  collectionItem(e) {
+    console.log('in')
+    const { topicIndex } = this.data
+    const key = this._getTopicId()
+    if (key) {
+      if (collection[key]) {
+        collection[key] = null;
+        collection = cancelCollection(key);
+      } else {
+        collection[key] = true;
+        collection = saveCollection(key);
+      }
+      this._checkStar(true);
+      console.log(collection);
     }
-    this._checkStar(true);
-    console.log(collection);
+
   },
   _checkStar(showMsg = false) {
     const { topicIndex } = this.data
     collection = getSubjectOneCollection()
+    const key = this._getTopicId()
     console.log(111, collection, topicIndex)
-    const hasStar = !!collection[topicIndex];
+    const hasStar = !!collection[key];
     const msg = hasStar ? '收藏成功' : '已取消收藏';
     showMsg &&
       wx.showToast({
@@ -316,6 +330,7 @@ Page({
     })
     this._setCircular();
     this._checkStar();
+    console.log('init exerciseList', exerciseList)
   },
 
   async _initAppData() {
@@ -355,29 +370,10 @@ Page({
   },
   _renderModal() {
     let { total } = this.data
-    let list = []
-    const subjectOneResult = wx.getStorageSync(SUBJECT_ONE_RESULT) || {}
-    for (let i = 0; i < total; i++) {
-      if (subjectOneResult[i] === true) {
-        list.push({
-          index: i,
-          class: 'success'
-        })
-        continue
-      }
-      if (subjectOneResult[i]) {
-        list.push({
-          index: i,
-          class: 'error'
-        })
-        continue
-      }
-      // if()
-      list.push({
-        index: i,
-        class: ''
-      })
-    }
+    const list = cacheList.map((item, index) => ({
+      index,
+      className: item.className
+    }))
     console.log(list)
     this.setData({
       answerList: list,

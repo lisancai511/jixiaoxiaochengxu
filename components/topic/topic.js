@@ -49,7 +49,8 @@ Component({
     hasCollected: false,
     isShowResult: false,
     classicList: [],
-    answerList: []
+    answerList: [],
+    showActionsheet: true,
   },
   /**
    * 组件的方法列表
@@ -240,12 +241,14 @@ Component({
       } = this.data;
       this.setData({
         modalName: e.currentTarget.dataset.target,
+        renderModal: true
       });
     },
 
     hideModal() {
       this.setData({
         modalName: null,
+        renderModal: false
       });
     },
     // 根据当前的topicIndex 判断swiper的index
@@ -320,7 +323,7 @@ Component({
       }))
       this.setData({
         answerList: list,
-        renderModal: true
+        renderModal: false
       })
     }
   },

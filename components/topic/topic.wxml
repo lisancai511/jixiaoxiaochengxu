@@ -55,7 +55,7 @@
         <view class="action text-blue" bindtap="hideModal">取消</view>
       </view>
       <recycle-view batch="{{batchSetRecycleData}}" id="recycleId">
-        <recycle-item wx:for="{{answerList}}" wx:key="index">
+        <recycle-item wx:for="{{answerList}}" wx:key="index" class="recycleItem">
           <view data-index="{{index}}" bind:tap="gotoItem" class="classic-list-item {{item.className}}">
             {{item.index + 1}}
           </view>

@@ -2,6 +2,7 @@
   "component": true,
   "usingComponents": {
     "recycle-view": "miniprogram-recycle-view/recycle-view",
-    "recycle-item": "miniprogram-recycle-view/recycle-item"
+    "recycle-item": "miniprogram-recycle-view/recycle-item",
+    "mp-actionSheet": "weui-miniprogram/actionsheet/actionsheet"
   }
 }

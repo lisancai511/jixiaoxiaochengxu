@@ -21,6 +21,10 @@ App({
     // 获取系统状态栏信息
     this.getNavInfo()
     await getCurrentUser(true)
+    // 云开发环境初始化
+    wx.cloud.init({
+      env: "cloud1-7gi5jb4120c33dbf"
+    })
   },
   globalData: {
     userInfo: null,

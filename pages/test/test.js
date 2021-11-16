@@ -46,6 +46,10 @@ Page({
       collection = saveCollection(key);
     }
   },
+  _getTopicId(topicIndex) {
+    const id = cacheList[topicIndex] && cacheList[topicIndex].id
+    return id || null
+  },
   _getTopicRecord(topicIndex, res) {
     const key = this._getTopicId(topicIndex)
     console.log(key)
@@ -99,6 +103,8 @@ Page({
     this.setData({
       topicIndex
     })
+    const ref = this.selectComponent('.topic')
+    ref._initTopicData()
   },
   _initErrorAndSuccess() {
     const successNumber = wx.getStorageSync('SUBJECT_ONE_SUCCESS_NUMBER') || 0
@@ -118,6 +124,7 @@ Page({
       total
     })
     this._initAppData();
+
   },
 
   /**

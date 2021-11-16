@@ -325,7 +325,6 @@ Component({
     }
   },
   ready: function () {
-    this._initTopicData()
 
   }
 })

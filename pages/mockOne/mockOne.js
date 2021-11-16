@@ -3,14 +3,16 @@ import {
   saveCollection,
   cancelCollection,
 } from '../../utils/util.js';
-import {getMockSubjectOne} from '../../service/subjectone'
+import { getMockSubjectOne } from '../../service/subjectone'
 import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
-import {  SUBJECT_ONE_MOCK, SUBJECT_ONE_MOCK_RESULT,  SUBJECT_ONE_MOCK_TOPIC_INDEX } from '../../utils/constant'
+import { SUBJECT_ONE_MOCK, SUBJECT_ONE_MOCK_RESULT, SUBJECT_ONE_MOCK_TOPIC_INDEX } from '../../utils/constant'
 const app = getApp();
 const MAX_SWIPER_LENGTH = 3;
+const COUNT_DOWN_TIME = 45 * 60
 let cacheList = [];
 let collection = {};
 let timer = null
+let countDownTimer = null
 Page({
   /**
    * 页面的初始数据
@@ -32,7 +34,52 @@ Page({
     successNumber: 0,
     wrongNumber: 0,
     classicList: [],
-    answerList: []
+    answerList: [],
+    countDownTime: '45:00'
+  },
+  calculateTime(timeNumber) {
+    let minute = Math.floor(timeNumber / 60)
+    let second = timeNumber % 60
+    if (minute < 10) {
+      minute = '0' + minute
+    }
+    if (second < 10) {
+      second = '0' + second
+    }
+    return `${minute}:${second}`
+  },
+  renderTimeString(timeNumber) {
+    let timeString = this.calculateTime(timeNumber)
+    this.setData({
+      countDownTime: timeString
+    })
+  },
+  forceSubmit() {
+    wx.showModal({
+      showCancel: false,
+      title: '提示',
+      content: '时间已到，需要立刻交卷！',
+      confirmText: '我知道了',
+      success(res) {
+        if (res.confirm) {
+          wx.redirectTo({
+            url: '/pages/record/record'
+          })
+        }
+      }
+    })
+
+  },
+  renderCountDownTime() {
+    let timeNumber = COUNT_DOWN_TIME
+    countDownTimer = setInterval(() => {
+      timeNumber--
+      if (timeNumber === 0) {
+        clearInterval(countDownTimer)
+        this.forceSubmit()
+      }
+      this.renderTimeString(timeNumber)
+    }, 1000)
   },
   toggle() {
     this.setData({
@@ -85,7 +132,7 @@ Page({
   },
   _getTopicRecord(topicIndex, res) {
     const subjectResult = wx.getStorageSync(SUBJECT_ONE_MOCK_RESULT) || {}
-    let {successNumber, wrongNumber} = this.data
+    let { successNumber, wrongNumber } = this.data
     // let successNumber = wx.getStorageSync(SUBJECT_ONE_SUCCESS_NUMBER) || 0
     // let wrongNumber = wx.getStorageSync(SUBJECT_ONE_ERROR_NUMBER) || 0
     if (subjectResult[topicIndex]) {
@@ -111,7 +158,7 @@ Page({
     }
     subjectResult[topicIndex] = res
     wx.setStorageSync(SUBJECT_ONE_MOCK_RESULT, subjectResult)
-    return {successNumber, wrongNumber}
+    return { successNumber, wrongNumber }
   },
   changeRecite() {
     this.setData({
@@ -328,7 +375,7 @@ Page({
         title: '数据加载中',
       })
       let res = await this.getMockSubjectOne(reset)
-      const {total, list} = res
+      const { total, list } = res
       this.setData({
         total
       })
@@ -338,7 +385,7 @@ Page({
       this._initSubject(topicIndex)
       this._renderModal()
       wx.hideLoading()
-    } catch(e) {
+    } catch (e) {
       wx.hideLoading()
     }
   },
@@ -362,8 +409,8 @@ Page({
     const subjectOneMockResult = wx.getStorageSync(SUBJECT_ONE_MOCK_RESULT) || {}
     let successNumber = 0
     let wrongNumber = 0
-    for(let key in subjectOneMockResult) {
-      if(subjectOneMockResult[key] === true) {
+    for (let key in subjectOneMockResult) {
+      if (subjectOneMockResult[key] === true) {
         successNumber++
       } else {
         wrongNumber++
@@ -412,7 +459,7 @@ Page({
   },
   _checkCache() {
     const cache = wx.getStorageSync(SUBJECT_ONE_MOCK_RESULT)
-    if(cache) {
+    if (cache) {
       wx.showModal({
         title: '温馨提示',
         content: '你有正在进行的考试，是否继续？',
@@ -432,10 +479,10 @@ Page({
     }
   },
   takeSubmit() {
-    const {successNumber, wrongNumber,total} = this.data
+    const { successNumber, wrongNumber, total } = this.data
     const reset = total - (successNumber + wrongNumber)
     let content = '是否确认提交试卷？'
-    if(reset !== 0) {
+    if (reset !== 0) {
       content = `您还有 ${reset} 道题目未完成，是否确认提交试卷？`
     }
     wx.showModal({
@@ -469,6 +516,7 @@ Page({
   onLoad: function (options) {
     // console.log(options.type);
     // 判断是否正在考试未交卷的情况
+    this.renderCountDownTime()
     this._checkCache()
     // this._initAppData();
     this._initErrorAndSuccess()
@@ -496,8 +544,11 @@ Page({
    */
   onUnload: function () {
     console.log('onUnload')
-    if(timer) {
+    if (timer) {
       clearTimeout(timer)
+    }
+    if (countDownTimer) {
+      clearInterval(countDownTimer)
     }
   },
 

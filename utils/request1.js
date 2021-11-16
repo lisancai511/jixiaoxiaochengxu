@@ -1,5 +1,9 @@
 const BASE_URL = 'http://39.99.228.79:7003/api';
+<<<<<<< HEAD
 // const BASE_URL = 'http://127.0.0.1:7003/api';
+=======
+// const BASE_URL = 'http://127.0.0.1:7008/api';
+>>>>>>> 94012121b262fcf57a704563598a4d9f7c6bbabb
 function request(method) {
   return function (url, data = {}) {
     let user = wx.getStorageSync('user');

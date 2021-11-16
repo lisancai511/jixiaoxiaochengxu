@@ -1,49 +1,62 @@
-const {get} = require('../utils/request1')
+const { get } = require('../utils/request1')
 const api = require('../api/index')
 
-export async function getSubjectOneList(data) {
-  let {list, ...other} = await get(api.subjectOne, data)
-  list = list.map(item => ({
-    ...item,
-    options: item.options.map(opt => ({
-      description: opt,
-      className: '',
-    })),
-  }));
+export async function getSubjectOneList(params) {
+  let { data, ...other } = await get(api.subjectOne, params)
+  data = data.map((item, i) => {
+    let { options } = item
+    options = options.split(', ')
+    return {
+      ...item,
+      index: i,
+      options: options.map(opt => ({
+        description: opt,
+        className: '',
+      })),
+    }
+  });
   return {
     ...other,
-    list
+    list: data
   }
 }
 
-export async function getMockSubjectOne(data) {
-  let {list, ...other} = await get(api.mockSubjectOne, data)
-  list = list.map(item => ({
-    ...item,
-    options: item.options.map(opt => ({
-      description: opt,
-      className: '',
-    })),
-  }));
-  return {
-    ...other,
-    list,
-  };
-}
-
-export async function getSpecialOne(type) {
-  return get(`/${type}`).then(res => {
-    let { list = [], ...other } = res;
-    list = list.map(item => ({
+export async function getMockSubjectOne(params) {
+  let { data, ...other } = await get(api.mockSubjectOne, params)
+  data = data.map(item => {
+    let { options } = item
+    options = options.split(', ')
+    return {
       ...item,
       options: item.options.map(opt => ({
         description: opt,
         className: '',
       })),
-    }));
+    }
+  });
+  return {
+    ...other,
+    list: data,
+  };
+}
+
+export async function getSpecialOne(type) {
+  return get(`/${type}`).then(res => {
+    let { data = [], ...other } = res;
+    data = data.map(item => {
+      let { options } = item
+      options = options.split(', ')
+      return {
+        ...item,
+        options: item.options.map(opt => ({
+          description: opt,
+          className: '',
+        })),
+      }
+    });
     return {
       ...other,
-      list,
+      list: data,
     };
   });
 }

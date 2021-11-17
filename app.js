@@ -17,7 +17,6 @@ App({
     })
   },
   onLaunch: async function () {
-    console.log('app')
     // 获取系统状态栏信息
     this.getNavInfo()
     await getCurrentUser(true)

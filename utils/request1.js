@@ -4,7 +4,6 @@ function request(method) {
   return function (url, data = {}) {
     let user = wx.getStorageSync('user');
     const Token = (user && user.token) || '';
-    console.log('Token', Token);
     return new Promise((resolve, reject) => {
       wx.request({
         url: BASE_URL + url,

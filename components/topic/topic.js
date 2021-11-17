@@ -59,7 +59,7 @@ Component({
     // 点击每一个选项
     clickItem(e) {
       const { item, index, optidx } = e.currentTarget.dataset;
-      let { topicIndex, exerciseList, isShowResult, answerList } = this.data
+      let { topicIndex, exerciseList, isShowResult, swiperIndex } = this.data
       const { own_res } = exerciseList[index];
       let key = 'answerList[' + topicIndex + ']';
       let value = {
@@ -74,6 +74,13 @@ Component({
             topicIndex,
             res: true
           }
+          swiperIndex = swiperIndex + 1 > 2 ? 0 : swiperIndex + 1
+          this.setData({
+            swiperIndex
+          })
+          this._toNextTopic(swiperIndex);
+          this._setCircular();
+          this._checkStar();
           this.triggerEvent('checkOptionItem', params)
         } else {
           value.className = 'error'
@@ -195,6 +202,7 @@ Component({
     onSlideChangeEnd(e) {
       const { current, source } = e.detail;
       if (source === 'touch') {
+        console.log('slide end', current)
         this._slideItem(current)
       }
     },
@@ -241,14 +249,14 @@ Component({
       } = this.data;
       this.setData({
         modalName: e.currentTarget.dataset.target,
-        renderModal: true
+        // renderModal: true
       });
     },
 
     hideModal() {
       this.setData({
         modalName: null,
-        renderModal: false
+        // renderModal: false
       });
     },
     // 根据当前的topicIndex 判断swiper的index
@@ -323,7 +331,7 @@ Component({
       }))
       this.setData({
         answerList: list,
-        renderModal: false
+        renderModal: true
       })
     }
   },

@@ -51,7 +51,6 @@ Page({
       });
   },
   onLoad() {
-    console.log('onload ---')
   },
   onShow() {
     if (this.data.PageCur === 'mine') {

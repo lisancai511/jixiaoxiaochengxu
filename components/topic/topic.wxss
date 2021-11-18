@@ -34,33 +34,31 @@
 .answer-type {
   margin-right: 8px;
 }
-.classic-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  padding-top: 10rpx;
-  padding-bottom: 40px;
-}
 .classic-list-item {
-  width: 68rpx;
-  height: 68rpx;
-  line-height: 68rpx;
+  width: 90rpx;
+  height: 90rpx;
+  line-height: 90rpx;
   border-radius: 50%;
-  margin: 14rpx;
-  border: 1rpx solid black;
+  margin: 14rpx 10rpx 14rpx 18rpx;
+  border: 1rpx solid #a9a9a9;
+  color: #bfbfbf;
 }
 .classic-list-item.success {
   border: 1px solid #70b603;
+  color: #44cca3;
+  background: #d6f4ea;
 }
 .classic-list-item.error {
-  border: 1px solid rgba(211, 114, 126, 0.996078431372549);
+  border: 1px solid #fd8d74;
+  background: #fde9e5;
+  color: #fc856a;
 }
 /* .classic-list-item:nth-child(6n) {
   margin-right: 0;
 } */
 
 .cu-dialog {
-  height: 68%;
+  height: 58%;
 }
 
 .bestanswer {
@@ -104,9 +102,13 @@
   background-color: orange;
 }
 
-#recycleId {
-  display: flex;
-}
 .recycleItem {
   height: 98rpx;
+  flex: auto;
+}
+
+.footeWrap {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }

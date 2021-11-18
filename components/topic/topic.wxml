@@ -55,11 +55,13 @@
         <view class="action text-blue" bindtap="hideModal">取消</view>
       </view>
       <recycle-view height="450" scroll-to-index="{{topicIndex}}" batch="{{batchSetRecycleData}}" id="recycleId">
-        <recycle-item wx:for="{{answerList}}" wx:key="index" class="recycleItem">
-          <view data-index="{{index}}" bind:tap="gotoItem" class="classic-list-item {{item.className}}">
-            {{item.index + 1}}
-          </view>
-        </recycle-item>
+        <view class="footeWrap">
+          <recycle-item wx:for="{{answerList}}" wx:key="index" class="recycleItem">
+            <view data-index="{{index}}" bind:tap="gotoItem" class="classic-list-item {{item.className}}">
+              {{item.index + 1}}
+            </view>
+          </recycle-item>
+        </view>
       </recycle-view>
     </view>
   </view>

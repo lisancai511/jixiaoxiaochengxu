@@ -1,0 +1,39 @@
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">我的成绩</view>
+</cu-custom>
+<scroll-view scroll-x class="bg-white nav">
+  <view class="flex text-center">
+    <view class="cu-item flex-sub {{TabCur=='1'?'active cur':''}}" bindtap="tabSelect" id="1">
+      考试记录
+    </view>
+    <view class="cu-item flex-sub {{TabCur=='4'?'active cur':''}}" bindtap="tabSelect" id="4">
+      总排行榜
+    </view>
+  </view>
+</scroll-view>
+<swiper bindchange='onSlideChangeEnd' class="swiper" current="{{TabCur=='4'?1:0}}">
+  <swiper-item item-id="1">
+    <view class="title">
+      <view class="title">
+        <view class="wx_info_wrap">
+          <open-data type="userAvatarUrl" class="login-icon"></open-data>
+        </view>
+        <view class="m-l-20">您的历史最高成绩60分</view>
+      </view>
+    </view>
+    <view class="wrap" wx:for="{{list}}" wx:key="index">
+      <view class="wrapTop">
+        <view class="socer">{{item.score}}分</view>
+        <view>{{item.useTime}}</view>
+      </view>
+      <view>
+        <view class="cenghao">{{item.score>=90?'车神':'马路杀手'}}</view>
+        <view>{{item.createAt}}</view>
+      </view>
+    </view>
+  </swiper-item>
+  <swiper-item item-id="4">
+    <view>5654</view>
+  </swiper-item>
+</swiper>

@@ -1,6 +1,6 @@
 {
   "description": "项目配置文件",
-  "cloudfunctionRoot": "cloud",
+  "cloudfunctionRoot": "cloud/",
   "packOptions": {
     "ignore": []
   },
@@ -30,6 +30,7 @@
       "disablePlugins": [],
       "outputPath": ""
     },
+    "enableEngineNative": false,
     "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,
@@ -37,7 +38,8 @@
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "minifyWXSS": true
+    "minifyWXSS": true,
+    "minifyWXML": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.16.1",

@@ -17,7 +17,8 @@
     "pages/litest/index",
     "pages/error/error",
     "pages/payPage/index",
-    "pages/phoneNumber/phoneNumber"
+    "pages/phoneNumber/phoneNumber",
+    "pages/grade/grade"
   ],
   "window": {
     "backgroundTextStyle": "light",

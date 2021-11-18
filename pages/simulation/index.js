@@ -1,14 +1,15 @@
 Page({
   data: {
-    TabCur: 1,
-    scrollLeft: 0
+    TabCur: '1'
   },
   tabSelect(e) {
-    const { id } = e.currentTarget
-    console.log(e.currentTarget)
     this.setData({
-      TabCur: id,
-      scrollLeft: (id - 1) * 60
+      TabCur: e.target.id
+    })
+  },
+  onSlideChangeEnd(e) {
+    this.setData({
+      TabCur: e.detail.currentItemId
     })
   }
 })

@@ -1,17 +1,26 @@
-<view class="title">驾考一练过</view>
+<cu-custom bgColor="bg-gradual-pink" isBack="{{false}}">
+  <view slot="content" class="myscoure">驾考一练过</view>
+</cu-custom>
+<view class="topTitle"></view>
 <scroll-view scroll-x class="bg-white nav">
   <view class="flex text-center">
-    <view class="cu-item flex-sub {{TabCur==1?'active cur':''}}" bindtap="tabSelect" id="1">
+    <view class="cu-item flex-sub {{TabCur=='1'?'active cur':''}}" bindtap="tabSelect" id="1">
       科一
     </view>
-    <view class="cu-item flex-sub {{TabCur==4?'active cur':''}}" bindtap="tabSelect" id="4">
+    <view class="cu-item flex-sub {{TabCur=='4'?'active cur':''}}" bindtap="tabSelect" id="4">
       科四
     </view>
   </view>
 </scroll-view>
-<view wx:if="{{TabCur==1}}">
-  <kemuOne></kemuOne>
-</view>
-<view class="container" wx:if="{{TabCur==4}}">
-  <kemuFour></kemuFour>
-</view>
+<swiper bindchange='onSlideChangeEnd' class="swiper" current="{{TabCur=='4'?1:0}}">
+  <swiper-item item-id="1">
+    <view>
+      <kemuOne></kemuOne>
+    </view>
+  </swiper-item>
+  <swiper-item item-id="4">
+    <view>
+      <kemuFour></kemuFour>
+    </view>
+  </swiper-item>
+</swiper>

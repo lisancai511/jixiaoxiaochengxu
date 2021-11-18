@@ -1,4 +1,7 @@
-<view class="title">驾考一练过</view>
+<cu-custom bgColor="bg-gradual-pink" isBack="{{false}}">
+  <block slot="content">驾考一练过</block>
+</cu-custom>
+<view class="topTitle"></view>
 <scroll-view scroll-x class="bg-white nav">
   <view class="flex text-center">
     <view class="cu-item flex-sub {{TabCur==1?'active cur':''}}" bindtap="tabSelect" id="1">

@@ -1,6 +1,7 @@
 const MAX_SWIPER_LENGTH = 3;
 let cacheList = [];
 let collection = {};
+let timer = null
 Component({
   /**
    * 组件的属性列表
@@ -75,12 +76,22 @@ Component({
             res: true
           }
           swiperIndex = swiperIndex + 1 > 2 ? 0 : swiperIndex + 1
+          exerciseList[index].options[item.ta - 1].className = 'success';
           this.setData({
-            swiperIndex
+            [key]: value,
+            exerciseList
           })
-          this._toNextTopic(swiperIndex);
-          this._setCircular();
-          this._checkStar();
+          if (timer) {
+            clearTimeout(timer)
+          }
+          timer = setTimeout(() => {
+            this.setData({
+              swiperIndex
+            })
+            this._toNextTopic(swiperIndex);
+            this._setCircular();
+            this._checkStar();
+          }, 200)
           this.triggerEvent('checkOptionItem', params)
         } else {
           value.className = 'error'
@@ -88,14 +99,15 @@ Component({
             topicIndex,
             res: optidx + ''
           }
+          exerciseList[index].options[optidx].className = 'error';
+          exerciseList[index].options[item.ta - 1].className = 'success';
+          this.setData({
+            [key]: value,
+            exerciseList
+          });
           this.triggerEvent('checkOptionItem', params)
         }
-        this.data.exerciseList[index].options[optidx].className = 'error';
-        this.data.exerciseList[index].options[item.ta - 1].className = 'success';
-        this.setData({
-          [key]: value,
-          exerciseList: this.data.exerciseList,
-        });
+
       }
     },
     gotoItem(e) {
@@ -150,11 +162,10 @@ Component({
       const idx = current + 1 > 2 ? 0 : current + 1;
       const key = 'exerciseList[' + idx + ']';
       const topicInfo = cacheList[topicIndex + 2] || {};
+      this.triggerEvent('slideItem', topicIndex + 1)
       this.setData({
         [key]: topicInfo,
       });
-      this.triggerEvent('slideItem', topicIndex + 1)
-      return this.data.topicIndex;
     },
     // 上一道题目
     _toLastTopic(current) {
@@ -162,10 +173,10 @@ Component({
       topicIndex = topicIndex - 1 < 0 ? 0 : topicIndex - 1
       const idx = current - 1 < 0 ? 2 : current - 1;
       const key = 'exerciseList[' + idx + ']';
+      this.triggerEvent('slideItem', topicIndex)
       this.setData({
         [key]: cacheList[topicIndex - 1] || {}
       });
-      this.triggerEvent('slideItem', topicIndex)
     },
     _setCircular() {
       let { topicIndex, isCircular } = this.data;
@@ -202,7 +213,9 @@ Component({
     onSlideChangeEnd(e) {
       const { current, source } = e.detail;
       if (source === 'touch') {
-        console.log('slide end', current)
+        if (timer) {
+          clearTimeout(timer)
+        }
         this._slideItem(current)
       }
     },
@@ -311,6 +324,9 @@ Component({
       this._checkStar()
       this._setCircular()
     },
+    getCacheList() {
+
+    },
     async _initTopicData() {
       cacheList = wx.getStorageSync(this.data.topicCacheKey) || []
       const { topicIndex } = this.data
@@ -335,7 +351,9 @@ Component({
       })
     }
   },
-  ready: function () {
-
+  detached: function () {
+    if (timer) {
+      clearTimeout(timer)
+    }
   }
 })

@@ -34,19 +34,12 @@
 .answer-type {
   margin-right: 8px;
 }
-.classic-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  padding-top: 10rpx;
-  padding-bottom: 40px;
-}
 .classic-list-item {
-  width: 86rpx;
-  height: 86rpx;
-  line-height: 86rpx;
+  width: 90rpx;
+  height: 90rpx;
+  line-height: 90rpx;
   border-radius: 50%;
-  margin: 14rpx;
+  margin: 14rpx 10rpx 14rpx 18rpx;
   border: 1rpx solid #a9a9a9;
   color: #bfbfbf;
 }
@@ -109,9 +102,13 @@
   background-color: orange;
 }
 
-#recycleId {
-  display: flex;
-}
 .recycleItem {
   height: 98rpx;
+  flex: auto;
+}
+
+.footeWrap {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }

@@ -66,6 +66,11 @@ Page({
       url: `/pages/special/special?type=specialOne`,
     });
   },
+  gotoGrade() {
+    wx.navigateTo({
+      url: `/pages/grade/grade?type=one`
+    })
+  },
   gotoSubject: function (type) {
     switch (type.currentTarget.id) {
       case 'mockExam':
@@ -74,7 +79,6 @@ Page({
       case 'wrongSubject':
         this._gotoError();
         break;
-
       case 'special':
         this._gotoSpecial();
         break;
@@ -83,6 +87,9 @@ Page({
         break;
       case 'vip':
         this._gotoVip();
+        break;
+      case 'grade':
+        this.gotoGrade();
         break;
       default:
         this._getClassicList().then(() => {

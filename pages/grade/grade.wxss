@@ -1,0 +1,47 @@
+.active {
+  color: #000;
+}
+.wx_info_wrap {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.title {
+  padding: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+page {
+  height: 100%;
+}
+
+.swiper {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.wrap {
+  display: flex;
+  padding: 20rpx;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e0e0e0;
+}
+.wrapTop {
+  display: flex;
+  align-items: center;
+}
+
+.socer {
+  margin-right: 40rpx;
+  font-size: 18px;
+  color: red;
+}
+
+.cenghao {
+  width: 100%;
+  text-align: right;
+}

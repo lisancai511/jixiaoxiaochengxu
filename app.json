@@ -18,7 +18,8 @@
     "pages/payPage/index",
     "pages/phoneNumber/phoneNumber",
     "pages/grade/grade",
-    "pages/mine/index"
+    "pages/mine/index",
+    "pages/about/about"
   ],
   "window": {
     "backgroundTextStyle": "light",

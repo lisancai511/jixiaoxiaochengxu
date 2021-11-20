@@ -3,7 +3,7 @@
   <text>子组件isCircular: {{isCircular}}</text>
   <text>子组件swiperIndex: {{swiperIndex}}</text> -->
   <swiper bindchange='onSlideChangeEnd' current="{{swiperIndex}}" circular="{{isCircular}}" class="swiper">
-    <block wx:for="{{exerciseList}}" wx:key="{{item.id}}">
+    <block wx:for="{{exerciseList}}" wx:key="id">
       <swiper-item item-id="{{item.id}}">
         <view class="exercise">
           <view class="question">
@@ -16,7 +16,7 @@
             <image wx:if="{{item.imageurl}}" src="{{item.imageurl}}" class="image"></image>
           </view>
           <view class="answer">
-            <view data-item="{{item}}" data-index="{{index}}" data-optidx="{{optIdx}}" bind:tap="clickItem" class="answer-item {{isShowResult && item.ta == optIdx+1 ? 'success' : ''}} {{answer.className}}" wx:for="{{item.options}}" wx:for-index="optIdx" wx:key="{{answer}}" wx:for-item="answer">
+            <view data-item="{{item}}" data-index="{{index}}" data-optidx="{{optIdx}}" bind:tap="clickItem" class="answer-item {{isShowResult && item.ta == optIdx+1 ? 'success' : ''}} {{answer.className}}" wx:for="{{item.options}}" wx:for-index="optIdx" wx:key="answer" wx:for-item="answer">
               <text>{{answer.description}}</text>
             </view>
           </view>

@@ -4,75 +4,9 @@
 <view class="text-center">
   <text>倒计时：{{countDownTime}}</text>
 </view>
-<swiper bindchange='onSlideChangeEnd' current="{{swiperIndex}}" circular="{{isCircular}}" class="swiper">
-  <block wx:for="{{exerciseList}}" wx:key="{{item.id}}">
-    <swiper-item item-id="{{item.id}}">
-      <view class="exercise">
-        <view class="question">
-          <text wx:if="{{item.Type==1}}" class="question-type">判断题</text>
-          <text wx:if="{{item.Type==2}}" class="question-type">单选题</text>
-          <text wx:if="{{item.Type==3}}" class="question-type">多选题</text>
-          <text class="question-dec">{{topicIndex + 1}}. {{item.question}}</text>
-        </view>
-        <view class="answer">
-          <view data-item="{{item}}" data-index="{{index}}" data-optidx="{{optIdx}}" bind:tap="clickItem" class="answer-item {{isShowResult && item.ta == optIdx+1 ? 'success' : ''}} {{answer.className}}" wx:for="{{item.options}}" wx:for-index="optIdx" wx:key="{{answer}}" wx:for-item="answer">
-            <text>{{answer.description}}</text>
-          </view>
-        </view>
-        <!-- <view wx:if="{{isShowResult || item.own_res}}">
-          <view>解析：</view>
-          <view class="bestanswer">{{item.bestanswer}}</view>
-        </view> -->
-      </view>
-    </swiper-item>
-  </block>
-</swiper>
-<view class="cu-bar tabbar bg-white shadow foot">
-  <view class="action">
-    <text class="n-icon icondui"></text>
-    <view class="">{{successNumber}}</view>
-  </view>
-  <view class="action">
-    <text class="n-icon iconicon_huabanfuben"></text>
-    <view class="">{{wrongNumber}}</view>
-  </view>
-  <view class="action" bindtap="showModal" data-target="bottomModal">
-    <text class="n-icon iconsuolvetuxianshitubiao"></text>
-    <view class="">{{topicIndex + 1}}/{{total}}</view>
-  </view>
-  <!-- <view class="action" bindtap="collectionItem">
-    <text class="n-icon {{hasCollected ? 'iconshoucang': 'iconshoucang2'}}"></text>
-    <view class="">收藏</view>
-  </view> -->
-  <!-- <view class="action" bind:tap="changeRecite">
-    <text class="n-icon {{isShowResult ? 'iconshu1' : 'iconshu'}} "></text>
-    <view>背题模式</view>
-  </view> -->
-  <view class="action" bind:tap="takeSubmit">
+<topic isShowRecite="{{false}}" class="topic" bind:jumpToItem="jumpToItem" bind:slideItem="slideItem" bind:checkOptionItem="checkOptionItem" bind:toggleCollect="toggleCollect" successNumber="{{successNumber}}" wrongNumber="{{wrongNumber}}" total="{{total}}" collectionKey="SUBJECT_ONE_COLLECTION" topicCacheKey="SUBJECT_ONE_MOCK" topicIndex="{{topicIndex}}">
+  <view class="action" bind:tap="takeSubmit" slot="takeSubmit">
     <text class="n-icon {{isShowResult ? 'iconshu1' : 'iconshu'}} "></text>
     <view>交卷</view>
   </view>
-</view>
-<wxs src="./tool.wxs" module="tool"></wxs>
-<view wx:if="{{renderModal}}" class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
-  <view class="cu-dialog">
-    <view class="cu-bar bg-white">
-      <view class="action text-green"></view>
-      <view class="action text-blue" bindtap="hideModal">取消</view>
-    </view>
-    <!-- <scroll-view scroll-y="true" class="" style="height: 100%;">
-      <view class="classic-list">
-        <view wx:for="{{total}}" data-index="{{index}}" bindtap="gotoItem" wx:key="{{item}}" class="classic-list-item {{getDotClassName(item)}}">
-          <text>{{index + 1}}</text>
-        </view>
-      </view>
-    </scroll-view> -->
-    <recycle-view batch="{{batchSetRecycleData}}" id="recycleId">
-      <recycle-item wx:for="{{answerList}}" wx:key="index">
-        <view data-index="{{index}}" bind:tap="gotoItem" class="classic-list-item {{item.class}}">
-          {{item.index + 1}}
-        </view>
-      </recycle-item>
-    </recycle-view>
-  </view>
-</view>
+</topic>

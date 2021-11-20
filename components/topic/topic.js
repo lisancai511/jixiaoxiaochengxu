@@ -4,6 +4,9 @@ let cacheList = [];
 let collection = {};
 let timer = null
 Component({
+  options: {
+    multipleSlots: true
+  },
   /**
    * 组件的属性列表
    */
@@ -32,6 +35,10 @@ Component({
       type: Number,
       value: 0
     },
+    isShowRecite: {
+      type: Boolean,
+      value: true
+    }
     // hasCollected: {
     //   type: Boolean,
     //   value: false
@@ -257,20 +264,17 @@ Component({
      */
 
     showModal(e) {
-      console.log(e);
-      const {
-        total
-      } = this.data;
+      const answerList = this._getAnswerList()
+      console.log(answerList)
       this.setData({
         modalName: e.currentTarget.dataset.target,
-        // renderModal: true
+        answerList
       });
     },
 
     hideModal() {
       this.setData({
-        modalName: null,
-        // renderModal: false
+        modalName: null
       });
     },
     // 根据当前的topicIndex 判断swiper的index
@@ -342,21 +346,19 @@ Component({
       const swiperIndex = this._getSwiperIndexByTopicIndex(topicIndex)
       this._checkStar()
       this._setCircular()
+      const answerList = this._getAnswerList()
       this.setData({
         exerciseList,
-        swiperIndex
+        swiperIndex,
+        answerList,
+        renderModal: true
       })
-      this._renderModal()
     },
-    _renderModal() {
-      const list = cacheList.map((item, index) => ({
+    _getAnswerList() {
+      return cacheList.map((item, index) => ({
         index,
         className: item.className
       }))
-      this.setData({
-        answerList: list,
-        renderModal: true
-      })
     }
   },
   detached: function () {

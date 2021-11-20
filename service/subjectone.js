@@ -28,7 +28,7 @@ export async function getMockSubjectOne(params) {
     options = options.split(', ')
     return {
       ...item,
-      options: item.options.map(opt => ({
+      options: options.map(opt => ({
         description: opt,
         className: '',
       })),
@@ -48,7 +48,7 @@ export async function getSpecialOne(type) {
       options = options.split(', ')
       return {
         ...item,
-        options: item.options.map(opt => ({
+        options: options.map(opt => ({
           description: opt,
           className: '',
         })),

@@ -10,7 +10,9 @@
             <text wx:if="{{item.Type==1}}" class="question-type">判断题</text>
             <text wx:if="{{item.Type==2}}" class="question-type">单选题</text>
             <text wx:if="{{item.Type==3}}" class="question-type">多选题</text>
-            <text class="question-dec">{{topicIndex + 1}}. {{item.question}}</text>
+            <text class="question-dec" wx:if="{{topicIndex < total}}">
+              {{topicIndex + 1}}. {{item.question}}
+            </text>
           </view>
           <view class="answer">
             <view data-item="{{item}}" data-index="{{index}}" data-optidx="{{optIdx}}" bind:tap="clickItem" class="answer-item {{isShowResult && item.ta == optIdx+1 ? 'success' : ''}} {{answer.className}}" wx:for="{{item.options}}" wx:for-index="optIdx" wx:key="{{answer}}" wx:for-item="answer">
@@ -42,10 +44,11 @@
       <text class="n-icon {{hasCollected ? 'iconshoucang': 'iconshoucang2'}}"></text>
       <view class="">收藏</view>
     </view>
-    <view class="action" bind:tap="changeRecite">
+    <view class="action" bind:tap="changeRecite" wx:if="{{isShowRecite}}">
       <text class="n-icon {{isShowResult ? 'iconshu1' : 'iconshu'}} "></text>
       <view>背题模式</view>
     </view>
+    <slot name="takeSubmit"></slot>
   </view>
   <wxs src="./tool.wxs" module="tool"></wxs>
   <view wx:if="{{renderModal}}" class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">

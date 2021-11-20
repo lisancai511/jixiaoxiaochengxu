@@ -4,9 +4,8 @@ import {
   cancelCollection,
 } from '../../utils/util.js';
 import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
-import { SUBJECT_ONE_ERROR, SUBJECT_ONE_RESULT, SUBJECT_ONE_SUCCESS, SUBJECT_ONE_TOPIC_INDEX, SUBJECT_ONE_ERROR_NUMBER, SUBJECT_ONE_SUCCESS_NUMBER } from '../../utils/constant'
+import { SUBJECT_ONE_RESULT, SUBJECT_ONE_TOPIC_INDEX, SUBJECT_ONE_ERROR_NUMBER, SUBJECT_ONE_SUCCESS_NUMBER } from '../../utils/constant'
 const app = getApp();
-const MAX_SWIPER_LENGTH = 3;
 let cacheList = [];
 let collection = {};
 Page({
@@ -94,13 +93,11 @@ Page({
   },
   async _initAppData() {
     const { list, total } = await getSubjectOne()
-    this.setData({
-      total
-    })
     cacheList = list
     const index = wx.getStorageSync(SUBJECT_ONE_TOPIC_INDEX) || 0
     const topicIndex = index < 0 ? 0 : index
     this.setData({
+      total,
       topicIndex
     })
     const ref = this.selectComponent('.topic')

@@ -3,6 +3,7 @@
     "pages/index/index",
     "pages/test/test",
     "pages/exercise/exercise",
+    "pages/mockOne/mockOne",
     "pages/mine/index",
     "pages/record/record",
     "pages/special/special",

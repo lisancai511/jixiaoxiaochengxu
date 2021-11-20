@@ -25,6 +25,7 @@ export async function getSubjectOne(data) {
     let total = wx.getStorageSync(constant.SUBJECT_ONE_TOTAL)
     if (list) {
       list = getTopicClassName(list, result)
+      console.log("ll--", list)
       return {
         list,
         total

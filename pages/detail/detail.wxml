@@ -1,0 +1,30 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content" class="myscoure">本次成绩</view>
+</cu-custom>
+<scroll-view scroll-y class="scrollPage">
+  <view mode='widthFix' class='png' style='width:100%;height:486rpx'>
+     <view class="socer">{{souce}}</view>
+     <view class="socer">{{souce<90?'不及格':'优秀'}}</view>
+  </view>
+  <view class="cu-list menu margin-top-xl margin-bottom-xl shadow-lg radius">
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="feedback">
+        <text class="cuIcon-calendar text-cyan"></text>
+        <text class="text-grey">查看错题</text>
+      </button>
+    </view>
+    <view class="cu-item arrow">
+      <button class="cu-btn content" bindtap="goToCollect">
+        <text class="cuIcon-newshot text-yellow"></text>
+        <text class="text-grey">我的成绩</text>
+      </button>
+    </view>
+    <view class="cu-item arrow" bindtap="goToAbout">
+      <button class="cu-btn content">
+        <text class="cuIcon-emojifill text-red"></text>
+        <text class="text-grey">重新考试</text>
+      </button>
+    </view>
+  </view>
+</scroll-view>

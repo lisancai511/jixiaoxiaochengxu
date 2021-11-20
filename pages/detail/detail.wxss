@@ -1,0 +1,20 @@
+page {
+  height: 100%;
+  overflow: hidden;
+}
+
+.myscoure {
+  color: #000;
+}
+.png {
+  background-image: linear-gradient(to top, #00f2fe, #4facfe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.socer {
+  font-size: 30px;
+  color: #fff;
+}

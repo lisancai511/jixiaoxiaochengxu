@@ -1,4 +1,6 @@
-// pages/special/special.js
+import { getGradeList } from '../../service/common'
+import { getUserStorage } from '../../utils/storage'
+import { formatTime } from '../../utils/util'
 Page({
   /**
    * 页面的初始数据
@@ -38,43 +40,65 @@ Page({
       TabCur: e.detail.currentItemId
     })
   },
+  async getGradeList() {
+    const user = getUserStorage()
+    if (user && user.id) {
+      const { data = [] } = await getGradeList({
+        wxUserId: user.id,
+        type: '1'
+      })
+      let list = data.map(item => {
+        const { createdAt, ...other } = item
+        return {
+          ...other,
+          createdAt: formatTime(createdAt)
+        }
+      })
+      console.log(list)
+      this.setData({
+        list
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {},
+  onLoad: function (options) {
+    this.getGradeList()
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {},
+  onReady: function () { },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {},
+  onShow: function () { },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {},
+  onHide: function () { },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {},
+  onUnload: function () { },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {},
+  onPullDownRefresh: function () { },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {},
+  onReachBottom: function () { },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {},
+  onShareAppMessage: function () { },
 });

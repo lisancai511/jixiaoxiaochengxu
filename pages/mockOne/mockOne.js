@@ -3,12 +3,15 @@ import {
   saveCollection,
   cancelCollection,
 } from '../../utils/util.js';
+import { getUserStorage } from '../../utils/storage'
 import { getMockSubjectOne } from '../../service/subjectone'
+import { addGrade } from '../../service/common'
 import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
 import { SUBJECT_ONE_MOCK, SUBJECT_ONE_MOCK_TIME, SUBJECT_ONE_MOCK_RESULT, SUBJECT_ONE_MOCK_TOPIC_INDEX, SUBJECT_ONE_MOCK_ERROR_NUMBER, SUBJECT_ONE_MOCK_SUCCESS_NUMBER } from '../../utils/constant'
 const app = getApp();
 
-const COUNT_DOWN_TIME = 45 * 60
+const COUNT_DOWN_TIME = '45:00'
+const COUNT_DOWN_TIME_NUMBER = 45 * 60
 let cacheList = [];
 let collection = {};
 let timer = null
@@ -23,7 +26,7 @@ Page({
     total: 100,
     successNumber: 0,
     wrongNumber: 0,
-    countDownTime: '45:00'
+    countDownTime: COUNT_DOWN_TIME
   },
   calculateTime(timeNumber) {
     let minute = Math.floor(timeNumber / 60)
@@ -36,11 +39,24 @@ Page({
     }
     return `${minute}:${second}`
   },
-  renderTimeString(timeNumber) {
+  renderTimeByStr(timeStr) {
+    const timeNumber = this.getTimeNumByTimeStr(timeStr)
     let timeString = this.calculateTime(timeNumber)
     this.setData({
       countDownTime: timeString
     })
+  },
+  renderTimeByNum(timeNumber) {
+    let timeString = this.calculateTime(timeNumber)
+    this.setData({
+      countDownTime: timeString
+    })
+  },
+  getTimeNumByTimeStr(countDownTime) {
+    let [m, s] = countDownTime.split(':')
+    m = Number(m)
+    s = Number(s)
+    return m * 60 + s
   },
   forceSubmit() {
     wx.showModal({
@@ -56,26 +72,19 @@ Page({
         }
       }
     })
-
   },
-  renderCountDownTime(timeNumber) {
+  renderCountDownTime(timeStr) {
+    let timeNumber = this.getTimeNumByTimeStr(timeStr)
     countDownTimer = setInterval(() => {
       timeNumber--
       if (timeNumber === 0) {
         clearInterval(countDownTimer)
         this.forceSubmit()
       }
-      this.renderTimeString(timeNumber)
+      this.renderTimeByNum(timeNumber)
     }, 1000)
-    this.renderTimeString(timeNumber)
+    this.renderTimeByNum(timeNumber)
   },
-  getTimeNumByTimeStr(countDownTime) {
-    let [m, s] = countDownTime.split(':')
-    m = Number(m)
-    s = Number(s)
-    return m * 60 + s
-  },
-
   jumpToItem(e) {
     const topicIndex = e.detail
     this.setData({
@@ -196,8 +205,7 @@ Page({
           if (res.confirm) {
             this._initErrorAndSuccess()
             this._initAppData()
-            const timeNum = wx.getStorageSync(SUBJECT_ONE_MOCK_TIME)
-            const countTime = this.getTimeNumByTimeStr(timeNum)
+            const countTime = wx.getStorageSync(SUBJECT_ONE_MOCK_TIME)
             this.renderCountDownTime(countTime)
           } else if (res.cancel) {
             this._resetMock()
@@ -206,8 +214,9 @@ Page({
         }
       })
     } else {
+      const { countDownTime } = this.data
       this._resetMock()
-      this.renderCountDownTime(COUNT_DOWN_TIME)
+      this.renderCountDownTime(countDownTime)
       this._initAppData()
     }
   },
@@ -219,6 +228,9 @@ Page({
     }
   },
   takeSubmit() {
+    if (countDownTimer) {
+      clearInterval(countDownTimer)
+    }
     const { successNumber, wrongNumber, total } = this.data
     const reset = total - (successNumber + wrongNumber)
     let content = '是否确认提交试卷？'
@@ -230,33 +242,47 @@ Page({
       cancelText: '确认提交',
       confirmText: '继续答题',
       success: (res) => {
-        if (res.cancel) {
-          // this._resetMock()
-          wx.redirectTo({
-            url: '/pages/record/record'
-          })
-          // wx.showToast({
-          //   title: '提交成功',
-          //   icon: 'success'
-          // })
-          // if(timer) {
-          //   clearTimeout(timer)
-          // }
-          // timer = setTimeout(() => {
-          //   console.log('123')
-          //   wx.navigateBack()
-          // }, 3000)
+        console.log(res)
+        const { confirm, cancel } = res
+        if (confirm) {
+          const { countDownTime } = this.data
+          this.renderCountDownTime(countDownTime)
         }
-      }
+        if (res.cancel) {
+          this.sendScoreToServer()
+          wx.redirectTo({
+            url: '/pages/record/record',
+          })
+        }
+      },
     })
+  },
+  _getUsedTimeStr() {
+    const { countDownTime } = this.data
+    const timeNumber = this.getTimeNumByTimeStr(countDownTime)
+    const usedTimeNumber = COUNT_DOWN_TIME_NUMBER - timeNumber
+    const usedTimeStr = this.calculateTime(usedTimeNumber)
+    return usedTimeStr
+  },
+  sendScoreToServer() {
+    const user = getUserStorage()
+    if (user && user.id) {
+      const score = wx.getStorageSync(SUBJECT_ONE_MOCK_SUCCESS_NUMBER)
+      const useTime = this._getUsedTimeStr()
+      const params = {
+        wxUserId: user.id,
+        score,
+        useTime,
+        type: '1'
+      }
+      addGrade(params)
+    }
+
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // console.log(options.type);
-    // 判断是否正在考试未交卷的情况
-    // this.renderCountDownTime()
     this._checkCache()
   },
 

@@ -19,7 +19,9 @@
     "pages/error/error",
     "pages/payPage/index",
     "pages/phoneNumber/phoneNumber",
-    "pages/grade/grade"
+    "pages/grade/grade",
+    "pages/mine/index",
+    "pages/about/about"
   ],
   "window": {
     "backgroundTextStyle": "light",

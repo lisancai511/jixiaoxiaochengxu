@@ -10,7 +10,7 @@
           <image class="icon" src="../../images/cuoti.png" />
           <text class="m-t-10">我的错题</text>
         </view>
-        <view class="left_item m-t-20 m-b-20">
+        <view class="left_item m-t-20 m-b-20" id="grade" bindtap="gotoSubject">
           <image class="icon" src="../../images/chengji.png" />
           <text class="m-t-10">我的成绩</text>
         </view>
@@ -40,11 +40,7 @@
     </view>
   </view>
   <view class="botClass">
-    <text>
-      考驾照，就用驾考一练过
-    </text>
-    <text class="bottom">
-      www.yilianguo.com
-    </text>
+    <text>考驾照，就用驾考一练过</text>
+    <text class="bottom">www.yilianguo.com</text>
   </view>
 </view>

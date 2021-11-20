@@ -1,0 +1,11 @@
+<cu-custom bgColor="bg-gradual-green" isBack="{{true}}"><view slot="backText">返回</view><view slot="content">关于</view></cu-custom>
+<view class='margin-xl bg-white padding-xl radius shadow-lg'>
+  <view class='text-center margin-bottom text-lg  text-grey'>关于驾考一练过</view>
+  <view class='text-content'>
+    <view>欢迎使用</view>
+    <view class='margin-top-sm'>该项目是我们开发的一款方便大家考驾照的答题小程序。基础题目免费，开通Vip后可做精简500题，有效帮助大家通过考试。</view>
+    <view class='margin-top-sm'>该项目使用了color Ui，再次向作者表示感谢。</view>
+    <view class='margin-top-sm'>商业合作：15395833823，13271591339。</view>
+    <view class='margin-top-sm'>更多功能敬请期待！</view>
+  </view>
+</view>

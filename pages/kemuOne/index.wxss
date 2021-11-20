@@ -68,7 +68,7 @@
   flex-direction: column;
 }
 .bottom {
-  margin-top: -24rpx;
+  margin-top: -2rpx;
 }
 
 .icon {

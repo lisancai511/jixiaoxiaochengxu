@@ -21,8 +21,8 @@
 
   <view class="user_info">
     <view class="user_info_title">
-      <view class="left">科一</view>
-      <view class="right myactive">科四</view>
+      <view bindtap="handleCheck" class="{{activeType==1?'left':'left myactive'}}" id="1">科一</view>
+      <view bindtap="handleCheck" class="{{activeType==4?'right':'right myactive'}}" id="4">科四</view>
     </view>
     <view class="user_info_main">
       <view class="wrap">
@@ -56,20 +56,20 @@
         <text class="text-grey">意见反馈</text>
       </button>
     </view>
-    <view class="cu-item arrow">
+    <!-- <view class="cu-item arrow">
       <button class="cu-btn content" open-type="feedback">
         <text class="cuIcon-creativefill text-orange"></text>
         <text class="text-grey">报名驾校</text>
       </button>
-    </view>
+    </view> -->
     <view class="cu-item arrow">
-      <button class="cu-btn content" open-type="feedback">
+      <button class="cu-btn content" bindtap="goToCollect">
         <text class="cuIcon-favorfill text-yellow"></text>
         <text class="text-grey">我的收藏</text>
       </button>
     </view>
-    <view class="cu-item arrow">
-      <button class="cu-btn content" open-type="feedback">
+    <view class="cu-item arrow" bindtap="goToAbout">
+      <button class="cu-btn content">
         <text class="cuIcon-emojifill text-red"></text>
         <text class="text-grey">关于我们</text>
       </button>

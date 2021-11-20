@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isCheckPhone: false
+    isCheckPhone: false,
+    activeType: 1
   },
   async gotoItem(e) {
     try {
@@ -62,11 +63,16 @@ Page({
       url: '/pages/phoneNumber/phoneNumber'
     })
   },
+  handleCheck(e) {
+    this.setData({
+      activeType: e.target.id
+    })
+    // TODO 根据id去请求科一科四的数据
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log('options', options)
     this.userInit()
   },
 

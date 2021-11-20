@@ -12,6 +12,9 @@
             <text wx:if="{{item.Type==3}}" class="question-type">多选题</text>
             <text class="question-dec">{{topicIndex + 1}}. {{item.question}}</text>
           </view>
+          <view class="imageWrap">
+            <image wx:if="{{item.imageurl}}" src="{{item.imageurl}}" class="image"></image>
+          </view>
           <view class="answer">
             <view data-item="{{item}}" data-index="{{index}}" data-optidx="{{optIdx}}" bind:tap="clickItem" class="answer-item {{isShowResult && item.ta == optIdx+1 ? 'success' : ''}} {{answer.className}}" wx:for="{{item.options}}" wx:for-index="optIdx" wx:key="{{answer}}" wx:for-item="answer">
               <text>{{answer.description}}</text>

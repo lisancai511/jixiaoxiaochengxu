@@ -4,7 +4,6 @@ Page({
     wx.cloud.callFunction({
       name: "pay",
       success(res) {
-        console.log(res, 77)
         wx.requestPayment({
           timeStamp: res.result.timeStamp,
           nonceStr: res.result.nonceStr,

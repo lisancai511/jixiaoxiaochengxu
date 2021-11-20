@@ -91,7 +91,7 @@ Component({
             this._toNextTopic(swiperIndex);
             this._setCircular();
             this._checkStar();
-          }, 200)
+          }, 400)
           this.triggerEvent('checkOptionItem', params)
         } else {
           value.className = 'error'

@@ -21,8 +21,8 @@
 
   <view class="user_info">
     <view class="user_info_title">
-      <view class="left">科一</view>
-      <view class="right myactive">科四</view>
+      <view bindtap="handleCheck" class="{{activeType==1?'left':'left myactive'}}" id="1">科一</view>
+      <view bindtap="handleCheck" class="{{activeType==4?'right':'right myactive'}}" id="4">科四</view>
     </view>
     <view class="user_info_main">
       <view class="wrap">

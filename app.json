@@ -3,7 +3,6 @@
     "pages/index/index",
     "pages/test/test",
     "pages/exercise/exercise",
-    "pages/mine/index",
     "pages/record/record",
     "pages/special/special",
     "pages/commonExercise/commonExercise",
@@ -18,7 +17,8 @@
     "pages/error/error",
     "pages/payPage/index",
     "pages/phoneNumber/phoneNumber",
-    "pages/grade/grade"
+    "pages/grade/grade",
+    "pages/mine/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

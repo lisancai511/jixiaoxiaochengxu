@@ -29,7 +29,7 @@
       </view>
       <view>
         <view class="cenghao">{{item.score>=90?'车神':'马路杀手'}}</view>
-        <view>{{item.createAt}}</view>
+        <view>{{item.createdAt}}</view>
       </view>
     </view>
   </swiper-item>

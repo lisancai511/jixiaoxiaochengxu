@@ -1,5 +1,11 @@
 import { ANSWER_ONE_ID_USER, ERROR_ONE_ID, SUBJECT_ONE, SUBJECT_ONE_COLLECTION } from '../utils/constant';
 const formatTime = date => {
+  if (!date) {
+    date = new Date()
+  }
+  if (typeof date === 'string') {
+    date = new Date(date)
+  }
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();

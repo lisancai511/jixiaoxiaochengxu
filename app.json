@@ -4,7 +4,6 @@
     "pages/test/test",
     "pages/exercise/exercise",
     "pages/mockOne/mockOne",
-    "pages/mine/index",
     "pages/record/record",
     "pages/special/special",
     "pages/commonExercise/commonExercise",
@@ -20,8 +19,7 @@
     "pages/payPage/index",
     "pages/phoneNumber/phoneNumber",
     "pages/grade/grade",
-    "pages/mine/index",
-    "pages/about/about"
+    "pages/mine/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

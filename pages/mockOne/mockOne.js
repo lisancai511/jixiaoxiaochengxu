@@ -181,6 +181,8 @@ Page({
     wx.removeStorageSync(SUBJECT_ONE_MOCK_RESULT)
     wx.removeStorageSync(SUBJECT_ONE_MOCK_TOPIC_INDEX)
     wx.removeStorageSync(SUBJECT_ONE_MOCK_TIME)
+    wx.removeStorageSync(SUBJECT_ONE_MOCK_SUCCESS_NUMBER)
+    wx.removeStorageSync(SUBJECT_ONE_MOCK_ERROR_NUMBER)
   },
   _checkCache() {
     const cache = wx.getStorageSync(SUBJECT_ONE_MOCK_RESULT) || null

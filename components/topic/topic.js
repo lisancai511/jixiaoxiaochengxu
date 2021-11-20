@@ -1,3 +1,4 @@
+import { getSubjectOneErrorList } from '../../utils/one'
 const MAX_SWIPER_LENGTH = 3;
 let cacheList = [];
 let collection = {};
@@ -325,10 +326,17 @@ Component({
       this._setCircular()
     },
     getCacheList() {
+      const { topicCacheKey } = this.data
+      switch (topicCacheKey) {
+        case 'SUBJECT_ONE_ERROR':
+          return getSubjectOneErrorList()
+        default:
+          return wx.getStorageSync(this.data.topicCacheKey) || []
+      }
 
     },
     async _initTopicData() {
-      cacheList = wx.getStorageSync(this.data.topicCacheKey) || []
+      cacheList = this.getCacheList()
       const { topicIndex } = this.data
       const exerciseList = this._getPageTopicList(topicIndex, cacheList)
       const swiperIndex = this._getSwiperIndexByTopicIndex(topicIndex)

@@ -22,7 +22,7 @@ Page({
   },
   getTopScore(list = []) {
     if (list.length) {
-      list.sort((a, b) => a.score - b.score)
+      list.sort((a, b) => b.score - a.score)
       return list[0].score
     }
     return null

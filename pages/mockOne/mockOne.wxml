@@ -7,6 +7,6 @@
 <topic isShowRecite="{{false}}" class="topic" bind:jumpToItem="jumpToItem" bind:slideItem="slideItem" bind:checkOptionItem="checkOptionItem" bind:toggleCollect="toggleCollect" successNumber="{{successNumber}}" wrongNumber="{{wrongNumber}}" total="{{total}}" collectionKey="SUBJECT_ONE_COLLECTION" topicCacheKey="SUBJECT_ONE_MOCK" topicIndex="{{topicIndex}}">
   <view class="action" bind:tap="takeSubmit" slot="takeSubmit">
     <text class="n-icon {{isShowResult ? 'iconshu1' : 'iconshu'}} "></text>
-    <view>交卷</view>
+    <view class="footer">交卷</view>
   </view>
 </topic>

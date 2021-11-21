@@ -1,4 +1,7 @@
+const topicFour = require('./specialFour')
+const { SPECIAL } = require('./basic')
 //  科目一
+
 export const topicOne = {
   koufenfakuan: {
     title: '扣分罚款题',
@@ -300,7 +303,13 @@ export const topicOne = {
   }
 };
 
-function getTopicBasic(topicMap) {
+const topicTypeMap = {
+  one: topicOne,
+  four: topicFour
+}
+
+export function getTopicBasic(type) {
+  const topicMap = topicTypeMap[type]
   let list = []
   for (let key in topicMap) {
     const { title = '', ids = [] } = topicMap[key]
@@ -316,12 +325,24 @@ function getTopicBasic(topicMap) {
   }
   return list
 }
-
-export function getTopicListByType(allList = [], type) {
+/**
+ * 通过类型返回专项练习的数据
+ * @param {string} kemuType one | four
+ * @returns 题目的数组
+ */
+export function getTopicListByType(kemuType, type) {
+  const listMap = {
+    one: 'SUBJECT_ONE',
+    four: 'SUBJECT_Four'
+  }
+  const topicInfo = topicTypeMap[kemuType]
+  const key = listMap[kemuType]
+  const allList = wx.getStorageSync(key) || []
+  console.log(allList)
   let t1 = new Date().getTime()
   if (!Array.isArray(allList) || !allList.length) return []
   if (type == undefined) return []
-  let ids = topicOne[type] && topicOne[type].ids
+  let ids = topicInfo[type] && topicInfo[type].ids
   let list = []
   if (ids) {
     for (let i = 0; i < allList.length; i++) {
@@ -341,4 +362,37 @@ export function getTopicListByType(allList = [], type) {
   return []
 }
 
-export const topicTypeList = getTopicBasic(topicOne)
+function createSpecialInfo(type) {
+  const topicMap = topicTypeMap[type]
+  let specialInfo = {}
+  for (let key in topicMap) {
+    specialInfo[key] = {
+      total: topicMap[key].ids.length,
+      topicIndex: 0,
+      successNumber: 0,
+      wrongNumber: 0,
+      result: {}
+    }
+  }
+  return specialInfo
+}
+
+export const kemuType = {
+  one: 'ONE',
+  four: 'FOUR'
+}
+
+export function getKeyFromType(type, key) {
+  return kemuType[type] + '_' + key
+}
+
+/**
+ * 
+ * @param {string|number} type one | four
+ */
+export function setStorageSpecial(type = one) {
+  const prefix = kemuType[type]
+  const key = `${prefix}_${SPECIAL}`
+  const info = createSpecialInfo(type)
+  wx.setStorageSync(key, info)
+}

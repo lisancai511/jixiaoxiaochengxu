@@ -4,10 +4,14 @@ import {
   cancelCollection,
 } from '../../utils/util.js';
 import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
-import { SUBJECT_ONE_RESULT, SUBJECT_ONE_TOPIC_INDEX, SUBJECT_ONE_ERROR_NUMBER, SUBJECT_ONE_SUCCESS_NUMBER } from '../../utils/constant'
+import { topicOne, getKeyFromType, getTopicListByType } from '../../utils/specialOne'
+const { SPECIAL } = require('../../utils/basic')
 const app = getApp();
 let cacheList = [];
 let collection = {};
+const kemuMap = {
+  one: topicOne
+}
 Page({
   /**
    * 页面的初始数据
@@ -18,20 +22,34 @@ Page({
     total: 0,
     successNumber: 0,
     wrongNumber: 0,
+    kemuType: '',
+    specialType: ''
+  },
+  getStorageKey() {
+    const { kemuType } = this.data
+    const key = getKeyFromType(kemuType, SPECIAL)
+    return key
+  },
+  setSpecialStorage(field, value) {
+    const { specialType } = this.data
+    const special = this.getStorageSpecial()
+    special[specialType][field] = value
+    const key = this.getStorageKey()
+    wx.setStorageSync(key, special)
   },
   jumpToItem(e) {
     const topicIndex = e.detail
     this.setData({
       topicIndex
     })
-    wx.setStorageSync(SUBJECT_ONE_TOPIC_INDEX, topicIndex)
+    this.setSpecialStorage('topicIndex', topicIndex)
   },
   slideItem(e) {
     const topicIndex = e.detail
     this.setData({
       topicIndex
     })
-    wx.setStorageSync(SUBJECT_ONE_TOPIC_INDEX, topicIndex)
+    this.setSpecialStorage('topicIndex', topicIndex)
   },
   toggleCollect(e) {
     const key = e.detail
@@ -49,13 +67,12 @@ Page({
     return id || null
   },
   _getTopicRecord(topicIndex, res) {
+    const { specialType } = this.data
     const key = this._getTopicId(topicIndex)
-    console.log(key)
-    const subjectResult = wx.getStorageSync(SUBJECT_ONE_RESULT) || {}
-    let successNumber = wx.getStorageSync(SUBJECT_ONE_SUCCESS_NUMBER) || 0
-    let wrongNumber = wx.getStorageSync(SUBJECT_ONE_ERROR_NUMBER) || 0
-    if (subjectResult[key]) {
-      if (subjectResult[key] === true) {
+    const special = this.getStorageSpecial()
+    let { result = {}, successNumber = 0, wrongNumber = 0, } = special[specialType]
+    if (result[key]) {
+      if (result[key] === true) {
         // 之前都是作对的题目
         if (res !== true) {
           successNumber--
@@ -75,10 +92,15 @@ Page({
         wrongNumber++
       }
     }
-    subjectResult[key] = res
-    wx.setStorageSync(SUBJECT_ONE_RESULT, subjectResult)
-    wx.setStorageSync(SUBJECT_ONE_SUCCESS_NUMBER, successNumber)
-    wx.setStorageSync(SUBJECT_ONE_ERROR_NUMBER, wrongNumber)
+    result[key] = res
+    special[specialType] = {
+      ...special[specialType],
+      result,
+      successNumber,
+      wrongNumber
+    }
+    const storageKey = this.getStorageKey()
+    wx.setStorageSync(storageKey, special)
     return { successNumber, wrongNumber }
   },
   checkOptionItem(e) {
@@ -90,53 +112,46 @@ Page({
       successNumber
     })
   },
-  async _initAppData() {
-    const { list, total } = await getSubjectOne()
-    cacheList = list
-    const index = wx.getStorageSync(SUBJECT_ONE_TOPIC_INDEX) || 0
-    const topicIndex = index < 0 ? 0 : index
+  getStorageSpecial() {
+    const key = this.getStorageKey()
+    console.log('key', key)
+    setTimeout(() => {
+
+      console.log(wx.getStorageSync('ONE_SPECIAL'))
+    }, 500)
+    return wx.getStorageSync(key) || {}
+  },
+
+  _initBasic(from, type) {
+    const special = this.getStorageSpecial()
+    console.log('special', special)
+    let { total = 0, successNumber = 0, wrongNumber = 0, topicIndex = 0 } = special[type]
+    console.log(special[type])
+    topicIndex = topicIndex < 0 ? 0 : topicIndex
+    cacheList = getTopicListByType(from, type)
+    if (total !== cacheList.length) {
+      total = cacheList.length
+    }
     this.setData({
       total,
+      successNumber,
+      wrongNumber,
       topicIndex
     })
     const ref = this.selectComponent('.topic')
     ref._initTopicData()
   },
-  _initErrorAndSuccess() {
-    const successNumber = wx.getStorageSync('SUBJECT_ONE_SUCCESS_NUMBER') || 0
-    const wrongNumber = wx.getStorageSync('SUBJECT_ONE_ERROR_NUMBER') || 0
-    this.setData({
-      successNumber,
-      wrongNumber
-    })
-  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // const total = wx.getStorageSync('SUBJECT_ONE_TOTAL')
-    // this._initErrorAndSuccess()
-    // this.setData({
-    //   total
-    // })
     // this._initAppData();
     const { from, type } = options
-    const kemuMap = {
-      specialOne: topicOne
-    }
-    const specialOneMap = {
-      'kaoshideng': {
-        successNumber: 1,
-        errorNumber: 1,
-        topiceIndex: 1
-      }
-    }
-    const total = kemuMap[from][type].ids.length
-    console.log(total)
     this.setData({
-      total
+      kemuType: from,
+      specialType: type
     })
-    console.log(options)
+    this._initBasic(from, type)
   },
 
   /**

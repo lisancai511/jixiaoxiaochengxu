@@ -1,22 +1,28 @@
-import { topicTypeList } from '../../utils/specialOne'
+import { getTopicBasic } from '../../utils/specialOne'
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    list: topicTypeList,
+    list: [],
   },
   gotoItem(e) {
     const item = e.currentTarget.dataset.item;
     wx.navigateTo({
-      url: `/pages/commonExercise/commonExercise?from=specialOne&type=${item.type}`,
+      url: `/pages/commonExercise/commonExercise?from=one&type=${item.type}`,
     });
+  },
+  getTopicSpecial(type) {
+    const list = getTopicBasic(type)
+    this.setData({
+      list
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getTopicSpecial(options.from)
   },
 
   /**

@@ -2,6 +2,7 @@
 const { getCurrentUser, getopenid } = require('./utils/common')
 const { addOrUpdateUser } = require('./service/login')
 const { setUserStorage } = require('./utils/storage')
+const { setStorageSpecial, kemuType } = require('./utils/specialOne')
 
 App({
   getNavInfo() {
@@ -25,8 +26,23 @@ App({
     })
     setUserStorage(res.data)
   },
+  /**
+   * 初始化科目一和科目四的本地存储
+   */
+  initSpecialStorage() {
+    const suffix = 'SPECIAL'
+    for (let key in kemuType) {
+      const storageKey = `${kemuType[key]}_${suffix}`
+      const value = wx.getStorageSync(storageKey)
+      if (!value) {
+        setStorageSpecial(key)
+      }
+    }
+
+  },
   onLaunch: async function () {
     // 获取系统状态栏信息
+    this.initSpecialStorage()
     this.getNavInfo()
     this.addOrUpdateUser()
     // await getCurrentUser(true)

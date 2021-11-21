@@ -270,7 +270,7 @@ Page({
   sendScoreToServer() {
     const user = getUserStorage()
     if (user && user.id) {
-      const score = wx.getStorageSync(SUBJECT_ONE_MOCK_SUCCESS_NUMBER)
+      const score = wx.getStorageSync(SUBJECT_ONE_MOCK_SUCCESS_NUMBER) || 0
       const useTime = this._getUsedTimeStr()
       const params = {
         wxUserId: user.id,

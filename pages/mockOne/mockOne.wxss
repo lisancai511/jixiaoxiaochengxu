@@ -10,3 +10,16 @@ page {
   display: flex;
   flex-direction: column;
 }
+
+.action {
+  font-size: 10rpx;
+
+}
+.footer {
+  font-size: 21rpx;
+  margin-top: -8rpx;
+}
+
+.n-icon {
+  margin-top: 8rpx;
+}

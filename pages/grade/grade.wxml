@@ -19,7 +19,7 @@
         <view class="wx_info_wrap">
           <open-data type="userAvatarUrl" class="login-icon"></open-data>
         </view>
-        <view class="m-l-20">您的历史最高成绩60分</view>
+        <view class="m-l-20" wx:if="{{topScore}}">您的历史最高成绩 {{topScore}} 分</view>
       </view>
     </view>
     <view class="wrap" wx:for="{{list}}" wx:key="index">

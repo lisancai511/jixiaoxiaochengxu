@@ -249,9 +249,12 @@ Page({
           this.renderCountDownTime(countDownTime)
         }
         if (res.cancel) {
-          this.sendScoreToServer()
+          const score = wx.getStorageSync(SUBJECT_ONE_MOCK_SUCCESS_NUMBER)
+          if (score > 60) {
+            this.sendScoreToServer()
+          }
           wx.redirectTo({
-            url: '/pages/record/record',
+            url: '/pages/gradeResult/gradeResult',
           })
         }
       },

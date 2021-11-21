@@ -1,5 +1,5 @@
 .title {
-  padding: 6px 12px;
+  padding: 6px 12px 6px 20px;
   border-bottom: 1px solid #eee;
   font-weight: bold;
 }
@@ -19,9 +19,9 @@
 
 .idx {
   display: inline-block;
-  width: 16px;
-  height: 16px;
-  line-height: 16px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
   text-align: center;
   margin-right: 4px;
   border: 1px solid green;

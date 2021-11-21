@@ -20,9 +20,9 @@ function getTopicClassName(list, result) {
 // 获取科目一的数据，拿到之后存入storage中，取得时候先从storage中取，没有则重新调取接口
 export async function getSubjectOne(data) {
   try {
-    let list = wx.getStorageSync(constant.SUBJECT_ONE)
-    let result = wx.getStorageSync(constant.SUBJECT_ONE_RESULT)
-    let total = wx.getStorageSync(constant.SUBJECT_ONE_TOTAL)
+    let list = wx.getStorageSync('one_TOPIC')
+    let result = wx.getStorageSync('one_ORDER_RESULT')
+    let total = wx.getStorageSync('one_ORDER_TOTAL')
     if (list) {
       list = getTopicClassName(list, result)
       console.log("ll--", list)
@@ -34,8 +34,8 @@ export async function getSubjectOne(data) {
     const res = await getSubjectOneList(data)
     list = getTopicClassName(res.list, result)
     total = res.total || 0
-    wx.setStorageSync(constant.SUBJECT_ONE, list)
-    wx.setStorageSync(constant.SUBJECT_ONE_TOTAL, total)
+    wx.setStorageSync('one_TOPIC', list)
+    wx.setStorageSync('one_ORDER_TOTAL', total)
     return res
   } catch (e) {
     console.log('getSubjectOne fail', e)
@@ -72,7 +72,7 @@ export async function getSubjectFour(data) {
 }
 
 export function getSubjectOneCollection() {
-  return wx.getStorageSync(constant.SUBJECT_ONE_COLLECTION) || {}
+  return wx.getStorageSync('one_ORDER_COLLECTION') || {}
 }
 
 export function getSubjectFourCollection() {

@@ -4,10 +4,16 @@ import {
   cancelCollection,
 } from '../../utils/util.js';
 import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
-import { SUBJECT_ONE_RESULT, SUBJECT_ONE_TOPIC_INDEX, SUBJECT_ONE_ERROR_NUMBER, SUBJECT_ONE_SUCCESS_NUMBER } from '../../utils/constant'
+import { RESULT, TOPIC, ERROR_NUMBER, SUCCESS_NUMBER, TOPIC_INDEX, TOTAL, } from '../../utils/constant'
 const app = getApp();
 let cacheList = [];
 let collection = {};
+let resultKey = ''
+let topicKey = ''
+let errorNumberKey = ''
+let successNumberKey = ''
+let topicIndexKey = ''
+let totalKey = ''
 Page({
   /**
    * 页面的初始数据
@@ -19,20 +25,22 @@ Page({
     total: 0,
     successNumber: 0,
     wrongNumber: 0,
+    kemuType: 'one',
+    from: ''
   },
   jumpToItem(e) {
     const topicIndex = e.detail
     this.setData({
       topicIndex
     })
-    wx.setStorageSync(SUBJECT_ONE_TOPIC_INDEX, topicIndex)
+    wx.setStorageSync(topicIndexKey, topicIndex)
   },
   slideItem(e) {
     const topicIndex = e.detail
     this.setData({
       topicIndex
     })
-    wx.setStorageSync(SUBJECT_ONE_TOPIC_INDEX, topicIndex)
+    wx.setStorageSync(topicIndexKey, topicIndex)
   },
   toggleCollect(e) {
     const key = e.detail
@@ -51,10 +59,9 @@ Page({
   },
   _getTopicRecord(topicIndex, res) {
     const key = this._getTopicId(topicIndex)
-    console.log(key)
-    const subjectResult = wx.getStorageSync(SUBJECT_ONE_RESULT) || {}
-    let successNumber = wx.getStorageSync(SUBJECT_ONE_SUCCESS_NUMBER) || 0
-    let wrongNumber = wx.getStorageSync(SUBJECT_ONE_ERROR_NUMBER) || 0
+    const subjectResult = wx.getStorageSync(resultKey) || {}
+    let successNumber = wx.getStorageSync(successNumberKey) || 0
+    let wrongNumber = wx.getStorageSync(errorNumberKey) || 0
     if (subjectResult[key]) {
       if (subjectResult[key] === true) {
         // 之前都是作对的题目
@@ -77,9 +84,9 @@ Page({
       }
     }
     subjectResult[key] = res
-    wx.setStorageSync(SUBJECT_ONE_RESULT, subjectResult)
-    wx.setStorageSync(SUBJECT_ONE_SUCCESS_NUMBER, successNumber)
-    wx.setStorageSync(SUBJECT_ONE_ERROR_NUMBER, wrongNumber)
+    wx.setStorageSync(resultKey, subjectResult)
+    wx.setStorageSync(successNumberKey, successNumber)
+    wx.setStorageSync(errorNumberKey, wrongNumber)
     return { successNumber, wrongNumber }
   },
   checkOptionItem(e) {
@@ -91,35 +98,46 @@ Page({
       successNumber
     })
   },
+  createStorageKey(key) {
+    const { kemuType, from } = this.data
+    return `${kemuType}_${from}_${key}`
+  },
   async _initAppData() {
-    const { list, total } = await getSubjectOne()
-    cacheList = list
-    const index = wx.getStorageSync(SUBJECT_ONE_TOPIC_INDEX) || 0
+    const total = wx.getStorageSync(totalKey)
+    const successNumber = wx.getStorageSync(successNumberKey) || 0
+    const wrongNumber = wx.getStorageSync(errorNumberKey) || 0
+    cacheList = wx.getStorageSync(topicKey) || []
+    const index = wx.getStorageSync(topicIndexKey) || 0
     const topicIndex = index < 0 ? 0 : index
     this.setData({
       total,
-      topicIndex
+      topicIndex,
+      successNumber,
+      wrongNumber
     })
     const ref = this.selectComponent('.topic')
     ref._initTopicData()
   },
-  _initErrorAndSuccess() {
-    const successNumber = wx.getStorageSync('SUBJECT_ONE_SUCCESS_NUMBER') || 0
-    const wrongNumber = wx.getStorageSync('SUBJECT_ONE_ERROR_NUMBER') || 0
-    this.setData({
-      successNumber,
-      wrongNumber
-    })
+  initKey() {
+    const { kemuType } = this.data
+    totalKey = this.createStorageKey(TOTAL)
+    resultKey = this.createStorageKey(RESULT)
+    topicKey = `${kemuType}_TOPIC`
+    errorNumberKey = this.createStorageKey(ERROR_NUMBER)
+    successNumberKey = this.createStorageKey(SUCCESS_NUMBER)
+    topicIndexKey = this.createStorageKey(TOPIC_INDEX)
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const total = wx.getStorageSync('SUBJECT_ONE_TOTAL')
-    this._initErrorAndSuccess()
+    const { kemuType, from } = options
+    console.log(kemuType, from)
     this.setData({
-      total
+      kemuType,
+      from
     })
+    this.initKey()
     this._initAppData();
 
   },

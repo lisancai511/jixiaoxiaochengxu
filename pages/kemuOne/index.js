@@ -76,16 +76,10 @@ Page({
       case 'mockExam':
         this._gotoMockExam();
         break;
-      case 'wrongSubject':
-        this._gotoError();
-        break;
       case 'special':
         this._gotoSpecial();
         break;
-      case 'collection':
-        this._gotoCollection();
-        break;
-      case 'vip':
+      case 'VIP':
         this._gotoVip();
         break;
       case 'grade':
@@ -94,7 +88,7 @@ Page({
       default:
         this._getClassicList().then(() => {
           wx.navigateTo({
-            url: `/pages/test/test?type=${type.currentTarget.id}`,
+            url: `/pages/test/test?kemuType=one&from=${type.currentTarget.id}`,
           });
         })
         break;

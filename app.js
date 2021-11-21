@@ -38,6 +38,8 @@ App({
         setStorageSpecial(key)
       }
     }
+  },
+  function() {
 
   },
   onLaunch: async function () {

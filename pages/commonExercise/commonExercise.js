@@ -5,7 +5,7 @@ import {
 } from '../../utils/util.js';
 import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
 import { topicOne, getKeyFromType, getTopicListByType } from '../../utils/specialOne'
-const { SPECIAL } = require('../../utils/basic')
+const { SPECIAL } = require('../../utils/constant')
 const app = getApp();
 let cacheList = [];
 let collection = {};
@@ -114,11 +114,6 @@ Page({
   },
   getStorageSpecial() {
     const key = this.getStorageKey()
-    console.log('key', key)
-    setTimeout(() => {
-
-      console.log(wx.getStorageSync('ONE_SPECIAL'))
-    }, 500)
     return wx.getStorageSync(key) || {}
   },
 

@@ -1,5 +1,5 @@
 const topicFour = require('./specialFour')
-const { SPECIAL } = require('./basic')
+const { SPECIAL } = require('./constant')
 //  科目一
 
 export const topicOne = {

@@ -6,28 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    list: [
-      {
-        score: '92',
-        useTime: '04:55',
-        createAt: '2021.11.18 14:56'
-      },
-      {
-        score: '86',
-        useTime: '04:55',
-        createAt: '2021.11.18 14:56'
-      },
-      {
-        score: '99',
-        useTime: '04:55',
-        createAt: '2021.11.18 14:56'
-      },
-      {
-        score: '100',
-        useTime: '04:55',
-        createAt: '2021.11.18 14:56'
-      }
-    ],
+    list: [],
+    topScore: '',
     TabCur: '1'
   },
   tabSelect(e) {
@@ -39,6 +19,13 @@ Page({
     this.setData({
       TabCur: e.detail.currentItemId
     })
+  },
+  getTopScore(list = []) {
+    if (list.length) {
+      list.sort((a, b) => b.score - a.score)
+      return list[0].score
+    }
+    return null
   },
   async getGradeList() {
     const user = getUserStorage()
@@ -54,9 +41,10 @@ Page({
           createdAt: formatTime(createdAt)
         }
       })
-      console.log(list)
+      const topScore = this.getTopScore(list)
       this.setData({
-        list
+        list,
+        topScore
       })
     }
   },

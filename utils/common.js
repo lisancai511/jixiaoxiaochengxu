@@ -1,5 +1,6 @@
 const { wxLogin, getUserInfoByOpenId } = require('../service/login')
 const { post } = require('../utils/request1')
+const { SUBJECT_ONE_ERROR_NUMBER, SUBJECT_FOUR_ERROR_NUMBER } = require('../utils/constant')
 /**
  * 判断是session是否有效
  * @returns {Promise} string openid
@@ -102,4 +103,27 @@ export async function getCurrentUser(refresh = false) {
     console.log('getCurrentUser fail', e)
     throw new Error(e)
   }
+}
+
+/**
+ * 
+ * @param {string} type 科目几 1 | 4
+ */
+export async function goToErrorPage(type) {
+  const keyMap = {
+    1: SUBJECT_ONE_ERROR_NUMBER,
+    4: SUBJECT_FOUR_ERROR_NUMBER
+  }
+  const errNums = wx.getStorageSync(keyMap[type])
+  if (errNums > 0) {
+    wx.navigateTo({
+      url: `/pages/error/error?type=${type}`,
+    });
+    return false
+  }
+  wx.showToast({
+    icon: 'none',
+    title: '暂无错题',
+    duration: 1000,
+  });
 }

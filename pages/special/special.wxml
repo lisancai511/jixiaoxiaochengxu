@@ -8,6 +8,6 @@
       <text class="idx">{{index + 1}}</text>
       <text>{{item.title}}</text>
     </view>
-    <text>{{item.number}}</text>
+    <text>{{item.num}}</text>
   </view>
 </view>

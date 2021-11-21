@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/gradeResult/gradeResult",
     "pages/test/test",
     "pages/exercise/exercise",
     "pages/mockOne/mockOne",
@@ -19,8 +20,7 @@
     "pages/payPage/index",
     "pages/phoneNumber/phoneNumber",
     "pages/grade/grade",
-    "pages/mine/index",
-    "pages/detail/detail"
+    "pages/mine/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

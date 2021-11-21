@@ -6,7 +6,7 @@ const app = getApp();
 Page({
   data: {
     CustomBar: app.globalData.CustomBar,
-    score: 87
+    score: 0
   },
   getScore() {
     const score = wx.getStorageSync(SUBJECT_ONE_MOCK_SUCCESS_NUMBER)

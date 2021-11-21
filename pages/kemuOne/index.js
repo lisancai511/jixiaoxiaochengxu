@@ -63,7 +63,7 @@ Page({
   },
   _gotoSpecial() {
     wx.navigateTo({
-      url: `/pages/special/special?type=specialOne`,
+      url: `/pages/special/special?from=one`,
     });
   },
   gotoGrade() {

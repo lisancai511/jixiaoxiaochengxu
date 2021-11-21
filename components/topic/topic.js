@@ -1,4 +1,5 @@
 import { getSubjectOneErrorList } from '../../utils/one'
+import { getTopicListByType } from '../../utils/specialOne'
 const MAX_SWIPER_LENGTH = 3;
 let cacheList = [];
 let collection = {};
@@ -11,6 +12,14 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    kemuType: {
+      type: String,
+      value: 'one'
+    },
+    specialType: {
+      type: String,
+      value: ''
+    },
     topicCacheKey: {
       type: String,
       value: ''
@@ -203,6 +212,7 @@ Component({
       }
     },
     _slideItem(current) {
+      console.log('current', current)
       let isRight = this._checkSwipeDirec(current);
       this.setData({
         swiperIndex: current,
@@ -213,9 +223,10 @@ Component({
         this._toLastTopic(current);
       }
       // console.log(this.data.exerciseList)
-      // console.log(this.data.exerciseList.map(item => item.index))
+      console.log(this.data.exerciseList.map(item => item.index))
       this._setCircular();
       this._checkStar();
+      console.log('item', cacheList[this.data.topicIndex])
     },
     // 滑动滑块结束
     onSlideChangeEnd(e) {
@@ -330,17 +341,20 @@ Component({
       this._setCircular()
     },
     getCacheList() {
-      const { topicCacheKey } = this.data
+      const { topicCacheKey, kemuType, specialType } = this.data
       switch (topicCacheKey) {
         case 'SUBJECT_ONE_ERROR':
           return getSubjectOneErrorList()
+        case 'SPECIAL':
+          return getTopicListByType(kemuType, specialType)
         default:
-          return wx.getStorageSync(this.data.topicCacheKey) || []
+          return wx.getStorageSync(topicCacheKey) || []
       }
 
     },
     async _initTopicData() {
       cacheList = this.getCacheList()
+      console.log('base', cacheList.length)
       const { topicIndex } = this.data
       const exerciseList = this._getPageTopicList(topicIndex, cacheList)
       const swiperIndex = this._getSwiperIndexByTopicIndex(topicIndex)

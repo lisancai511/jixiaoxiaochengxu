@@ -43,14 +43,15 @@ Page({
     wx.setStorageSync(topicIndexKey, topicIndex)
   },
   toggleCollect(e) {
+    const { kemuType } = this.data
     const key = e.detail
     collection = getSubjectOneCollection()
     if (collection[key]) {
       collection[key] = null;
-      collection = cancelCollection(key);
+      collection = cancelCollection(kemuType, key);
     } else {
       collection[key] = true;
-      collection = saveCollection(key);
+      collection = saveCollection(kemuType, key);
     }
   },
   _getTopicId(topicIndex) {

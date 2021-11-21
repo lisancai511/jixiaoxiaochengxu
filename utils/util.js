@@ -55,21 +55,23 @@ const getKeyFromStorage = key => {
   }
 };
 
-const saveCollection = id => {
-  const idObj = getKeyFromStorage(SUBJECT_ONE_COLLECTION) || {};
+const saveCollection = (kemuType, id) => {
+  const key = `${kemuType}_COLLECTION`
+  const idObj = getKeyFromStorage(key) || {};
   if (id) {
     idObj[id] = true;
   }
-  wx.setStorageSync(SUBJECT_ONE_COLLECTION, idObj);
+  wx.setStorageSync(key, idObj);
   return idObj;
 };
 
-const cancelCollection = id => {
-  const idObj = getKeyFromStorage(SUBJECT_ONE_COLLECTION) || {};
+const cancelCollection = (kemuType, id) => {
+  const key = `${kemuType}_COLLECTION`
+  const idObj = getKeyFromStorage(key) || {};
   if (idObj[id]) {
     delete idObj[id];
   }
-  wx.setStorageSync(SUBJECT_ONE_COLLECTION, idObj);
+  wx.setStorageSync(key, idObj);
   return idObj;
 };
 

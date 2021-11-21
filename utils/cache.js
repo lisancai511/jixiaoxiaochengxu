@@ -72,7 +72,7 @@ export async function getSubjectFour(data) {
 }
 
 export function getSubjectOneCollection() {
-  return wx.getStorageSync('one_ORDER_COLLECTION') || {}
+  return wx.getStorageSync('one_COLLECTION') || {}
 }
 
 export function getSubjectFourCollection() {

@@ -53,13 +53,14 @@ Page({
   },
   toggleCollect(e) {
     const key = e.detail
+    const { kemuType } = this.data
     collection = getSubjectOneCollection()
     if (collection[key]) {
       collection[key] = null;
-      collection = cancelCollection(key);
+      collection = cancelCollection(kemuType, key);
     } else {
       collection[key] = true;
-      collection = saveCollection(key);
+      collection = saveCollection(kemuType, key);
     }
   },
   _getTopicId(topicIndex) {

@@ -104,10 +104,10 @@ Page({
     collection = getSubjectOneCollection()
     if (collection[key]) {
       collection[key] = null;
-      collection = cancelCollection(key);
+      collection = cancelCollection('one', key);
     } else {
       collection[key] = true;
-      collection = saveCollection(key);
+      collection = saveCollection('one', key);
     }
   },
   _getTopicId(topicIndex) {

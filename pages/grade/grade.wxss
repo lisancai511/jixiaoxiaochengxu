@@ -28,7 +28,7 @@ page {
   padding: 20rpx;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #ebe9e9;
 }
 .wrapTop {
   display: flex;
@@ -39,9 +39,15 @@ page {
   margin-right: 40rpx;
   font-size: 18px;
   color: red;
+  min-width: 100rpx;
 }
 
 .cenghao {
   width: 100%;
   text-align: right;
+}
+
+.date {
+  font-size: 20rpx;
+  color: #918f8f;
 }

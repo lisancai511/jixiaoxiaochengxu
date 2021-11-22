@@ -3,7 +3,7 @@
     <view class="main">
       <view class="main_left">
         <view bindtap="gotoSubject" id="VIP" class="left_item m-t-20 m-b-20">
-          <image class="icon" src="../../images/vip.png" />
+          <image class="icon vip" src="../../images/vip.png" />
           <text class="m-t-10">vip课程</text>
         </view>
         <view bindtap="gotoSubject" id="ERROR" class="left_item m-t-20 m-b-20">
@@ -29,7 +29,7 @@
       </view>
       <view class="main_right">
         <view bindtap="gotoSubject" id="special" class="left_item m-t-20 m-b-20">
-          <view class="t-icon iconzhuanxianglianxi"></view>
+          <image class="icon" src="../../images/zhuanxiang.png" />
           <text class="m-t-10">专项练习</text>
         </view>
         <view bindtap="gotoSubject" id="COLLECTION" class="left_item m-t-20 m-b-20">

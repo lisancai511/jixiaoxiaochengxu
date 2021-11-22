@@ -75,3 +75,14 @@
   width: 40px;
   height: 40px;
 }
+
+.vip {
+  animation:mymove 2s infinite;
+}
+
+@keyframes mymove
+{
+    75%{
+        transform: scale(1.4);
+    }
+}

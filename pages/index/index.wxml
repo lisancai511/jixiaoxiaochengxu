@@ -5,12 +5,12 @@
     <view class='cuIcon-cu-image'>
       <image src="/images/tabbar/basics{{PageCur=='simulation'?'_cur':''}}.png"></image>
     </view>
-    <view class="{{PageCur=='simulation'?'text-green':'text-gray'}}">模拟</view>
+    <view class="{{PageCur=='simulation'?'text-purple':'text-gray'}}">模拟</view>
   </view>
   <view class="action" bindtap="NavChange" data-cur="mine">
     <view class='cuIcon-cu-image'>
       <image src="/images/tabbar/component{{PageCur=='mine'?'_cur':''}}.png"></image>
     </view>
-    <view class="{{PageCur=='mine'?'text-green':'text-gray'}}">我的</view>
+    <view class="{{PageCur=='mine'?'text-purple':'text-gray'}}">我的</view>
   </view>
 </view>

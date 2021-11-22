@@ -250,9 +250,7 @@ Page({
         }
         if (res.cancel) {
           const score = wx.getStorageSync(SUBJECT_ONE_MOCK_SUCCESS_NUMBER)
-          if (score > 60) {
-            this.sendScoreToServer()
-          }
+          this.sendScoreToServer()
           wx.redirectTo({
             url: '/pages/gradeResult/gradeResult',
           })

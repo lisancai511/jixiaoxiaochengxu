@@ -34,11 +34,11 @@
         </view>
       </view>
       <view class="wrap">
-        <text class="wrap_top">0</text>
+        <text class="wrap_top">{{averageScore}}</text>
         <text class="wrap_mid">考试平均分</text>
         <view class="wrap_foot">
           <text>累计考试</text>
-          <text class="color m-l-5">0次</text>
+          <text class="color m-l-5">{{examNum}}次</text>
         </view>
       </view>
       <view class="wrap">

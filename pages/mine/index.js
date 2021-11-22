@@ -2,6 +2,8 @@
 const { checkLoginFromLocal, getCurrentUser,getPhoneNumber } = require('../../utils/common')
 import { getKeyFromStorage, getErrorIdLists } from '../../utils/util';
 import { SUBJECT_ONE_COLLECTION, SUBJECT_FOUR_COLLECTION } from '../../utils/constant';
+import { getGradeList } from '../../service/common'
+import { getUserStorage } from '../../utils/storage'
 Page({
 
   /**
@@ -9,7 +11,9 @@ Page({
    */
   data: {
     isCheckPhone: false,
-    activeType: 1
+    activeType: 1,
+    averageScore: 0,
+    examNum: 0
   },
   async gotoItem(e) {
     try {
@@ -69,6 +73,7 @@ Page({
     this.setData({
       activeType: e.target.id
     })
+    this.getScore()
     // TODO 根据id去请求科一科四的数据
   },
   goToAbout() {
@@ -102,11 +107,34 @@ Page({
       });
     }
   },
+  async getScore() {
+    const user = getUserStorage()
+    if (user && user.id) {
+      const { data = [] } = await getGradeList({
+        wxUserId: user.id,
+        type: this.data.activeType || '1'
+      })
+      let averageScore = 0
+      data.forEach(item=>{
+        averageScore = averageScore + Number(item.score)
+      })
+      if(Number.isNaN(averageScore)) {
+        averageScore = 0
+      }
+      averageScore = averageScore? averageScore / data.length:0
+      this.setData({
+        averageScore: averageScore.toFixed(0),
+        examNum: data.length
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.userInit()
+    this.getScore()
+    console.log(110)
   },
 
   /**

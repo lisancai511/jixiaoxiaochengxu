@@ -1,7 +1,7 @@
-const { get } = require('../utils/request1')
+const { get } = require('../utils/request')
 const api = require('../api/index')
 
-export async function getSubjectOneList(kemuType = 'one') {
+export async function getServerTopicList(kemuType = 'one') {
   const apiMap = {
     one: api.subjectOne,
     four: api.subjectFour

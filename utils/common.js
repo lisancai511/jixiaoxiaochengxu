@@ -1,5 +1,5 @@
 const { wxLogin, getUserInfoByOpenId } = require('../service/login')
-const { post } = require('../utils/request1')
+const { post } = require('../utils/request')
 const { SUBJECT_ONE_ERROR_NUMBER, SUBJECT_FOUR_ERROR_NUMBER } = require('../utils/constant')
 /**
  * 判断是session是否有效

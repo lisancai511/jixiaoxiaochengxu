@@ -21,14 +21,14 @@
             <image class="bg" src="../../images/2.png" />
             <view class="main_content">顺序练习</view>
           </view>
-          <view bindtap="gotoSubject" id="mockExam" class="main_bottom">
+          <view bindtap="gotoSubject" id="MOCK" class="main_bottom">
             <image class="bg" src="../../images/3.png" />
             <view class="main_content">模拟考试</view>
           </view>
         </view>
       </view>
       <view class="main_right">
-        <view bindtap="gotoSubject" id="special" class="left_item m-t-20 m-b-20">
+        <view bindtap="gotoSubject" id="SPECIAL" class="left_item m-t-20 m-b-20">
           <view class="t-icon iconzhuanxianglianxi"></view>
           <text class="m-t-10">专项练习</text>
         </view>

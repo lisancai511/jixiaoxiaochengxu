@@ -1,43 +1,47 @@
-function wrapData(data) {
-  const timp = new Date().getTime();
-  return {
-    ...data,
-    timp,
-  };
-}
-
-function checkTimp(data) {
-  const { timp } = data;
-  const currentTime = new Date().getTime();
-  const fixedTime = 24 * 60 * 60;
-
-  return currentTime - timp > fixedTime;
-}
-
-function getCachedData(key) {
-  try {
-    const value = wx.getStorageSync(key);
-    if (value && checkTimp(value)) {
-      return value;
-    } else {
-      return false;
-    }
-  } catch (e) {
-    console.log('getData error', e);
+const BASE_URL = 'http://39.99.228.79:7003/api';
+// const BASE_URL = 'http://127.0.0.1:7003/api';
+function request(method) {
+  return function (url, data = {}) {
+    let user = wx.getStorageSync('user');
+    const Token = (user && user.token) || '';
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: BASE_URL + url,
+        method,
+        data,
+        // header: {
+        //   'X-Token': Token,
+        // },
+        success(res) {
+          if (res.statusCode >= 200 && res.statusCode <= 300) {
+            resolve(res.data);
+          } else {
+            res.data.message &&
+              wx.showToast({
+                icon: 'none',
+                title: res.data.message,
+                duration: 2000,
+              });
+            reject(res.data);
+          }
+        },
+        fail(err) {
+          console.log(234234)
+          wx.showToast({
+            icon: 'none',
+            title: '网络异常',
+            duration: 2000,
+          });
+          reject(err);
+        },
+      });
+    });
   }
 }
-
-function saveCacheData(key, data) {
-  try {
-    wx.setStorageSync(key, wrapData(data));
-  } catch (e) {
-    console.log('saveCacheData error', e);
-  }
-}
+const get = request('GET')
+const post = request('POST')
 
 module.exports = {
-  wrapData,
-  checkTimp,
-  saveCacheData,
-  getCachedData,
+  get,
+  post
 };

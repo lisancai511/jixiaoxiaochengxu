@@ -1,10 +1,9 @@
 // pages/kemuOne/index.js
 import { getKeyFromStorage, getErrorIdLists } from '../../utils/util';
 import { SUBJECT_ONE_COLLECTION, SUBJECT_ONE_ERROR_NUMBER } from '../../utils/constant';
-import ClassicModel from '../../model/classic.js';
-const classicModel = new ClassicModel();
-import { getSubjectOneList } from '../../service/subjectone'
-import { getSubjectOne } from '../../utils/cache'
+
+import { getServerTopicList } from '../../service/subjectone'
+import { getTopicListByKemuType } from '../../utils/cache'
 const app = getApp();
 Page({
   /**
@@ -32,9 +31,10 @@ Page({
     });
   },
   _gotoError(from) {
-    const errNums = wx.getStorageSync(SUBJECT_ONE_ERROR_NUMBER)
-    console.log(errNums)
-    if (errNums > 0) {
+    const key = 'one_ERROR'
+    const errNums = wx.getStorageSync(key) || {}
+    const len = Object.keys(errNums).length
+    if (len > 0) {
       this.navigateFrom(from)
       return false
     }
@@ -44,14 +44,14 @@ Page({
       duration: 1000,
     });
   },
-  _gotoMockExam() {
+  _gotoMockExam(from) {
     wx.navigateTo({
-      url: `/pages/mockOne/mockOne?type=mockOne`,
+      url: `/pages/mockOne/mockOne?kemuType=one&from=${from}`,
     });
   },
-  _gotoSpecial() {
+  _gotoSpecial(from) {
     wx.navigateTo({
-      url: `/pages/special/special?from=one`,
+      url: `/pages/special/special?kemuType=one&from=${from}`,
     });
   },
   gotoGrade() {
@@ -67,11 +67,11 @@ Page({
   gotoSubject: function (type) {
     const from = type.currentTarget.id
     switch (from) {
-      case 'mockExam':
-        this._gotoMockExam();
+      case 'MOCK':
+        this._gotoMockExam(from);
         break;
-      case 'special':
-        this._gotoSpecial();
+      case 'SPECIAL':
+        this._gotoSpecial(from);
         break;
       case 'VIP':
         this._gotoVip();

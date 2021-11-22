@@ -1,4 +1,4 @@
 <cu-custom bgColor="" isBack="{{true}}">
   <view slot="backText">返回</view>
 </cu-custom>
-<topic class="topic" kemuType="{{kemuType}}" from="SPECIAL" specialType="{{specialType}}" bind:jumpToItem="jumpToItem" bind:slideItem="slideItem" bind:checkOptionItem="checkOptionItem" bind:toggleCollect="toggleCollect" successNumber="{{successNumber}}" wrongNumber="{{wrongNumber}}" total="{{total}}" collectionKey="SUBJECT_ONE_COLLECTION" topicCacheKey="SPECIAL" topicIndex="{{topicIndex}}" />
+<topic class="topic" kemuType="{{kemuType}}" from="SPECIAL" specialType="{{specialType}}" bind:jumpToItem="jumpToItem" bind:slideItem="slideItem" bind:checkOptionItem="checkOptionItem" bind:toggleCollect="toggleCollect" successNumber="{{successNumber}}" wrongNumber="{{wrongNumber}}" total="{{total}}" topicIndex="{{topicIndex}}" />

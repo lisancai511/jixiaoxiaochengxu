@@ -3,7 +3,7 @@ import {
   saveCollection,
   cancelCollection,
 } from '../../utils/util.js';
-import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
+import { getTopicListByKemuType, getSubjectOneCollection } from '../../utils/cache'
 import { RESULT, TOPIC, ERROR_NUMBER, SUCCESS_NUMBER, TOPIC_INDEX, TOTAL, } from '../../utils/constant'
 import { getTopicListByKey } from '../../utils/common'
 const app = getApp();
@@ -46,7 +46,7 @@ Page({
   toggleCollect(e) {
     const { kemuType } = this.data
     const key = e.detail
-    collection = getSubjectOneCollection()
+    collection = getSubjectOneCollection(kemuType)
     if (collection[key]) {
       collection[key] = null;
       collection = cancelCollection(kemuType, key);
@@ -111,6 +111,7 @@ Page({
     switch (from) {
       case 'ERROR':
         cacheList = getTopicListByKey(key, cacheList)
+        console.log('cacheList', cacheList)
         break;
       case 'COLLECTION':
         cacheList = getTopicListByKey(key, cacheList)
@@ -120,8 +121,18 @@ Page({
     }
 
   },
+  getTotal() {
+    const { kemuType, from } = this.data
+    let total = wx.getStorageSync(totalKey)
+    if (from === 'ERROR' || from === 'COLLECTION') {
+      const key = `${kemuType}_${from}`
+      const errMap = wx.getStorageSync(key) || {}
+      total = Object.keys(errMap).length
+    }
+    return total
+  },
   async _initAppData() {
-    const total = wx.getStorageSync(totalKey)
+    const total = this.getTotal()
     const successNumber = wx.getStorageSync(successNumberKey) || 0
     const wrongNumber = wx.getStorageSync(errorNumberKey) || 0
     this.setCacheList()

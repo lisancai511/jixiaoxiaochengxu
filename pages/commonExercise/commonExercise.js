@@ -3,7 +3,7 @@ import {
   saveCollection,
   cancelCollection,
 } from '../../utils/util.js';
-import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
+import { getTopicListByKemuType, getSubjectOneCollection } from '../../utils/cache'
 import { topicOne, getKeyFromType, getTopicListByType } from '../../utils/specialOne'
 const { SPECIAL } = require('../../utils/constant')
 const app = getApp();
@@ -54,7 +54,7 @@ Page({
   toggleCollect(e) {
     const key = e.detail
     const { kemuType } = this.data
-    collection = getSubjectOneCollection()
+    collection = getSubjectOneCollection(kemuType)
     if (collection[key]) {
       collection[key] = null;
       collection = cancelCollection(kemuType, key);
@@ -118,13 +118,13 @@ Page({
     return wx.getStorageSync(key) || {}
   },
 
-  _initBasic(from, type) {
+  _initBasic(kemuType, type) {
     const special = this.getStorageSpecial()
     console.log('special', special)
     let { total = 0, successNumber = 0, wrongNumber = 0, topicIndex = 0 } = special[type]
     console.log(special[type])
     topicIndex = topicIndex < 0 ? 0 : topicIndex
-    cacheList = getTopicListByType(from, type)
+    cacheList = getTopicListByType(kemuType, type)
     if (total !== cacheList.length) {
       total = cacheList.length
     }
@@ -141,13 +141,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // this._initAppData();
-    const { from, type } = options
+    const { kemuType, type } = options
+    console.log('special', options)
     this.setData({
-      kemuType: from,
+      kemuType,
       specialType: type
     })
-    this._initBasic(from, type)
+    this._initBasic(kemuType, type)
   },
 
   /**

@@ -1,13 +1,8 @@
-import ClassicModel from '../../model/classic.js';
-const classicModel = new ClassicModel();
 const app = getApp();
 
 Page({
   data: {
     PageCur: 'simulation',
-  },
-  onLoad: function () {
-    // this.getData();
   },
   NavChange(e) {
     const PageCur = e.currentTarget.dataset.cur
@@ -23,32 +18,6 @@ Page({
       imageUrl: '/images/share.jpg',
       path: '/pages/index/index',
     };
-  },
-  getData() {
-    this._getClassicList();
-    this._getFiftySubject();
-  },
-  _getClassicList() {
-    classicModel.getClassic({ limit: 5 }).then(res => {
-      app.globalData.arrOne = res.list;
-      app.globalData.total = res.total;
-    });
-  },
-  _getFiftySubject() {
-    classicModel
-      .getFiftySubject()
-      .then(res => {
-        return res.list.map(item => ({
-          ...item,
-          options: item.options.map(opt => ({
-            description: opt,
-            className: '',
-          })),
-        }));
-      })
-      .then(res => {
-        app.globalData.fiftySubject = res;
-      });
   },
   onLoad() {
   },

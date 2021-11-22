@@ -1,11 +1,10 @@
-import { getSubjectOneErrorList } from '../../utils/one'
 import { getTopicListByType } from '../../utils/specialOne'
 import { getTopicListByKey } from '../../utils/common'
 const MAX_SWIPER_LENGTH = 3;
 let cacheList = [];
 let collection = {};
 let timer = null
-let errorKey = 'ERROR'
+let errorKey = ''
 Component({
   options: {
     multipleSlots: true
@@ -26,11 +25,6 @@ Component({
       type: String,
       value: 'one'
     },
-    // 缓存题目的key
-    topicCacheKey: {
-      type: String,
-      value: ''
-    },
     topicIndex: {
       type: Number,
       value: 0
@@ -38,10 +32,6 @@ Component({
     total: {
       type: Number,
       value: 0
-    },
-    collectionKey: {
-      type: String,
-      value: ''
     },
     successNumber: {
       type: Number,
@@ -265,7 +255,8 @@ Component({
       }
     },
     _checkStar(showMsg = false) {
-      const { collectionKey } = this.data
+      const { kemuType } = this.data
+      const collectionKey = `${kemuType}_COLLECTION`
       collection = wx.getStorageSync(collectionKey) || {}
       console.log('col', collection)
       const key = this._getTopicId()
@@ -401,11 +392,13 @@ Component({
     },
     setErrorKey() {
       const { kemuType } = this.data
-      errorKey = `${kemuType}_${errorKey}`
+      errorKey = `${kemuType}_ERROR`
+      console.log('errorKey', errorKey)
     },
     async _initTopicData() {
       this.setErrorKey()
       cacheList = this.getCacheList()
+      console.log('子组件', cacheList)
       this.setHeight()
       const { topicIndex } = this.data
       const exerciseList = this._getPageTopicList(topicIndex, cacheList)
@@ -432,7 +425,7 @@ Component({
       clearTimeout(timer)
     }
   },
-  onload: function () {
+  onLoad: function () {
     console.log(23424, this.data.kemuType)
   }
 })

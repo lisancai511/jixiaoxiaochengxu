@@ -28,13 +28,8 @@
         </view>
       </view>
       <view class="main_right">
-<<<<<<< HEAD
         <view bindtap="gotoSubject" id="special" class="left_item m-t-20 m-b-20">
           <image class="icon" src="../../images/zhuanxiang.png" />
-=======
-        <view bindtap="gotoSubject" id="SPECIAL" class="left_item m-t-20 m-b-20">
-          <view class="t-icon iconzhuanxianglianxi"></view>
->>>>>>> 8f6d08b7137e03f6f0232e90413431d72c61bc5f
           <text class="m-t-10">专项练习</text>
         </view>
         <view bindtap="gotoSubject" id="COLLECTION" class="left_item m-t-20 m-b-20">

@@ -260,15 +260,10 @@ Page({
           this.renderCountDownTime(countDownTime)
         }
         if (res.cancel) {
-<<<<<<< HEAD
-          const score = wx.getStorageSync(SUBJECT_ONE_MOCK_SUCCESS_NUMBER)
-          this.sendScoreToServer()
-=======
           const score = wx.getStorageSync(successNumberKey)
           if (score > 60) {
             this.sendScoreToServer()
           }
->>>>>>> 8f6d08b7137e03f6f0232e90413431d72c61bc5f
           wx.redirectTo({
             url: '/pages/gradeResult/gradeResult',
           })

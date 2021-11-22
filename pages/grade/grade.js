@@ -27,12 +27,12 @@ Page({
     }
     return null
   },
-  async getGradeList() {
+  async getGradeList(kemuType) {
     const user = getUserStorage()
     if (user && user.id) {
       const { data = [] } = await getGradeList({
         wxUserId: user.id,
-        type: '1'
+        type: kemuType === 'one' ? '1' : '4'
       })
       let list = data.map(item => {
         const { createdAt, ...other } = item
@@ -52,7 +52,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getGradeList()
+    console.log(options)
+    const { kemuType } = options
+    this.getGradeList(kemuType)
   },
 
   /**

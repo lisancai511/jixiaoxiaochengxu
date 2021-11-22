@@ -280,6 +280,7 @@ Page({
   },
   sendScoreToServer() {
     const user = getUserStorage()
+    const { kemuType } = this.data
     if (user && user.id) {
       const score = wx.getStorageSync(successNumberKey) || 0
       const useTime = this._getUsedTimeStr()
@@ -287,7 +288,7 @@ Page({
         wxUserId: user.id,
         score,
         useTime,
-        type: '1'
+        type: kemuType === 'one' ? '1' : '4'
       }
       addGrade(params)
     }

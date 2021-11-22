@@ -55,7 +55,7 @@ Page({
   },
   gotoGrade() {
     wx.navigateTo({
-      url: `/pages/grade/grade?type=four`
+      url: `/pages/grade/grade?kemuType=four`
     })
   },
   navigateFrom(from) {

@@ -1,4 +1,4 @@
-const { getSubjectOneList } = require('../service/subjectone')
+const { getServerTopicList } = require('../service/subjectone')
 const { getSubjectFourList } = require('../service/subjectfour')
 const constant = require('../utils/constant')
 // 渲染已经做过的题目
@@ -18,27 +18,29 @@ function getTopicClassName(list, result) {
   })
 }
 // 获取科目一的数据，拿到之后存入storage中，取得时候先从storage中取，没有则重新调取接口
-export async function getSubjectOne(data) {
+export async function getTopicListByKemuType(kemuType) {
   try {
-    let list = wx.getStorageSync('one_TOPIC')
-    let result = wx.getStorageSync('one_ORDER_RESULT')
-    let total = wx.getStorageSync('one_ORDER_TOTAL')
+    const topicKey = `${kemuType}_TOPIC`
+    const resultKey = `${kemuType}_ORDER_RESULT`
+    const totalKey = `${kemuType}_ORDER_TOTAL`
+    let list = wx.getStorageSync(topicKey)
+    let result = wx.getStorageSync(resultKey)
+    let total = wx.getStorageSync(totalKey)
     if (list) {
       list = getTopicClassName(list, result)
-      console.log("ll--", list)
       return {
         list,
         total
       }
     }
-    const res = await getSubjectOneList(data)
+    const res = await getServerTopicList(kemuType)
     list = getTopicClassName(res.list, result)
     total = res.total || 0
-    wx.setStorageSync('one_TOPIC', list)
-    wx.setStorageSync('one_ORDER_TOTAL', total)
+    wx.setStorageSync(topicKey, list)
+    wx.setStorageSync(totalKey, total)
     return res
   } catch (e) {
-    console.log('getSubjectOne fail', e)
+    console.log('getTopicListByKemuType fail', e)
     return {
       list: [],
       total: 0
@@ -71,8 +73,9 @@ export async function getSubjectFour(data) {
   }
 }
 
-export function getSubjectOneCollection() {
-  return wx.getStorageSync('one_COLLECTION') || {}
+export function getSubjectOneCollection(kemuType = 'one') {
+  const key = `${kemuType}_COLLECTION`
+  return wx.getStorageSync(key) || {}
 }
 
 export function getSubjectFourCollection() {

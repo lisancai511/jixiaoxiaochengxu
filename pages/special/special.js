@@ -5,11 +5,14 @@ Page({
    */
   data: {
     list: [],
+    kemuType: '',
+    from: ''
   },
   gotoItem(e) {
     const item = e.currentTarget.dataset.item;
+    const { kemuType } = this.data
     wx.navigateTo({
-      url: `/pages/commonExercise/commonExercise?from=one&type=${item.type}`,
+      url: `/pages/commonExercise/commonExercise?kemuType=${kemuType}&type=${item.type}`,
     });
   },
   getTopicSpecial(type) {
@@ -22,7 +25,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getTopicSpecial(options.from)
+    console.log(options)
+    const { kemuType, from } = options
+    this.setData({
+      kemuType,
+      from
+    })
+    this.getTopicSpecial(kemuType)
   },
 
   /**

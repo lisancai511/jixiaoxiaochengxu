@@ -1,8 +1,8 @@
-const {get} = require('../utils/request1')
+const { get } = require('../utils/request')
 const api = require('../api/index')
 
 export async function getSubjectFourList(data) {
-  let {list, ...other} = await get(api.subjectFour, data)
+  let { list, ...other } = await get(api.subjectFour, data)
   list = list.map(item => ({
     ...item,
     options: item.options.map(opt => ({
@@ -17,7 +17,7 @@ export async function getSubjectFourList(data) {
 }
 
 export async function getMockSubjectFour(data) {
-  let {list, ...other} = await get(api.mockSubjectFour, data)
+  let { list, ...other } = await get(api.mockSubjectFour, data)
   list = list.map(item => ({
     ...item,
     options: item.options.map(opt => ({

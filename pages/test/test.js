@@ -3,8 +3,9 @@ import {
   saveCollection,
   cancelCollection,
 } from '../../utils/util.js';
-import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
+import { getTopicListByKemuType, getSubjectOneCollection } from '../../utils/cache'
 import { RESULT, TOPIC, ERROR_NUMBER, SUCCESS_NUMBER, TOPIC_INDEX, TOTAL, } from '../../utils/constant'
+import { getTopicListByKey } from '../../utils/common'
 const app = getApp();
 let cacheList = [];
 let collection = {};
@@ -45,7 +46,7 @@ Page({
   toggleCollect(e) {
     const { kemuType } = this.data
     const key = e.detail
-    collection = getSubjectOneCollection()
+    collection = getSubjectOneCollection(kemuType)
     if (collection[key]) {
       collection[key] = null;
       collection = cancelCollection(kemuType, key);
@@ -103,11 +104,38 @@ Page({
     const { kemuType, from } = this.data
     return `${kemuType}_${from}_${key}`
   },
+  setCacheList() {
+    const { from, kemuType } = this.data
+    cacheList = wx.getStorageSync(topicKey) || []
+    const key = `${kemuType}_${from}`
+    switch (from) {
+      case 'ERROR':
+        cacheList = getTopicListByKey(key, cacheList)
+        console.log('cacheList', cacheList)
+        break;
+      case 'COLLECTION':
+        cacheList = getTopicListByKey(key, cacheList)
+        break;
+      default:
+        break;
+    }
+
+  },
+  getTotal() {
+    const { kemuType, from } = this.data
+    let total = wx.getStorageSync(totalKey)
+    if (from === 'ERROR' || from === 'COLLECTION') {
+      const key = `${kemuType}_${from}`
+      const errMap = wx.getStorageSync(key) || {}
+      total = Object.keys(errMap).length
+    }
+    return total
+  },
   async _initAppData() {
-    const total = wx.getStorageSync(totalKey)
+    const total = this.getTotal()
     const successNumber = wx.getStorageSync(successNumberKey) || 0
     const wrongNumber = wx.getStorageSync(errorNumberKey) || 0
-    cacheList = wx.getStorageSync(topicKey) || []
+    this.setCacheList()
     const index = wx.getStorageSync(topicIndexKey) || 0
     const topicIndex = index < 0 ? 0 : index
     this.setData({

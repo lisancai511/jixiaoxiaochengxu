@@ -75,13 +75,7 @@ const cancelCollection = (kemuType, id) => {
   return idObj;
 };
 
-const getSubjectOneList = () => {
-  const list = getKeyFromStorage(SUBJECT_ONE)
-  if (list) {
-    return list
-  }
-  return []
-}
+
 
 module.exports = {
   formatTime: formatTime,
@@ -89,6 +83,5 @@ module.exports = {
   getKeyFromStorage,
   saveCollection,
   cancelCollection,
-  getErrorIdLists,
-  getSubjectOneList
+  getErrorIdLists
 };

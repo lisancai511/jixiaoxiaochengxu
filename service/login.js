@@ -1,4 +1,4 @@
-const { post, get } = require('../utils/request1')
+const { post, get } = require('../utils/request')
 const api = require('../api/index')
 export function wxLogin(js_code) {
   return post('/wxLogin', { js_code })

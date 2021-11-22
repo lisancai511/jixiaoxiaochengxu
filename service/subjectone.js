@@ -1,8 +1,12 @@
-const { get } = require('../utils/request1')
+const { get } = require('../utils/request')
 const api = require('../api/index')
 
-export async function getSubjectOneList(params) {
-  let { data, ...other } = await get(api.subjectOne, params)
+export async function getServerTopicList(kemuType = 'one') {
+  const apiMap = {
+    one: api.subjectOne,
+    four: api.subjectFour
+  }
+  let { data, ...other } = await get(apiMap[kemuType], { limit: 10000 })
   data = data.map((item, i) => {
     let { options } = item
     options = options.split(', ')
@@ -21,8 +25,12 @@ export async function getSubjectOneList(params) {
   }
 }
 
-export async function getMockSubjectOne(params) {
-  let { data, ...other } = await get(api.mockSubjectOne, params)
+export async function getMockSubjectOne(kemuType = 'one') {
+  const apiMap = {
+    one: api.mockSubjectOne,
+    four: api.mockSubjectFour
+  }
+  let { data, ...other } = await get(apiMap[kemuType], { limit: 10000 })
   data = data.map(item => {
     let { options } = item
     options = options.split(', ')

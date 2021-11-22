@@ -1,4 +1,4 @@
-const { post, get } = require('../utils/request1')
+const { post, get } = require('../utils/request')
 
 export function addGrade(data) {
   return post('/wx/addGrade', data)

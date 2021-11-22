@@ -3,4 +3,4 @@
 </cu-custom>
 <!-- 父组件：topicIndex:{{topicIndex}}
 <text>hascollect:{{hasCollected}}</text> -->
-<topic class="topic" bind:jumpToItem="jumpToItem" bind:slideItem="slideItem" bind:checkOptionItem="checkOptionItem" bind:toggleCollect="toggleCollect" successNumber="{{successNumber}}" wrongNumber="{{wrongNumber}}" total="{{total}}" collectionKey="one_COLLECTION" topicCacheKey="one_TOPIC" topicIndex="{{topicIndex}}" />
+<topic class="topic" kemuType="{{kemuType}}" from="{{from}}" bind:jumpToItem="jumpToItem" bind:slideItem="slideItem" bind:checkOptionItem="checkOptionItem" bind:toggleCollect="toggleCollect" successNumber="{{successNumber}}" wrongNumber="{{wrongNumber}}" total="{{total}}" topicIndex="{{topicIndex}}" />

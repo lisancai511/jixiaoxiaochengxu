@@ -308,8 +308,8 @@ const topicTypeMap = {
   four: topicFour
 }
 
-export function getTopicBasic(type) {
-  const topicMap = topicTypeMap[type]
+export function getTopicBasic(kemuType) {
+  const topicMap = topicTypeMap[kemuType]
   let list = []
   for (let key in topicMap) {
     const { title = '', ids = [] } = topicMap[key]
@@ -331,12 +331,8 @@ export function getTopicBasic(type) {
  * @returns 题目的数组
  */
 export function getTopicListByType(kemuType, type) {
-  const listMap = {
-    one: 'SUBJECT_ONE',
-    four: 'SUBJECT_Four'
-  }
   const topicInfo = topicTypeMap[kemuType]
-  const key = listMap[kemuType]
+  const key = `${kemuType}_TOPIC`
   const allList = wx.getStorageSync(key) || []
   console.log(allList)
   let t1 = new Date().getTime()

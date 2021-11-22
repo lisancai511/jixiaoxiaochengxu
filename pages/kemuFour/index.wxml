@@ -2,11 +2,16 @@
   <view class="cu-item shadow">
     <view class="main">
       <view class="main_left">
+<<<<<<< HEAD
         <view bindtap="gotoSubject" id="vip" class="left_item m-t-20 m-b-20">
           <image class="icon vip" src="../../images/vip.png" />
+=======
+        <view bindtap="gotoSubject" id="VIP" class="left_item m-t-20 m-b-20">
+          <image class="icon" src="../../images/vip.png" />
+>>>>>>> 8f6d08b7137e03f6f0232e90413431d72c61bc5f
           <text class="m-t-10">vip课程</text>
         </view>
-        <view bindtap="gotoSubject" id="wrongSubject" class="left_item m-t-20 m-b-20">
+        <view bindtap="gotoSubject" id="ERROR" class="left_item m-t-20 m-b-20">
           <image class="icon" src="../../images/cuoti.png" />
           <text class="m-t-10">我的错题</text>
         </view>
@@ -17,22 +22,27 @@
       </view>
       <view class="main_mid">
         <view class="main_item">
-          <view bindtap="gotoSubject" id="order" class="main_top">
+          <view bindtap="gotoSubject" id="ORDER" class="main_top">
             <image class="bg" src="../../images/2.png" />
             <view class="main_content">顺序练习</view>
           </view>
-          <view bindtap="gotoSubject" id="mockExam" class="main_bottom">
+          <view bindtap="gotoSubject" id="MOCK" class="main_bottom">
             <image class="bg" src="../../images/3.png" />
             <view class="main_content">模拟考试</view>
           </view>
         </view>
       </view>
       <view class="main_right">
+<<<<<<< HEAD
         <view bindtap="gotoSubject" id="special" class="left_item m-t-20 m-b-20">
           <image class="icon" src="../../images/zhuanxiang.png" />
+=======
+        <view bindtap="gotoSubject" id="SPECIAL" class="left_item m-t-20 m-b-20">
+          <view class="t-icon iconzhuanxianglianxi"></view>
+>>>>>>> 8f6d08b7137e03f6f0232e90413431d72c61bc5f
           <text class="m-t-10">专项练习</text>
         </view>
-        <view bindtap="gotoSubject" id="collection" class="left_item m-t-20 m-b-20">
+        <view bindtap="gotoSubject" id="COLLECTION" class="left_item m-t-20 m-b-20">
           <image class="icon" src="../../images/shoucang.png" />
           <text class="m-t-10">我的收藏</text>
         </view>

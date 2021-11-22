@@ -6,8 +6,8 @@ import {
 import { getUserStorage } from '../../utils/storage'
 import { getMockSubjectOne } from '../../service/subjectone'
 import { addGrade } from '../../service/common'
-import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
-import { SUBJECT_ONE_MOCK, SUBJECT_ONE_MOCK_TIME, SUBJECT_ONE_MOCK_RESULT, SUBJECT_ONE_MOCK_TOPIC_INDEX, SUBJECT_ONE_MOCK_ERROR_NUMBER, SUBJECT_ONE_MOCK_SUCCESS_NUMBER } from '../../utils/constant'
+import { getTopicListByKemuType, getSubjectOneCollection } from '../../utils/cache'
+import { TOPIC, TOTAL, RESULT, ERROR_NUMBER, SUCCESS_NUMBER, TOPIC_INDEX, TIME } from '../../utils/constant'
 const app = getApp();
 
 const COUNT_DOWN_TIME = '45:00'
@@ -16,6 +16,13 @@ let cacheList = [];
 let collection = {};
 let timer = null
 let countDownTimer = null
+let resultKey = ''
+let topicKey = ''
+let errorNumberKey = ''
+let successNumberKey = ''
+let topicIndexKey = ''
+let totalKey = ''
+let timeKey = ''
 Page({
   /**
    * 页面的初始数据
@@ -26,7 +33,9 @@ Page({
     total: 100,
     successNumber: 0,
     wrongNumber: 0,
-    countDownTime: COUNT_DOWN_TIME
+    countDownTime: COUNT_DOWN_TIME,
+    kemuType: '',
+    from: ''
   },
   calculateTime(timeNumber) {
     let minute = Math.floor(timeNumber / 60)
@@ -90,24 +99,25 @@ Page({
     this.setData({
       topicIndex
     })
-    wx.setStorageSync(SUBJECT_ONE_MOCK_TOPIC_INDEX, topicIndex)
+    wx.setStorageSync(topicIndexKey, topicIndex)
   },
   slideItem(e) {
     const topicIndex = e.detail
     this.setData({
       topicIndex
     })
-    wx.setStorageSync(SUBJECT_ONE_MOCK_TOPIC_INDEX, topicIndex)
+    wx.setStorageSync(topicIndexKey, topicIndex)
   },
   toggleCollect(e) {
     const key = e.detail
-    collection = getSubjectOneCollection()
+    const { kemuType } = this.data
+    collection = getSubjectOneCollection(kemuType)
     if (collection[key]) {
       collection[key] = null;
-      collection = cancelCollection('one', key);
+      collection = cancelCollection(kemuType, key);
     } else {
       collection[key] = true;
-      collection = saveCollection('one', key);
+      collection = saveCollection(kemuType, key);
     }
   },
   _getTopicId(topicIndex) {
@@ -117,9 +127,9 @@ Page({
   _getTopicRecord(topicIndex, res) {
     const key = this._getTopicId(topicIndex)
     console.log(key)
-    const subjectResult = wx.getStorageSync(SUBJECT_ONE_MOCK_RESULT) || {}
-    let successNumber = wx.getStorageSync(SUBJECT_ONE_MOCK_SUCCESS_NUMBER) || 0
-    let wrongNumber = wx.getStorageSync(SUBJECT_ONE_MOCK_ERROR_NUMBER) || 0
+    const subjectResult = wx.getStorageSync(resultKey) || {}
+    let successNumber = wx.getStorageSync(successNumberKey) || 0
+    let wrongNumber = wx.getStorageSync(errorNumberKey) || 0
     if (subjectResult[key]) {
       if (subjectResult[key] === true) {
         // 之前都是作对的题目
@@ -142,9 +152,9 @@ Page({
       }
     }
     subjectResult[key] = res
-    wx.setStorageSync(SUBJECT_ONE_MOCK_RESULT, subjectResult)
-    wx.setStorageSync(SUBJECT_ONE_MOCK_SUCCESS_NUMBER, successNumber)
-    wx.setStorageSync(SUBJECT_ONE_MOCK_ERROR_NUMBER, wrongNumber)
+    wx.setStorageSync(resultKey, subjectResult)
+    wx.setStorageSync(successNumberKey, successNumber)
+    wx.setStorageSync(errorNumberKey, wrongNumber)
     return { successNumber, wrongNumber }
   },
   checkOptionItem(e) {
@@ -157,18 +167,19 @@ Page({
     })
   },
   async getMockSubjectOne(reset) {
-    const cache = wx.getStorageSync(SUBJECT_ONE_MOCK)
+    const cache = wx.getStorageSync(topicKey)
     if (cache && !reset) {
       return cache
     }
-    let { list: data } = await getMockSubjectOne()
-    wx.setStorageSync(SUBJECT_ONE_MOCK, data)
+    const { kemuType } = this.data
+    let { list: data } = await getMockSubjectOne(kemuType)
+    wx.setStorageSync(topicKey, data)
     return data
   },
   async _initAppData(reset = false) {
     let list = await this.getMockSubjectOne(reset)
     cacheList = list
-    const index = wx.getStorageSync(SUBJECT_ONE_MOCK_TOPIC_INDEX) || 0
+    const index = wx.getStorageSync(topicIndexKey) || 0
     const topicIndex = index < 0 ? 0 : index
     this.setData({
       topicIndex
@@ -177,8 +188,8 @@ Page({
     ref._initTopicData()
   },
   _initErrorAndSuccess() {
-    const successNumber = wx.getStorageSync(SUBJECT_ONE_MOCK_SUCCESS_NUMBER) || 0
-    const wrongNumber = wx.getStorageSync(SUBJECT_ONE_MOCK_ERROR_NUMBER) || 0
+    const successNumber = wx.getStorageSync(successNumberKey) || 0
+    const wrongNumber = wx.getStorageSync(errorNumberKey) || 0
     this.setData({
       successNumber,
       wrongNumber
@@ -186,15 +197,15 @@ Page({
   },
 
   _resetMock() {
-    wx.removeStorageSync(SUBJECT_ONE_MOCK)
-    wx.removeStorageSync(SUBJECT_ONE_MOCK_RESULT)
-    wx.removeStorageSync(SUBJECT_ONE_MOCK_TOPIC_INDEX)
-    wx.removeStorageSync(SUBJECT_ONE_MOCK_TIME)
-    wx.removeStorageSync(SUBJECT_ONE_MOCK_SUCCESS_NUMBER)
-    wx.removeStorageSync(SUBJECT_ONE_MOCK_ERROR_NUMBER)
+    wx.removeStorageSync(topicKey)
+    wx.removeStorageSync(resultKey)
+    wx.removeStorageSync(topicIndexKey)
+    wx.removeStorageSync(timeKey)
+    wx.removeStorageSync(successNumberKey)
+    wx.removeStorageSync(errorNumberKey)
   },
   _checkCache() {
-    const cache = wx.getStorageSync(SUBJECT_ONE_MOCK_RESULT) || null
+    const cache = wx.getStorageSync(resultKey) || null
     if (cache) {
       wx.showModal({
         title: '温馨提示',
@@ -205,7 +216,7 @@ Page({
           if (res.confirm) {
             this._initErrorAndSuccess()
             this._initAppData()
-            const countTime = wx.getStorageSync(SUBJECT_ONE_MOCK_TIME)
+            const countTime = wx.getStorageSync(timeKey)
             this.renderCountDownTime(countTime)
           } else if (res.cancel) {
             this._resetMock()
@@ -221,10 +232,10 @@ Page({
     }
   },
   saveCountTime() {
-    const cache = wx.getStorageSync(SUBJECT_ONE_MOCK_RESULT) || null
+    const cache = wx.getStorageSync(resultKey) || null
     if (cache) {
       const { countDownTime } = this.data
-      wx.setStorageSync(SUBJECT_ONE_MOCK_TIME, countDownTime)
+      wx.setStorageSync(timeKey, countDownTime)
     }
   },
   takeSubmit() {
@@ -249,8 +260,15 @@ Page({
           this.renderCountDownTime(countDownTime)
         }
         if (res.cancel) {
+<<<<<<< HEAD
           const score = wx.getStorageSync(SUBJECT_ONE_MOCK_SUCCESS_NUMBER)
           this.sendScoreToServer()
+=======
+          const score = wx.getStorageSync(successNumberKey)
+          if (score > 60) {
+            this.sendScoreToServer()
+          }
+>>>>>>> 8f6d08b7137e03f6f0232e90413431d72c61bc5f
           wx.redirectTo({
             url: '/pages/gradeResult/gradeResult',
           })
@@ -267,23 +285,43 @@ Page({
   },
   sendScoreToServer() {
     const user = getUserStorage()
+    const { kemuType } = this.data
     if (user && user.id) {
-      const score = wx.getStorageSync(SUBJECT_ONE_MOCK_SUCCESS_NUMBER) || 0
+      const score = wx.getStorageSync(successNumberKey) || 0
       const useTime = this._getUsedTimeStr()
       const params = {
         wxUserId: user.id,
         score,
         useTime,
-        type: '1'
+        type: kemuType === 'one' ? '1' : '4'
       }
       addGrade(params)
     }
 
   },
+  createStorageKey(key) {
+    const { kemuType, from } = this.data
+    return `${kemuType}_${from}_${key}`
+  },
+  initKey() {
+    totalKey = this.createStorageKey(TOTAL)
+    resultKey = this.createStorageKey(RESULT)
+    topicKey = this.createStorageKey(TOPIC)
+    errorNumberKey = this.createStorageKey(ERROR_NUMBER)
+    successNumberKey = this.createStorageKey(SUCCESS_NUMBER)
+    topicIndexKey = this.createStorageKey(TOPIC_INDEX)
+    timeKey = this.createStorageKey(TIME)
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const { kemuType, from } = options
+    this.setData({
+      kemuType,
+      from
+    })
+    this.initKey()
     this._checkCache()
   },
 

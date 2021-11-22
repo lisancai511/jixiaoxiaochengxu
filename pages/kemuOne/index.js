@@ -11,43 +11,31 @@ Page({
    * 页面的初始数据
    */
   data: {},
-  async _getClassicList() {
-    wx.showLoading({
-      title: '数据加载中...',
-    })
-    const { list, total } = await getSubjectOne({ limit: 100000 })
-    app.globalData.arrOne = list;
-    app.globalData.total = total;
-    wx.hideLoading()
-
-  },
-  _gotoCollection() {
-    const collection = getKeyFromStorage(SUBJECT_ONE_COLLECTION) || {};
+  _gotoCollection(from) {
+    const key = 'one_COLLECTION'
+    const collection = getKeyFromStorage(key) || {};
     const ids = Object.keys(collection);
     if (ids.length) {
-      wx.navigateTo({
-        url: `/pages/collection/collection?type=collectionOne`,
-      });
-    } else {
-      wx.showToast({
-        icon: 'none',
-        title: '暂无收藏',
-        duration: 1000,
-      });
+      this.navigateFrom(from)
+      return true
     }
+    wx.showToast({
+      icon: 'none',
+      title: '暂无收藏',
+      duration: 1000,
+    });
+    return false
   },
   _gotoVip() {
     wx.navigateTo({
       url: `/pages/payPage/index?type=vipOne`,
     });
   },
-  _gotoError() {
+  _gotoError(from) {
     const errNums = wx.getStorageSync(SUBJECT_ONE_ERROR_NUMBER)
     console.log(errNums)
     if (errNums > 0) {
-      wx.navigateTo({
-        url: `/pages/error/error?type=errorOne`,
-      });
+      this.navigateFrom(from)
       return false
     }
     wx.showToast({
@@ -71,8 +59,14 @@ Page({
       url: `/pages/grade/grade?type=one`
     })
   },
+  navigateFrom(from) {
+    wx.navigateTo({
+      url: `/pages/test/test?kemuType=one&from=${from}`,
+    });
+  },
   gotoSubject: function (type) {
-    switch (type.currentTarget.id) {
+    const from = type.currentTarget.id
+    switch (from) {
       case 'mockExam':
         this._gotoMockExam();
         break;
@@ -85,20 +79,21 @@ Page({
       case 'grade':
         this.gotoGrade();
         break;
+      case 'ERROR':
+        this._gotoError(from)
+        break
+      case 'COLLECTION':
+        this._gotoCollection(from)
+        break
       default:
-        this._getClassicList().then(() => {
-          wx.navigateTo({
-            url: `/pages/test/test?kemuType=one&from=${type.currentTarget.id}`,
-          });
-        })
+        this.navigateFrom(from)
         break;
     }
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-  },
+  onLoad: function (options) { },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

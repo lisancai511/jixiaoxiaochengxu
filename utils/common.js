@@ -127,3 +127,23 @@ export async function goToErrorPage(type) {
     duration: 1000,
   });
 }
+
+export function getTopicListByKey(key, allList) {
+  const typeMap = wx.getStorageSync(key)
+  if (!typeMap) return []
+  const [kemuType] = key.split('_')
+  if (kemuType == undefined) return []
+  if (allList == undefined) {
+    const key = `${kemuType}_TOPIC`
+    allList = wx.getStorageSync(key)
+  }
+  let list = []
+  for (let i = 0; i < allList.length; i++) {
+    const item = allList[i];
+    const { id } = item
+    if (typeMap[id]) {
+      list.push(item)
+    }
+  }
+  return list
+}

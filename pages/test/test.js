@@ -5,6 +5,7 @@ import {
 } from '../../utils/util.js';
 import { getSubjectOne, getSubjectOneCollection } from '../../utils/cache'
 import { RESULT, TOPIC, ERROR_NUMBER, SUCCESS_NUMBER, TOPIC_INDEX, TOTAL, } from '../../utils/constant'
+import { getTopicListByKey } from '../../utils/common'
 const app = getApp();
 let cacheList = [];
 let collection = {};
@@ -103,11 +104,27 @@ Page({
     const { kemuType, from } = this.data
     return `${kemuType}_${from}_${key}`
   },
+  setCacheList() {
+    const { from, kemuType } = this.data
+    cacheList = wx.getStorageSync(topicKey) || []
+    const key = `${kemuType}_${from}`
+    switch (from) {
+      case 'ERROR':
+        cacheList = getTopicListByKey(key, cacheList)
+        break;
+      case 'COLLECTION':
+        cacheList = getTopicListByKey(key, cacheList)
+        break;
+      default:
+        break;
+    }
+
+  },
   async _initAppData() {
     const total = wx.getStorageSync(totalKey)
     const successNumber = wx.getStorageSync(successNumberKey) || 0
     const wrongNumber = wx.getStorageSync(errorNumberKey) || 0
-    cacheList = wx.getStorageSync(topicKey) || []
+    this.setCacheList()
     const index = wx.getStorageSync(topicIndexKey) || 0
     const topicIndex = index < 0 ? 0 : index
     this.setData({

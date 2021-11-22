@@ -18,24 +18,26 @@ function getTopicClassName(list, result) {
   })
 }
 // 获取科目一的数据，拿到之后存入storage中，取得时候先从storage中取，没有则重新调取接口
-export async function getSubjectOne(data) {
+export async function getSubjectOne(kemuType) {
   try {
-    let list = wx.getStorageSync('one_TOPIC')
-    let result = wx.getStorageSync('one_ORDER_RESULT')
-    let total = wx.getStorageSync('one_ORDER_TOTAL')
+    const topicKey = `${kemuType}_TOPIC`
+    const resultKey = `${kemuType}_ORDER_RESULT`
+    const totalKey = `${kemuType}_ORDER_TOTAL`
+    let list = wx.getStorageSync(topicKey)
+    let result = wx.getStorageSync(resultKey)
+    let total = wx.getStorageSync(totalKey)
     if (list) {
       list = getTopicClassName(list, result)
-      console.log("ll--", list)
       return {
         list,
         total
       }
     }
-    const res = await getSubjectOneList(data)
+    const res = await getSubjectOneList(kemuType)
     list = getTopicClassName(res.list, result)
     total = res.total || 0
-    wx.setStorageSync('one_TOPIC', list)
-    wx.setStorageSync('one_ORDER_TOTAL', total)
+    wx.setStorageSync(topicKey, list)
+    wx.setStorageSync(totalKey, total)
     return res
   } catch (e) {
     console.log('getSubjectOne fail', e)

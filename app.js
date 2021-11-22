@@ -2,6 +2,7 @@
 const { getCurrentUser, getopenid } = require('./utils/common')
 const { addOrUpdateUser } = require('./service/login')
 const { setUserStorage } = require('./utils/storage')
+const { getSubjectOne } = require('./utils/cache')
 const { setStorageSpecial, kemuType } = require('./utils/specialOne')
 
 App({
@@ -44,6 +45,7 @@ App({
   },
   onLaunch: async function () {
     // 获取系统状态栏信息
+    getSubjectOne('one')
     this.initSpecialStorage()
     this.getNavInfo()
     this.addOrUpdateUser()

@@ -1,9 +1,11 @@
 import { getSubjectOneErrorList } from '../../utils/one'
 import { getTopicListByType } from '../../utils/specialOne'
+import { getTopicListByKey } from '../../utils/common'
 const MAX_SWIPER_LENGTH = 3;
 let cacheList = [];
 let collection = {};
 let timer = null
+let errorKey = 'ERROR'
 Component({
   options: {
     multipleSlots: true
@@ -20,6 +22,11 @@ Component({
       type: String,
       value: ''
     },
+    from: {
+      type: String,
+      value: 'one'
+    },
+    // 缓存题目的key
     topicCacheKey: {
       type: String,
       value: ''
@@ -79,7 +86,7 @@ Component({
     clickItem(e) {
       const { item, index, optidx } = e.currentTarget.dataset;
       let { topicIndex, exerciseList, isShowResult, swiperIndex } = this.data
-      const { own_res } = exerciseList[index];
+      const { own_res, id } = exerciseList[index];
       let key = 'answerList[' + topicIndex + ']';
       let value = {
         index: topicIndex,
@@ -116,6 +123,11 @@ Component({
           const params = {
             topicIndex,
             res: optidx + ''
+          }
+          const errorStorage = wx.getStorageSync(errorKey) || {}
+          if (!errorStorage[id]) {
+            errorStorage[id] = true
+            wx.setStorageSync(errorKey, errorStorage)
           }
           exerciseList[index].options[optidx].className = 'error';
           exerciseList[index].options[item.ta - 1].className = 'success';
@@ -342,51 +354,58 @@ Component({
       this._setCircular()
     },
     getCacheList() {
-      const { topicCacheKey, kemuType, specialType } = this.data
-      switch (topicCacheKey) {
-        case 'SUBJECT_ONE_ERROR':
-          return getSubjectOneErrorList()
+      const { kemuType, from, specialType } = this.data
+      let key = `${kemuType}_${from}`
+      switch (from) {
+        case 'ERROR':
+          return getTopicListByKey(key)
+        case 'COLLECTION':
+          return getTopicListByKey(key)
         case 'SPECIAL':
           return getTopicListByType(kemuType, specialType)
         default:
-          return wx.getStorageSync(topicCacheKey) || []
+          key = `${kemuType}_TOPIC`
+          return wx.getStorageSync(key) || []
       }
-
     },
     setHeight() {
       let windowHeight = wx.getSystemInfoSync().windowHeight
       let num = 0
-      if(windowHeight<600) {
+      if (windowHeight < 600) {
         num = 290
       }
-      if(windowHeight<650 && windowHeight>600) {
+      if (windowHeight < 650 && windowHeight > 600) {
         num = 310
       }
-      if(windowHeight<700 && windowHeight>650) {
+      if (windowHeight < 700 && windowHeight > 650) {
         num = 340
       }
-      if(windowHeight<750 && windowHeight>700) {
+      if (windowHeight < 750 && windowHeight > 700) {
         num = 370
       }
-      if(windowHeight<800 && windowHeight>750) {
+      if (windowHeight < 800 && windowHeight > 750) {
         num = 390
       }
-      if(windowHeight<850 && windowHeight>800) {
+      if (windowHeight < 850 && windowHeight > 800) {
         num = 420
       }
-      if(windowHeight<900 && windowHeight>850) {
+      if (windowHeight < 900 && windowHeight > 850) {
         num = 450
       }
-      if(windowHeight<950 && windowHeight>900) {
+      if (windowHeight < 950 && windowHeight > 900) {
         num = 470
       }
       this.setData({
         bottomHeight: num
       })
     },
+    setErrorKey() {
+      const { kemuType } = this.data
+      errorKey = `${kemuType}_${errorKey}`
+    },
     async _initTopicData() {
+      this.setErrorKey()
       cacheList = this.getCacheList()
-      console.log('base', cacheList.length)
       this.setHeight()
       const { topicIndex } = this.data
       const exerciseList = this._getPageTopicList(topicIndex, cacheList)
@@ -413,7 +432,7 @@ Component({
       clearTimeout(timer)
     }
   },
-  onload: function() {
-    console.log(23424)
+  onload: function () {
+    console.log(23424, this.data.kemuType)
   }
 })

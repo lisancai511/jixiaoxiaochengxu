@@ -78,7 +78,7 @@
 }
 
 .exercise {
-  padding: 30rpx;
+  padding: 30rpx 30rpx 0 30rpx;
   color: #333;
   height: 100%;
   overflow-y: scroll;
@@ -90,12 +90,11 @@
 .question-type {
   font-size: 16px;
   font-weight: bold;
-  margin-bottom: 10px;
   display: block;
 }
 .question-dec {
-  font-size: 16px;
-  line-height: 28px;
+  font-size: 32rpx;
+  line-height: 44rpx;
 }
 .demo-text-1 {
   background-color: rgb(142, 233, 142);
@@ -116,4 +115,10 @@
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+}
+
+.line {
+  width: 20rpx;
+  background-color: red;
+  display: inline-block;
 }

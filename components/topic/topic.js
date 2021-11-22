@@ -69,6 +69,7 @@ Component({
     classicList: [],
     answerList: [],
     showActionsheet: true,
+    bottomHeight: 280
   },
   /**
    * 组件的方法列表
@@ -352,9 +353,41 @@ Component({
       }
 
     },
+    setHeight() {
+      let windowHeight = wx.getSystemInfoSync().windowHeight
+      let num = 0
+      if(windowHeight<600) {
+        num = 290
+      }
+      if(windowHeight<650 && windowHeight>600) {
+        num = 310
+      }
+      if(windowHeight<700 && windowHeight>650) {
+        num = 340
+      }
+      if(windowHeight<750 && windowHeight>700) {
+        num = 370
+      }
+      if(windowHeight<800 && windowHeight>750) {
+        num = 390
+      }
+      if(windowHeight<850 && windowHeight>800) {
+        num = 420
+      }
+      if(windowHeight<900 && windowHeight>850) {
+        num = 450
+      }
+      if(windowHeight<950 && windowHeight>900) {
+        num = 470
+      }
+      this.setData({
+        bottomHeight: num
+      })
+    },
     async _initTopicData() {
       cacheList = this.getCacheList()
       console.log('base', cacheList.length)
+      this.setHeight()
       const { topicIndex } = this.data
       const exerciseList = this._getPageTopicList(topicIndex, cacheList)
       const swiperIndex = this._getSwiperIndexByTopicIndex(topicIndex)
@@ -379,5 +412,8 @@ Component({
     if (timer) {
       clearTimeout(timer)
     }
+  },
+  onload: function() {
+    console.log(23424)
   }
 })

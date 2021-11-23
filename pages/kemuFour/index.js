@@ -65,12 +65,14 @@ Page({
   },
   gotoSubject: function (type) {
     const from = type.currentTarget.id
+    console.log(type.currentTarget.id)
     switch (from) {
       case 'MOCK':
         this._gotoMockExam(from);
         break;
-      case 'SPECIAL':
+      case 'special':
         this._gotoSpecial(from);
+        console.log(234234)
         break;
       case 'VIP':
         this._gotoVip();

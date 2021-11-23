@@ -109,6 +109,7 @@
 .recycleItem {
   height: 98rpx;
   flex: auto;
+  max-width: 16.68%;
 }
 
 .footeWrap {

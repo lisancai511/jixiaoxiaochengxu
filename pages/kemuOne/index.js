@@ -70,7 +70,7 @@ Page({
       case 'MOCK':
         this._gotoMockExam(from);
         break;
-      case 'SPECIAL':
+      case 'special':
         this._gotoSpecial(from);
         break;
       case 'VIP':

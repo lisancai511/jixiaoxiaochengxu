@@ -18,12 +18,12 @@ exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
 
   const api = tenpay.init(config)
-
+  const openid = wxContext.OPENID
   let result = await api.getPayParams({
     out_trade_no: Date.now(),
     body: '开通vip',
     total_fee: 1,
-    openid: wxContext.OPENID
+    openid
   });
-  return result
+  return { ...result, openid }
 }

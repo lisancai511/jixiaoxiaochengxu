@@ -1,5 +1,6 @@
 import { getTopicListByType } from '../../utils/specialOne'
 import { getTopicListByKey } from '../../utils/common'
+import { getVipTopicList } from '../../service/subjectone'
 const MAX_SWIPER_LENGTH = 3;
 let cacheList = [];
 let collection = {};
@@ -354,6 +355,8 @@ Component({
           return getTopicListByKey(key)
         case 'SPECIAL':
           return getTopicListByType(kemuType, specialType)
+        // case 'VIP':
+        //   return getVipTopicList(kemuType)
         default:
           key = `${kemuType}_TOPIC`
           return wx.getStorageSync(key) || []

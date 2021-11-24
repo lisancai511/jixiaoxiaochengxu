@@ -8,3 +8,7 @@ export function getGradeList(data) {
   return post('/wx/getGradeList', data)
 }
 
+export function openVip(openId = '') {
+  return post('/wx/openVip', { openId })
+}
+

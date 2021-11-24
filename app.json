@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/result/result",
+    "pages/phoneNumber/phoneNumber",
     "pages/subject/index",
     "pages/gradeResult/gradeResult",
     "pages/test/test",
@@ -12,7 +14,6 @@
     "pages/kemuOne/index",
     "pages/kemuFour/index",
     "pages/payPage/index",
-    "pages/phoneNumber/phoneNumber",
     "pages/grade/grade",
     "pages/mine/index"
   ],

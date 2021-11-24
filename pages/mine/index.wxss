@@ -1,5 +1,5 @@
 .UCenter-bg {
-  background-image: url(https://ss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D450%2C600/sign=5653fe58912397ddd62c90006cb29e81/03087bf40ad162d9c1b8a5a311dfa9ec8a13cd3f.jpg);
+  background-image: url(https://bpic.588ku.com/back_pic/04/40/46/35584f7ed697494.jpg);
   background-size: cover;
   height: 250rpx;
   display: flex;
@@ -149,8 +149,8 @@ map,
   color: #fff;
   width: 50px;
   text-align: center;
-  background-image: linear-gradient(to right, #00f2fe, #4facfe);
-  border: 1px solid #4facfe;
+  background-image: linear-gradient(to right, #6739b6, #b27df4);
+  border: 1px solid #b27df4;
 }
 
 .left {
@@ -159,12 +159,12 @@ map,
 }
 
 .right {
-  background-image: linear-gradient(to left, #00f2fe, #4facfe);
+  background-image: linear-gradient(to left, #6739b6, #b27df4);
   border-radius: 0px 24px 24px 0px;
 }
 
 .myactive {
-  color: #4facfe;
+  color: #b27df4;
   background: #fff;
 }
 
@@ -184,9 +184,9 @@ map,
   width: 60px;
   text-align: center;
   border-radius: 24px;
-  background-image: linear-gradient(to right, #00f2fe, #4facfe);
+  background-image: linear-gradient(to right, #6739b6, #b27df4);
 }
 
 .color {
-  color: #4facfe;
+  color: #b27df4;
 }

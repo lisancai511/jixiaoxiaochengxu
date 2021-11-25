@@ -261,9 +261,7 @@ Page({
         }
         if (res.cancel) {
           const score = wx.getStorageSync(successNumberKey)
-          if (score > 60) {
-            this.sendScoreToServer()
-          }
+          this.sendScoreToServer()
           wx.redirectTo({
             url: '/pages/gradeResult/gradeResult',
           })

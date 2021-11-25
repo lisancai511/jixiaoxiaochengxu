@@ -6,4 +6,6 @@ module.exports = {
   subjectFour: '/subjectFour',
   mockSubjectFour: '/mockSubjectFour',
   fiftysubjectFour: '/fiftysubjectFour',
+  vipOne: '/vipOne',
+  vipFour: '/vipFour'
 }

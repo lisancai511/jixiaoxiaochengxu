@@ -48,23 +48,25 @@ export async function getMockSubjectOne(kemuType = 'one') {
   };
 }
 
-export async function getSpecialOne(type) {
-  return get(`/${type}`).then(res => {
-    let { data = [], ...other } = res;
-    data = data.map(item => {
-      let { options } = item
-      options = options.split(', ')
-      return {
-        ...item,
-        options: options.map(opt => ({
-          description: opt,
-          className: '',
-        })),
-      }
-    });
+export async function getVipTopicList(kemuType = 'one') {
+  const apiMap = {
+    one: api.vipOne,
+    four: api.vipFour
+  }
+  let { data, ...other } = await get(apiMap[kemuType], { limit: 10000 })
+  data = data.map(item => {
+    let { options } = item
+    options = options.split(', ')
     return {
-      ...other,
-      list: data,
-    };
+      ...item,
+      options: options.map(opt => ({
+        description: opt,
+        className: '',
+      })),
+    }
   });
+  return {
+    ...other,
+    list: data,
+  };
 }

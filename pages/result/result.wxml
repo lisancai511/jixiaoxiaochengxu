@@ -1,0 +1,19 @@
+<cu-custom bgColor="" isBack="{{true}}">
+    <view slot="backText">返回</view>
+</cu-custom>
+<mp-msg class="main" type="{{payType}}" title="{{title}}">
+    <view slot="desc">{{desc}}</view>
+    <!-- <view slot="extend">
+        <view>1. 说明1</view>
+        <view>2. 说明2</view>
+    </view> -->
+    <view slot="handle" wx:if="{{hasRes}}">
+        <button class="weui-btn" type="primary" bind:tap="gotoVip">开始做题</button>
+    </view>
+    <!-- <view slot="footer">
+        <view class="weui-footer__links">
+            <navigator url="" class="weui-footer__link">底部链接文本</navigator>
+        </view>
+        <view class="weui-footer__text">Copyright © 2008-2016 weui.io</view>
+    </view> -->
+</mp-msg>

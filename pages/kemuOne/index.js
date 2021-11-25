@@ -3,7 +3,7 @@ import { getKeyFromStorage, getErrorIdLists } from '../../utils/util';
 import { SUBJECT_ONE_COLLECTION, SUBJECT_ONE_ERROR_NUMBER } from '../../utils/constant';
 
 import { getServerTopicList } from '../../service/subjectone'
-import { getTopicListByKemuType } from '../../utils/cache'
+import { getUserStorage } from '../../utils/storage'
 const app = getApp();
 Page({
   /**
@@ -25,9 +25,16 @@ Page({
     });
     return false
   },
-  _gotoVip() {
+  _gotoVip(from) {
+    const user = getUserStorage()
+    if (user && user.isVip) {
+      wx.navigateTo({
+        url: `/pages/test/test?kemuType=one&from=${from}`,
+      });
+      return
+    }
     wx.navigateTo({
-      url: `/pages/payPage/index?type=vipOne`,
+      url: `/pages/payPage/index?kemuType=one&from=${from}`,
     });
   },
   _gotoError(from) {
@@ -74,7 +81,7 @@ Page({
         this._gotoSpecial(from);
         break;
       case 'VIP':
-        this._gotoVip();
+        this._gotoVip(from);
         break;
       case 'grade':
         this.gotoGrade();

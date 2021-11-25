@@ -6,6 +6,7 @@ import {
 import { getTopicListByKemuType, getSubjectOneCollection } from '../../utils/cache'
 import { RESULT, TOPIC, ERROR_NUMBER, SUCCESS_NUMBER, TOPIC_INDEX, TOTAL, } from '../../utils/constant'
 import { getTopicListByKey } from '../../utils/common'
+import { getVipTopicList } from '../../service/subjectone'
 const app = getApp();
 let cacheList = [];
 let collection = {};
@@ -116,6 +117,8 @@ Page({
       case 'COLLECTION':
         cacheList = getTopicListByKey(key, cacheList)
         break;
+      // case 'VIP':
+      //   cacheList = getVipTopicList(kemuType)
       default:
         break;
     }

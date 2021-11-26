@@ -1,0 +1,24 @@
+page {
+  background-color: #EAEDF4;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.icon {
+  width: 120rpx;
+  height: 120rpx;
+}
+.wrap {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 10rpx;
+  background-color: #fff;
+  padding: 20rpx;
+}
+.dtitle {
+  font-size: 38rpx;
+  height: 70%;
+  overflow-y: scroll;
+}

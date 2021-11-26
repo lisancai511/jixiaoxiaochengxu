@@ -1,0 +1,38 @@
+<cu-custom bgColor="bg-gradual-yellow" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">难题笔记</view>
+</cu-custom>
+<view class="cu-card article {{isCard?'no-card':''}}">
+  <view class="shadow wrap">
+    <view class="detail">
+      <view>1.能停就停，能帮就帮，能让就让。</view>
+      <view>2.只有违法，没有违章。</view>
+      <view>3.人行横道不能停车和调头。</view>
+      <view>4.只有违法，没有违章。</view>
+      <view>5.酒驾和无照，只扣12分。</view>
+      <view>6.仪表图像看清楚，安全带，减伤害，头枕护颈部。</view>
+      <view>7.高速上，遇雪雾，能见度200米，60码，距离100米。</view>
+      <view>8.100米，40码，距离50米。</view>
+      <view>8.50米，下高速，20码不能停。</view>
+      <view>10.右转让左转，转弯让直行。</view>
+      <view>11.下坡不要挂空档，空档不容易挂档，不超车。</view>
+      <view>12.上坡超车找宽路。下高速，先减速，再匝道。</view>
+      <view>13.雨天路滑车速慢，看不清靠边停。</view>
+      <view>14.雨雪雾，开近光，停车开启示廓灯，报警灯。</view>
+      <view>15.指示牌，黄色慢，红色停，白色辅助绿色行。</view>
+      <view>16.实线不跨虚线越，障碍物前多让路。</view>
+      <view>17.左转先，右转后，遇水低档稳速过，看见插队要礼让。</view>
+      <view>18.上坡低档马力足，下坡低档事故少，特殊车辆要避让。</view>
+      <view>19.车上路，看标线，看标志，遇见超车靠右行。</view>
+      <view>20.转弯路，靠右行，不要超车和占道，停车还要50米。</view>
+      <view>21.加油站，消防栓，不停车，停车也要30米。</view>
+      <view>22.山路上，不超车，山崖一边要先行。</view>
+      <view>23.过水路，先停车，一停二看三通过。</view>
+      <view>24.遇见鹿，是野生，遇见牛，是牲畜。</view>
+      <view>25.蓝色牌，是指示，机动多人公交车，还有高速ETC。</view>
+      <view>26.换驾照，90天，其余都是30天，在国外，不要慌，还有3年等你来。</view>
+      <view>27.火车道，要看牌，上有火车无人看，上有围栏有人管，一条斜线50米。</view>
+      <view>28.交警手势我不说，他看哪边就哪边，不过腰，手摆动，赶快变道不多说。手在腰下动，看见就转弯。</view>
+    </view>
+  </view>
+</view>

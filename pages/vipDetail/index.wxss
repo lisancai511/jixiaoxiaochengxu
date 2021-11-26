@@ -1,0 +1,26 @@
+page {
+  /* background-color: #EAEDF4; */
+}
+
+.icon {
+  width: 120rpx;
+  height: 120rpx;
+}
+.wrap {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  box-sizing: border-box;
+  margin: 30rpx;
+  background-color: #8564f0;
+  border-radius: 10rpx;
+  padding: 10rpx;
+  color: #fff;
+}
+.dtitle {
+  font-size: 38rpx;
+}
+
+.imgWrap {
+  width: 100%;
+}

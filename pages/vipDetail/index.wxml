@@ -1,0 +1,34 @@
+<cu-custom bgColor="bg-gradual-yellow" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">Vip</view>
+</cu-custom>
+<view class="cu-card article {{isCard?'no-card':''}}">
+  <view class="shadow wrap">
+    <image class="icon" src="../../images/a.png" />
+    <view class="detail">
+      <view class="dtitle">精简500题</view>
+      <view>专属精简题库，500道高频考题揭秘</view>
+    </view>
+  </view>
+</view>
+<view class="cu-card article {{isCard?'no-card':''}}">
+  <view class="shadow wrap">
+    <image class="icon" src="../../images/b.png" />
+    <view class="detail">
+      <view class="dtitle">考前密卷</view>
+      <view>智能预测，直击考点，临考冲高分</view>
+    </view>
+  </view>
+</view>
+<view class="cu-card article {{isCard?'no-card':''}}">
+  <view class="shadow wrap">
+    <image class="icon" src="../../images/c.png" />
+    <view class="detail">
+      <view class="dtitle">难题笔记</view>
+      <view>强化记忆，加深理解，考试更从容</view>
+    </view>
+  </view>
+</view>
+<view class="imgWrap">
+  <image class="footimg" src="../../images/d.png" />
+</view>

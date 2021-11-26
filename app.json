@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/vipDetail/index",
+    "pages/note/index",
     "pages/index/index",
     "pages/result/result",
     "pages/phoneNumber/phoneNumber",

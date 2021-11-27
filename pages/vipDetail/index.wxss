@@ -16,6 +16,7 @@ page {
   border-radius: 10rpx;
   padding: 10rpx;
   color: #fff;
+  position: relative;
 }
 .dtitle {
   font-size: 38rpx;
@@ -27,4 +28,10 @@ page {
   justify-content: center;
   align-items: center;
 
+}
+
+.fr {
+  position: absolute;
+  right: 10rpx;
+  color: #ffc600;
 }

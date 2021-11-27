@@ -147,3 +147,8 @@ export function getTopicListByKey(key, allList) {
   }
   return list
 }
+
+// 根据id的map过滤数组
+export function filterListByMap(list = [], map = []) {
+  return list.filter(item => map[item.originId] === true)
+}

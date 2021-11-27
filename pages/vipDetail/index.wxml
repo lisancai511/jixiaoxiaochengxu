@@ -3,7 +3,7 @@
   <view slot="content">Vip</view>
 </cu-custom>
 <view class="cu-card article {{isCard?'no-card':''}}">
-  <view class="shadow wrap">
+  <view class="shadow wrap" bind:tap="gotoExercise">
     <image class="icon" src="../../images/a.png" />
     <view class="detail">
       <view class="dtitle">精简500题</view>

@@ -1,6 +1,7 @@
 import { getGradeList } from '../../service/common'
 import { getUserStorage } from '../../utils/storage'
 import { formatTime } from '../../utils/util'
+import { getVipTopicList } from '../../service/subjectone'
 Page({
   /**
    * 页面的初始数据
@@ -8,7 +9,16 @@ Page({
   data: {
     list: [],
     topScore: '',
-    TabCur: '1'
+    TabCur: '1',
+    kemuType: '',
+    from: ''
+  },
+  // 获取精简500题
+  gotoExercise() {
+    const { kemuType, from } = this.data
+    wx.navigateTo({
+      url: `/pages/test/test?kemuType=${kemuType}&from=${from}`,
+    });
   },
   tabSelect(e) {
     this.setData({
@@ -57,9 +67,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
-    const { kemuType } = options
-    this.getGradeList(kemuType)
+    console.log("00", options)
+    const { kemuType, from } = options
+    this.setData({
+      kemuType,
+      from
+    })
+    // this.getGradeList(kemuType)
   },
 
   /**

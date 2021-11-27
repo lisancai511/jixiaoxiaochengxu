@@ -411,7 +411,6 @@ Component({
     async _initTopicData() {
       this.setErrorKey()
       cacheList = this.getCacheList()
-      console.log('子组件', cacheList)
       this.setHeight()
       const { topicIndex } = this.data
       const exerciseList = this._getPageTopicList(topicIndex, cacheList)

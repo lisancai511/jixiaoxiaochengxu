@@ -2,7 +2,7 @@
   <view class="cu-item shadow">
     <view class="main">
       <view class="main_left">
-        <view bindtap="gotoSubject" id="vip" class="left_item m-t-20 m-b-20">
+        <view bindtap="gotoSubject" id="VIP" class="left_item m-t-20 m-b-20">
           <image class="icon vip" src="../../images/vip.png" />
           <text class="m-t-10">vip课程</text>
         </view>

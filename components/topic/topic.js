@@ -1,6 +1,7 @@
 import { getTopicListByType } from '../../utils/specialOne'
-import { getTopicListByKey } from '../../utils/common'
+import { getTopicListByKey, filterListByMap } from '../../utils/common'
 import { getVipTopicList } from '../../service/subjectone'
+import vipTopicMap from '../../utils/vip'
 const MAX_SWIPER_LENGTH = 3;
 let cacheList = [];
 let collection = {};
@@ -83,12 +84,13 @@ Component({
         index: topicIndex,
         class: ''
       }
+      console.log("id>", exerciseList[index].id)
       if (!own_res && !isShowResult) {
         this.data.exerciseList[index].own_res = optidx + 1 + '';
         if (Number(optidx) + 1 == Number(item.ta)) {
           value.className = 'success'
           const params = {
-            topicIndex,
+            topicId: exerciseList[index].id,
             res: true
           }
           swiperIndex = swiperIndex + 1 > 2 ? 0 : swiperIndex + 1
@@ -112,7 +114,7 @@ Component({
         } else {
           value.className = 'error'
           const params = {
-            topicIndex,
+            topicId: exerciseList[index].id,
             res: optidx + ''
           }
           const errorStorage = wx.getStorageSync(errorKey) || {}
@@ -345,6 +347,14 @@ Component({
       this._checkStar()
       this._setCircular()
     },
+    getVipTopicList(kemuType) {
+      console.log('in==')
+      const key = `${kemuType}_TOPIC`
+      const allList = wx.getStorageSync(key) || []
+      const list = filterListByMap(allList, vipTopicMap[kemuType])
+      console.log('ll--', list)
+      return list || []
+    },
     getCacheList() {
       const { kemuType, from, specialType } = this.data
       let key = `${kemuType}_${from}`
@@ -355,8 +365,8 @@ Component({
           return getTopicListByKey(key)
         case 'SPECIAL':
           return getTopicListByType(kemuType, specialType)
-        // case 'VIP':
-        //   return getVipTopicList(kemuType)
+        case 'VIP':
+          return this.getVipTopicList(kemuType)
         default:
           key = `${kemuType}_TOPIC`
           return wx.getStorageSync(key) || []

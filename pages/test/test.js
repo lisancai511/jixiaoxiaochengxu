@@ -6,6 +6,7 @@ import {
 import { getTopicListByKemuType, getSubjectOneCollection } from '../../utils/cache'
 import { RESULT, TOPIC, ERROR_NUMBER, SUCCESS_NUMBER, TOPIC_INDEX, TOTAL, } from '../../utils/constant'
 import { getTopicListByKey } from '../../utils/common'
+import { one_Total, four_Total } from '../../utils/vip'
 import { getVipTopicList } from '../../service/subjectone'
 const app = getApp();
 let cacheList = [];
@@ -56,17 +57,12 @@ Page({
       collection = saveCollection(kemuType, key);
     }
   },
-  _getTopicId(topicIndex) {
-    const id = cacheList[topicIndex] && cacheList[topicIndex].id
-    return id || null
-  },
-  _getTopicRecord(topicIndex, res) {
-    const key = this._getTopicId(topicIndex)
+  _getTopicRecord(topicId, res) {
     const subjectResult = wx.getStorageSync(resultKey) || {}
     let successNumber = wx.getStorageSync(successNumberKey) || 0
     let wrongNumber = wx.getStorageSync(errorNumberKey) || 0
-    if (subjectResult[key]) {
-      if (subjectResult[key] === true) {
+    if (subjectResult[topicId]) {
+      if (subjectResult[topicId] === true) {
         // 之前都是作对的题目
         if (res !== true) {
           successNumber--
@@ -86,16 +82,15 @@ Page({
         wrongNumber++
       }
     }
-    subjectResult[key] = res
+    subjectResult[topicId] = res
     wx.setStorageSync(resultKey, subjectResult)
     wx.setStorageSync(successNumberKey, successNumber)
     wx.setStorageSync(errorNumberKey, wrongNumber)
     return { successNumber, wrongNumber }
   },
   checkOptionItem(e) {
-    const { topicIndex, res } = e.detail
-    console.log(topicIndex, res)
-    const { successNumber, wrongNumber } = this._getTopicRecord(topicIndex, res)
+    const { topicId, res } = e.detail
+    const { successNumber, wrongNumber } = this._getTopicRecord(topicId, res)
     this.setData({
       wrongNumber,
       successNumber
@@ -132,13 +127,22 @@ Page({
       const errMap = wx.getStorageSync(key) || {}
       total = Object.keys(errMap).length
     }
+    if (from === "VIP") {
+      const totalMap = {
+        one: one_Total,
+        four: four_Total
+      }
+      console.log(one_Total)
+      total = totalMap[kemuType]
+      console.log('to', total)
+    }
     return total
   },
   async _initAppData() {
     const total = this.getTotal()
     const successNumber = wx.getStorageSync(successNumberKey) || 0
     const wrongNumber = wx.getStorageSync(errorNumberKey) || 0
-    this.setCacheList()
+    // this.setCacheList()
     const index = wx.getStorageSync(topicIndexKey) || 0
     const topicIndex = index < 0 ? 0 : index
     this.setData({

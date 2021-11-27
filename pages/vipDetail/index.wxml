@@ -9,6 +9,7 @@
       <view class="dtitle">精简500题</view>
       <view>专属精简题库，500道高频考题揭秘</view>
     </view>
+    <text class="cuIcon-right lg text-gray fr"></text>
   </view>
 </view>
 <view class="cu-card article {{isCard?'no-card':''}}">
@@ -18,15 +19,17 @@
       <view class="dtitle">考前密卷</view>
       <view>智能预测，直击考点，临考冲高分</view>
     </view>
+    <text class="cuIcon-right lg text-gray fr"></text>
   </view>
 </view>
-<view class="cu-card article {{isCard?'no-card':''}}">
+<view class="cu-card article {{isCard?'no-card':''}}" bindtap = "goToNote">
   <view class="shadow wrap">
     <image class="icon" src="../../images/c.png" />
     <view class="detail">
       <view class="dtitle">难题笔记</view>
       <view>强化记忆，加深理解，考试更从容</view>
     </view>
+    <text class="cuIcon-right lg text-gray fr"></text>
   </view>
 </view>
 <view class="imgWrap">

@@ -47,7 +47,7 @@ page {
   --gradualRed: linear-gradient(45deg, #f43f3b, #ec008c);
   --gradualOrange: linear-gradient(45deg, #ff9700, #ed1c24);
   --gradualGreen: linear-gradient(45deg, #39b54a, #8dc63f);
-  --gradualPurple: linear-gradient(45deg, #9000ff, #5e00ff);
+  --gradualPurple: linear-gradient(45deg, #faddfe, #b27df4);
   --gradualPink: linear-gradient(45deg, #ec008c, #6739b6);
   --gradualBlue: linear-gradient(45deg, #0081ff, #1cbbb4);
   --yellow: linear-gradient(45deg, #ffdc00, #ffc600);

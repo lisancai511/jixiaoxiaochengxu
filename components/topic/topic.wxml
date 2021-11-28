@@ -51,7 +51,9 @@
       <text class="n-icon {{isShowResult ? 'iconshu1' : 'iconshu'}} "></text>
       <view>背题模式</view>
     </view>
-    <slot name="takeSubmit"></slot>
+    <view class="action" wx:if="{{from=='MOCK'}}">
+      <slot name="takeSubmit" class="action"></slot>
+    </view>
   </view>
   <wxs src="./tool.wxs" module="tool"></wxs>
   <view wx:if="{{renderModal}}" class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">

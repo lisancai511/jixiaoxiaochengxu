@@ -18,8 +18,7 @@
     "pages/payPage/index",
     "pages/grade/grade",
     "pages/mine/index",
-    "pages/vipDetail/index",
-    "pages/bfeoueExamFour/index"
+    "pages/vipDetail/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

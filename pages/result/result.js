@@ -48,7 +48,7 @@ Page({
   gotoVip() {
     const { kemuType, from } = this.data
     wx.redirectTo({
-      url: `/pages/test/test?kemuType=${kemuType}&from=${from}`,
+      url: `/pages/vipDetail/index?kemuType=${kemuType}&from=${from}`,
     });
   },
   /**

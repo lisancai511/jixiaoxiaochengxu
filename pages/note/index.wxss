@@ -17,8 +17,8 @@ page {
   background-color: #fff;
   padding: 20rpx;
 }
-.dtitle {
-  font-size: 38rpx;
-  height: 70%;
+.detail {
+  font-size: 36rpx;
+  line-height: 60rpx;
   overflow-y: scroll;
 }

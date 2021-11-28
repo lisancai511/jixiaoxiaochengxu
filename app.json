@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/note/index",
     "pages/result/result",
     "pages/phoneNumber/phoneNumber",
     "pages/subject/index",
@@ -16,8 +17,7 @@
     "pages/payPage/index",
     "pages/grade/grade",
     "pages/mine/index",
-    "pages/vipDetail/index",
-    "pages/note/index"
+    "pages/vipDetail/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

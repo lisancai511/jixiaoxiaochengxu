@@ -1,0 +1,41 @@
+<cu-custom bgColor="bg-gradual-yellow" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">模拟考试</view>
+</cu-custom>
+<view class="top">
+  <view class="wx_info_wrap">
+    <open-data type="userAvatarUrl" class="login-icon"></open-data>
+  </view>
+</view>
+<view class="wrap">
+  <view class="flex">
+    最好成绩30分，用时2分11秒
+  </view>
+  <view class="cu-card article {{isCard?'no-card':''}}">
+    <view class="shadow main">
+      <view class="content1">
+        <view class="text">考试类型</view>
+        <view>校车C1/C2/C3</view>
+      </view>
+      <view class="content1">
+        <view class="text">考试标准</view>
+        <view>100题/45分钟</view>
+      </view>
+      <view class="content1">
+        <view class="text">合格标准</view>
+        <view>90分及格(满分100分)</view>
+      </view>
+      <view class="content1">
+        <view class="text">出题规则</view>
+        <view>根据公安部出题规则组卷</view>
+      </view>
+    </view>
+  </view>
+  <view class="footer text">
+    模拟考试不能修改答案，没错1题扣1分，错题累计超过10道，则考试不通过。
+  </view>
+
+  <view class="footer">
+    <button class="cu-btn lg btn">开始考试</button>
+  </view>
+</view>

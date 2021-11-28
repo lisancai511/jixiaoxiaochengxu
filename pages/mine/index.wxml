@@ -59,12 +59,12 @@
         <text class="text-grey">报名驾校</text>
       </button>
     </view> -->
-    <view class="cu-item arrow">
+    <!-- <view class="cu-item arrow">
       <button class="cu-btn content" bindtap="goToCollect">
         <text class="cuIcon-favorfill text-yellow"></text>
         <text class="text-grey">我的收藏</text>
       </button>
-    </view>
+    </view> -->
     <view class="cu-item arrow" bindtap="goToAbout">
       <button class="cu-btn content">
         <text class="cuIcon-emojifill text-red"></text>

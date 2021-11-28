@@ -7,6 +7,9 @@ export function addGrade(data) {
 export function getGradeList(data) {
   return post('/wx/getGradeList', data)
 }
+export function getStudentGrade(data) {
+  return post('/wx/getStudentGrade', data)
+}
 
 export function openVip(openId = '') {
   return post('/wx/openVip', { openId })

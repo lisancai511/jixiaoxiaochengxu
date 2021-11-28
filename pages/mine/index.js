@@ -1,8 +1,8 @@
 // pages/mine/mine.js
-const { checkLoginFromLocal, getCurrentUser, getPhoneNumber } = require('../../utils/common')
+const { checkLoginFromLocal, getCurrentUser, getPhoneNumber, gotoCollectionPage } = require('../../utils/common')
 import { getKeyFromStorage, getErrorIdLists } from '../../utils/util';
 import { SUBJECT_ONE_COLLECTION, SUBJECT_FOUR_COLLECTION } from '../../utils/constant';
-import { getGradeList } from '../../service/common'
+import { getStudentGrade } from '../../service/common'
 import { getUserStorage } from '../../utils/storage'
 Page({
 
@@ -16,6 +16,7 @@ Page({
     examNum: 0,
     takeNum: 0,
     takeRate: 0,
+    scoreInfo: {}
   },
   calculateNum() {
     const { activeType } = this.data
@@ -100,8 +101,12 @@ Page({
       activeType: e.target.id
     })
     this.calculateNum()
-    this.getScore()
-    // TODO 根据id去请求科一科四的数据
+    const { scoreInfo, activeType } = this.data
+    const { averageScore, examNum } = this.renderScore(scoreInfo, activeType)
+    this.setData({
+      examNum,
+      averageScore
+    })
   },
   goToAbout() {
     wx.navigateTo({
@@ -109,49 +114,38 @@ Page({
     });
   },
   goToCollect() {
-    let collection = {}
-    if (this.activeType == 1) {
-      collection = getKeyFromStorage(SUBJECT_ONE_COLLECTION) || {};
-    } else {
-      collection = getKeyFromStorage(SUBJECT_FOUR_COLLECTION) || {};
-    }
-    const ids = Object.keys(collection);
-    if (ids.length) {
-      if (this.activeType == 1) {
-        wx.navigateTo({
-          url: `/pages/collection/collection?type=collectionOne`,
-        });
-      } else {
-        wx.navigateTo({
-          url: `/pages/collection/collection?type=collectionFour`,
-        });
-      }
-    } else {
-      wx.showToast({
-        icon: 'none',
-        title: '暂无收藏',
-        duration: 1000,
-      });
+    const { activeType } = this.data
+    const kemuType = activeType === '1' ? 'one' : 'four'
+    gotoCollectionPage(kemuType)
+  },
+  renderScore(scoreInfo, activeType) {
+    const item = scoreInfo[activeType] || {}
+    return {
+      averageScore: item.score || 0,
+      examNum: item.total || 0,
     }
   },
   async getScore() {
     const user = getUserStorage()
+    const { activeType } = this.data
     if (user && user.id) {
-      const { data = [] } = await getGradeList({
+      const { data = [] } = await getStudentGrade({
         wxUserId: user.id,
-        type: this.data.activeType || '1'
       })
-      let averageScore = 0
+      const scoreInfo = {}
       data.forEach(item => {
-        averageScore = averageScore + Number(item.score)
+        let { type, score, total } = item
+        score = score.toFixed(2)
+        scoreInfo[type] = {
+          score,
+          total
+        }
       })
-      if (Number.isNaN(averageScore)) {
-        averageScore = 0
-      }
-      averageScore = averageScore ? averageScore / data.length : 0
+      const { averageScore, examNum } = this.renderScore(scoreInfo, activeType)
       this.setData({
-        averageScore: averageScore.toFixed(0),
-        examNum: data.length
+        scoreInfo,
+        examNum,
+        averageScore
       })
     }
   },
@@ -162,7 +156,6 @@ Page({
     this.userInit()
     this.getScore()
     this.calculateNum()
-    console.log(110)
   },
 
   /**

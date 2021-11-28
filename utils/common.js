@@ -126,6 +126,24 @@ export async function goToErrorPage(kemuType) {
   });
 }
 
+export function gotoCollectionPage(kemuType) {
+  const key = `${kemuType}_COLLECTION`
+  const collection = wx.getStorageSync(key) || {};
+  const ids = Object.keys(collection);
+  if (ids.length) {
+    wx.navigateTo({
+      url: `/pages/test/test?kemuType=${kemuType}&from=COLLECTION`,
+    });
+    return true
+  }
+  wx.showToast({
+    icon: 'none',
+    title: '暂无收藏',
+    duration: 1000,
+  });
+  return false
+}
+
 export function getTopicListByKey(key, allList) {
   const typeMap = wx.getStorageSync(key)
   if (!typeMap) return []

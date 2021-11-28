@@ -1,6 +1,7 @@
 import { getTopicListByType } from '../../utils/specialOne'
 import { getTopicListByKey, filterListByMap } from '../../utils/common'
 import { getVipTopicList } from '../../service/subjectone'
+import { getTopicClassName } from '../../utils/cache'
 import vipTopicMap from '../../utils/vip'
 const MAX_SWIPER_LENGTH = 3;
 let cacheList = [];
@@ -82,7 +83,7 @@ Component({
       let key = 'answerList[' + topicIndex + ']';
       let value = {
         index: topicIndex,
-        class: ''
+        className: ''
       }
       console.log("id>", exerciseList[index].id)
       if (!own_res && !isShowResult) {
@@ -95,6 +96,7 @@ Component({
           }
           swiperIndex = swiperIndex + 1 > 2 ? 0 : swiperIndex + 1
           exerciseList[index].options[item.ta - 1].className = 'success';
+          exerciseList[index].className = 'success'
           this.setData({
             [key]: value,
             exerciseList
@@ -122,6 +124,7 @@ Component({
             errorStorage[id] = true
             wx.setStorageSync(errorKey, errorStorage)
           }
+          exerciseList[index].className = 'error'
           exerciseList[index].options[optidx].className = 'error';
           exerciseList[index].options[item.ta - 1].className = 'success';
           this.setData({
@@ -130,7 +133,7 @@ Component({
           });
           this.triggerEvent('checkOptionItem', params)
         }
-
+        console.log(value)
       }
     },
     gotoItem(e) {
@@ -282,8 +285,9 @@ Component({
      */
 
     showModal(e) {
-      const answerList = this._getAnswerList()
-      console.log(answerList)
+      const result = this.getTopicResult()
+      const answerList = this._getAnswerList(result)
+      console.log(answerList[this.data.topicIndex])
       this.setData({
         modalName: e.currentTarget.dataset.target,
         answerList
@@ -367,6 +371,11 @@ Component({
           return getTopicListByType(kemuType, specialType)
         case 'VIP':
           return this.getVipTopicList(kemuType)
+        case 'MOCK':
+          key = `${kemuType}_${from}_TOPIC`
+          const result = this.getTopicResult()
+          const list = wx.getStorageSync(key) || []
+          return getTopicClassName(list, result)
         default:
           key = `${kemuType}_TOPIC`
           return wx.getStorageSync(key) || []
@@ -417,7 +426,8 @@ Component({
       const swiperIndex = this._getSwiperIndexByTopicIndex(topicIndex)
       this._checkStar()
       this._setCircular()
-      const answerList = this._getAnswerList()
+      const result = this.getTopicResult()
+      const answerList = this._getAnswerList(result)
       this.setData({
         exerciseList,
         swiperIndex,
@@ -425,11 +435,39 @@ Component({
         renderModal: true
       })
     },
-    _getAnswerList() {
-      return cacheList.map((item, index) => ({
-        index,
-        className: item.className
-      }))
+    filterTopicClassName(result) {
+      return cacheList.map((item, index) => {
+        if (index === this.data.topicIndex) {
+          console.log(item)
+        }
+        let { className, id } = item
+        if (result[id] != undefined) {
+          className = result[id] === true ? 'success' : 'error'
+        }
+        return {
+          index,
+          className
+        }
+      })
+    },
+    getTopicResult() {
+      const { kemuType, from, specialType } = this.data
+      console.log('kemutype---', kemuType, 'from', from)
+      let key = `${kemuType}_${from}_RESULT`
+      let result = wx.getStorageSync(key)
+      if (from === 'SPECIAL') {
+        const title = {
+          one: 'ONE',
+          four: 'FOUR'
+        }
+        key = `${title[kemuType]}_${from}`
+        const special = wx.getStorageSync(key) || {}
+        result = special[specialType] && special[specialType].result
+      }
+      return result
+    },
+    _getAnswerList(result) {
+      return this.filterTopicClassName(result)
     }
   },
   detached: function () {

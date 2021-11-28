@@ -124,14 +124,12 @@ Page({
     const id = cacheList[topicIndex] && cacheList[topicIndex].id
     return id || null
   },
-  _getTopicRecord(topicIndex, res) {
-    const key = this._getTopicId(topicIndex)
-    console.log(key)
+  _getTopicRecord(topicId, res) {
     const subjectResult = wx.getStorageSync(resultKey) || {}
     let successNumber = wx.getStorageSync(successNumberKey) || 0
     let wrongNumber = wx.getStorageSync(errorNumberKey) || 0
-    if (subjectResult[key]) {
-      if (subjectResult[key] === true) {
+    if (subjectResult[topicId]) {
+      if (subjectResult[topicId] === true) {
         // 之前都是作对的题目
         if (res !== true) {
           successNumber--
@@ -151,16 +149,15 @@ Page({
         wrongNumber++
       }
     }
-    subjectResult[key] = res
+    subjectResult[topicId] = res
     wx.setStorageSync(resultKey, subjectResult)
     wx.setStorageSync(successNumberKey, successNumber)
     wx.setStorageSync(errorNumberKey, wrongNumber)
     return { successNumber, wrongNumber }
   },
   checkOptionItem(e) {
-    const { topicIndex, res } = e.detail
-    console.log(topicIndex, res)
-    const { successNumber, wrongNumber } = this._getTopicRecord(topicIndex, res)
+    const { topicId, res } = e.detail
+    const { successNumber, wrongNumber } = this._getTopicRecord(topicId, res)
     this.setData({
       wrongNumber,
       successNumber
@@ -221,6 +218,7 @@ Page({
           } else if (res.cancel) {
             this._resetMock()
             this._initAppData(true)
+            this.renderCountDownTime(COUNT_DOWN_TIME)
           }
         }
       })

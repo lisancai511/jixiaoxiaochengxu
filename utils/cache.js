@@ -2,7 +2,7 @@ const { getServerTopicList } = require('../service/subjectone')
 const { getSubjectFourList } = require('../service/subjectfour')
 const constant = require('../utils/constant')
 // 渲染已经做过的题目
-function getTopicClassName(list, result) {
+export function getTopicClassName(list, result) {
   return list.map(item => {
     const { id, options, ta } = item
     if (result[id] != undefined) {
@@ -21,22 +21,18 @@ function getTopicClassName(list, result) {
 export async function getTopicListByKemuType(kemuType) {
   try {
     const topicKey = `${kemuType}_TOPIC`
-    const resultKey = `${kemuType}_ORDER_RESULT`
     const totalKey = `${kemuType}_ORDER_TOTAL`
     let list = wx.getStorageSync(topicKey)
-    let result = wx.getStorageSync(resultKey)
     let total = wx.getStorageSync(totalKey)
     if (list) {
-      list = getTopicClassName(list, result)
       return {
         list,
         total
       }
     }
     const res = await getServerTopicList(kemuType)
-    list = getTopicClassName(res.list, result)
     total = res.total || 0
-    wx.setStorageSync(topicKey, list)
+    wx.setStorageSync(topicKey, res.list)
     wx.setStorageSync(totalKey, total)
     return res
   } catch (e) {

@@ -63,17 +63,12 @@ Page({
       collection = saveCollection(kemuType, key);
     }
   },
-  _getTopicId(topicIndex) {
-    const id = cacheList[topicIndex] && cacheList[topicIndex].id
-    return id || null
-  },
-  _getTopicRecord(topicIndex, res) {
+  _getTopicRecord(topicId, res) {
     const { specialType } = this.data
-    const key = this._getTopicId(topicIndex)
     const special = this.getStorageSpecial()
     let { result = {}, successNumber = 0, wrongNumber = 0, } = special[specialType]
-    if (result[key]) {
-      if (result[key] === true) {
+    if (result[topicId]) {
+      if (result[topicId] === true) {
         // 之前都是作对的题目
         if (res !== true) {
           successNumber--
@@ -93,7 +88,7 @@ Page({
         wrongNumber++
       }
     }
-    result[key] = res
+    result[topicId] = res
     special[specialType] = {
       ...special[specialType],
       result,
@@ -105,9 +100,8 @@ Page({
     return { successNumber, wrongNumber }
   },
   checkOptionItem(e) {
-    const { topicIndex, res } = e.detail
-    console.log(topicIndex, res)
-    const { successNumber, wrongNumber } = this._getTopicRecord(topicIndex, res)
+    const { topicId, res } = e.detail
+    const { successNumber, wrongNumber } = this._getTopicRecord(topicId, res)
     this.setData({
       wrongNumber,
       successNumber

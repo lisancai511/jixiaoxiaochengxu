@@ -7,11 +7,12 @@ page {
   color: #000;
 }
 .png {
-  background-image: linear-gradient(to top, #00f2fe, #4facfe);
+  background-image: linear-gradient(to top, #ffdc00, #ffc600);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  border-radius: 0 0 50% 50%;
 }
 
 .socer {

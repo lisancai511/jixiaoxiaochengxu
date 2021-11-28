@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/bfeoueExam/index",
     "pages/note/index",
     "pages/result/result",
     "pages/phoneNumber/phoneNumber",
@@ -18,8 +19,7 @@
     "pages/grade/grade",
     "pages/mine/index",
     "pages/vipDetail/index",
-    "pages/bfeoueExamFour/index",
-    "pages/bfeoueExamOne/index"
+    "pages/bfeoueExamFour/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

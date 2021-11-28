@@ -1,5 +1,5 @@
 // pages/mine/mine.js
-const { checkLoginFromLocal, getCurrentUser,getPhoneNumber } = require('../../utils/common')
+const { checkLoginFromLocal, getCurrentUser, getPhoneNumber } = require('../../utils/common')
 import { getKeyFromStorage, getErrorIdLists } from '../../utils/util';
 import { SUBJECT_ONE_COLLECTION, SUBJECT_FOUR_COLLECTION } from '../../utils/constant';
 import { getGradeList } from '../../service/common'
@@ -11,9 +11,35 @@ Page({
    */
   data: {
     isCheckPhone: false,
-    activeType: 1,
+    activeType: '1',
     averageScore: 0,
-    examNum: 0
+    examNum: 0,
+    takeNum: 0,
+    takeRate: 0,
+  },
+  calculateNum() {
+    const { activeType } = this.data
+    const kemuType = activeType === '1' ? 'one' : 'four'
+    const successKey = `${kemuType}_ORDER_SUCCESS_NUMBER`
+    const errorKey = `${kemuType}_ORDER_ERROR_NUMBER`
+    const successNum = wx.getStorageSync(successKey) || 0
+    const errorNum = wx.getStorageSync(errorKey) || 0
+    const takeNum = successNum + errorNum
+    let takeRate = parseInt(successNum / takeNum * 100)
+    if (takeNum === 0) {
+      takeRate = 0
+    }
+    this.setData({
+      takeNum,
+      takeRate
+    })
+  },
+  gotoExam() {
+    const { activeType } = this.data
+    const kemuType = activeType === '1' ? 'one' : 'four'
+    wx.navigateTo({
+      url: `/pages/bfeoueExam/index?kemuType=${kemuType}&from=MOCK`,
+    });
   },
   async gotoItem(e) {
     try {
@@ -57,7 +83,7 @@ Page({
   async userInit() {
     console.log('userInit')
     const user = await getCurrentUser()
-    if(user) {
+    if (user) {
       this.setData({
         isCheckPhone: !!user.phone
       })
@@ -73,6 +99,7 @@ Page({
     this.setData({
       activeType: e.target.id
     })
+    this.calculateNum()
     this.getScore()
     // TODO 根据id去请求科一科四的数据
   },
@@ -83,14 +110,14 @@ Page({
   },
   goToCollect() {
     let collection = {}
-    if(this.activeType == 1) {
+    if (this.activeType == 1) {
       collection = getKeyFromStorage(SUBJECT_ONE_COLLECTION) || {};
     } else {
       collection = getKeyFromStorage(SUBJECT_FOUR_COLLECTION) || {};
     }
     const ids = Object.keys(collection);
     if (ids.length) {
-      if(this.activeType == 1) {
+      if (this.activeType == 1) {
         wx.navigateTo({
           url: `/pages/collection/collection?type=collectionOne`,
         });
@@ -98,7 +125,7 @@ Page({
         wx.navigateTo({
           url: `/pages/collection/collection?type=collectionFour`,
         });
-      } 
+      }
     } else {
       wx.showToast({
         icon: 'none',
@@ -115,13 +142,13 @@ Page({
         type: this.data.activeType || '1'
       })
       let averageScore = 0
-      data.forEach(item=>{
+      data.forEach(item => {
         averageScore = averageScore + Number(item.score)
       })
-      if(Number.isNaN(averageScore)) {
+      if (Number.isNaN(averageScore)) {
         averageScore = 0
       }
-      averageScore = averageScore? averageScore / data.length:0
+      averageScore = averageScore ? averageScore / data.length : 0
       this.setData({
         averageScore: averageScore.toFixed(0),
         examNum: data.length
@@ -134,6 +161,7 @@ Page({
   onLoad: function (options) {
     this.userInit()
     this.getScore()
+    this.calculateNum()
     console.log(110)
   },
 

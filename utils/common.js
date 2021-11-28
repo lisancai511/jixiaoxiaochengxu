@@ -109,15 +109,13 @@ export async function getCurrentUser(refresh = false) {
  * 
  * @param {string} type 科目几 1 | 4
  */
-export async function goToErrorPage(type) {
-  const keyMap = {
-    1: SUBJECT_ONE_ERROR_NUMBER,
-    4: SUBJECT_FOUR_ERROR_NUMBER
-  }
-  const errNums = wx.getStorageSync(keyMap[type])
-  if (errNums > 0) {
-    wx.navigateTo({
-      url: `/pages/error/error?type=${type}`,
+export async function goToErrorPage(kemuType) {
+  const key = `${kemuType}_ERROR`
+  const errNums = wx.getStorageSync(key) || {}
+  const len = Object.keys(errNums).length
+  if (len > 0) {
+    wx.redirectTo({
+      url: `/pages/test/test?kemuType=${kemuType}&from=ERROR`,
     });
     return false
   }

@@ -75,9 +75,7 @@ Page({
       confirmText: '我知道了',
       success(res) {
         if (res.confirm) {
-          wx.redirectTo({
-            url: '/pages/record/record'
-          })
+          this.gotoResult()
         }
       }
     })
@@ -119,10 +117,6 @@ Page({
       collection[key] = true;
       collection = saveCollection(kemuType, key);
     }
-  },
-  _getTopicId(topicIndex) {
-    const id = cacheList[topicIndex] && cacheList[topicIndex].id
-    return id || null
   },
   _getTopicRecord(topicId, res) {
     const subjectResult = wx.getStorageSync(resultKey) || {}
@@ -174,8 +168,8 @@ Page({
     return data
   },
   async _initAppData(reset = false) {
-    let list = await this.getMockSubjectOne(reset)
-    cacheList = list
+    // let list = await this.getMockSubjectOne(reset)
+    // cacheList = list
     const index = wx.getStorageSync(topicIndexKey) || 0
     const topicIndex = index < 0 ? 0 : index
     this.setData({
@@ -194,7 +188,6 @@ Page({
   },
 
   _resetMock() {
-    wx.removeStorageSync(topicKey)
     wx.removeStorageSync(resultKey)
     wx.removeStorageSync(topicIndexKey)
     wx.removeStorageSync(timeKey)
@@ -260,11 +253,15 @@ Page({
         if (res.cancel) {
           const score = wx.getStorageSync(successNumberKey)
           this.sendScoreToServer()
-          wx.redirectTo({
-            url: '/pages/gradeResult/gradeResult',
-          })
+          this.gotoResult()
         }
       },
+    })
+  },
+  gotoResult() {
+    const { kemuType, from } = this.data
+    wx.redirectTo({
+      url: `/pages/gradeResult/gradeResult?kemuType=${kemuType}&from=${from}`,
     })
   },
   _getUsedTimeStr() {

@@ -1,36 +1,34 @@
 <scroll-view scroll-y class="scrollPage">
-  <view class="UCenter-bg">
-  </view>
-
+  <view class="UCenter-bg"></view>
   <view class="zhanwei"></view>
-
   <view class="wx_info">
     <view class="wx_info_out">
-       <!-- <button wx:if="{{ !isCheckPhone}}" plain class="loginBtn" bindtap="inputPhoneNumber">绑定手机号</button> -->
-        <view class="wx_info_wrap">
-          <open-data type="userAvatarUrl" class="login-icon"></open-data>
-        </view>
-        <view class="wx_info_userName">
-          <open-data wx:if="{{ isCheckPhone}}" type="userNickName" class="name"></open-data>
-          <text class="wx_info_text">
-            找驾校 考驾照 就用驾考一练过
-          </text>
-        </view>
+      <!-- <button wx:if="{{ !isCheckPhone}}" plain class="loginBtn" bindtap="inputPhoneNumber">绑定手机号</button> -->
+      <view class="wx_info_wrap">
+        <open-data type="userAvatarUrl" class="login-icon"></open-data>
+      </view>
+      <view class="wx_info_userName">
+        <open-data wx:if="{{ isCheckPhone}}" type="userNickName" class="name"></open-data>
+        <text class="wx_info_text">找驾校 考驾照 就用驾考一练过</text>
+      </view>
     </view>
   </view>
-
   <view class="user_info">
     <view class="user_info_title">
-      <view bindtap="handleCheck" class="{{activeType==1?'left':'left myactive'}}" id="1">科一</view>
-      <view bindtap="handleCheck" class="{{activeType==4?'right':'right myactive'}}" id="4">科四</view>
+      <view bindtap="handleCheck" class="{{activeType==='1'?'left':'left myactive'}}" id="1">
+        科一
+      </view>
+      <view bindtap="handleCheck" class="{{activeType==='4'?'right':'right myactive'}}" id="4">
+        科四
+      </view>
     </view>
     <view class="user_info_main">
       <view class="wrap">
-        <text class="wrap_top">0</text>
+        <text class="wrap_top">{{takeNum}}</text>
         <text class="wrap_mid">累计答题数</text>
         <view class="wrap_foot">
           <text>正确率</text>
-          <text class="color m-l-5">0%</text>
+          <text class="color m-l-5">{{takeRate}}%</text>
         </view>
       </view>
       <view class="wrap">
@@ -42,13 +40,12 @@
         </view>
       </view>
       <view class="wrap">
-        <text class="wrap_top btn">去考试</text>
+        <text class="wrap_top btn" bind:tap="gotoExam">去考试</text>
         <text class="wrap_mid">进阶模拟考试</text>
         <text class="wrap_foot">45分钟全力冲刺</text>
       </view>
     </view>
   </view>
-  
   <view class="cu-list menu margin-top-xl margin-bottom-xl shadow-lg radius">
     <view class="cu-item arrow">
       <button class="cu-btn content" open-type="feedback">

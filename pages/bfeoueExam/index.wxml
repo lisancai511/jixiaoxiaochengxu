@@ -8,9 +8,7 @@
   </view>
 </view>
 <view class="wrap">
-  <view class="flex">
-    最好成绩30分，用时2分11秒
-  </view>
+  <view class="flex">最好成绩30分，用时2分11秒</view>
   <view class="cu-card article {{isCard?'no-card':''}}">
     <view class="shadow main">
       <view class="content1">
@@ -19,7 +17,7 @@
       </view>
       <view class="content1">
         <view class="text">考试标准</view>
-        <view>100题/45分钟</view>
+        <view>{{kemuType === 'one' ? '100题/45分钟' : '50题/45分钟'}}</view>
       </view>
       <view class="content1">
         <view class="text">合格标准</view>
@@ -32,10 +30,9 @@
     </view>
   </view>
   <view class="footer text">
-    模拟考试不能修改答案，没错1题扣1分，错题累计超过10道，则考试不通过。
+    {{kemuType === 'one' ? '模拟考试不能修改答案，没错1题扣1分，错题累计超过10道，则考试不通过。' : '模拟考试不能修改答案，没错1题扣2分，错题累计超过5道，则考试不通过。'}}
   </view>
-
   <view class="footer">
-    <button class="cu-btn lg btn">开始考试</button>
+    <button class="cu-btn lg btn" bind:tap="gotoMock">开始考试</button>
   </view>
 </view>

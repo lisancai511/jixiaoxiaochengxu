@@ -53,7 +53,7 @@ Page({
   },
   _gotoMockExam(from) {
     wx.navigateTo({
-      url: `/pages/mockOne/mockOne?kemuType=four&from=${from}`,
+      url: `/pages/bfeoueExam/index?kemuType=four&from=${from}`,
     });
   },
   _gotoSpecial(from) {

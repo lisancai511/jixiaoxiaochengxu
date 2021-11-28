@@ -4,7 +4,7 @@
 </cu-custom>
 <scroll-view scroll-y class="scrollPage">
   <view mode='widthFix' class='png' style='width:100%;height:486rpx'>
-    <view class="socer">{{score}}</view>
+    <view class="socer">{{score}}分</view>
     <view class="socer">{{score<90?'不及格':'优秀'}}</view>
   </view>
   <view class="cu-list menu margin-top-xl margin-bottom-xl shadow-lg radius">

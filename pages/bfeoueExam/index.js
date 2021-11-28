@@ -1,6 +1,7 @@
 import { getGradeList } from '../../service/common'
 import { getUserStorage } from '../../utils/storage'
 import { formatTime } from '../../utils/util'
+import { getMockSubjectOne } from '../../service/subjectone'
 Page({
   /**
    * 页面的初始数据
@@ -8,7 +9,39 @@ Page({
   data: {
     list: [],
     topScore: '',
-    TabCur: '1'
+    TabCur: '1',
+    kemuType: 'one',
+    from: ''
+  },
+  createStorageKey(key) {
+    const { kemuType, from } = this.data
+    return `${kemuType}_${from}_${key}`
+  },
+  getTopicList() {
+    const resultKey = this.createStorageKey('RESULT')
+    const cache = wx.getStorageSync(resultKey) || null
+    if (!cache) {
+      this.getMockSubjectOne(false)
+    } else {
+      this.getMockSubjectOne()
+    }
+  },
+  async getMockSubjectOne(useCache = true) {
+    const { kemuType, from } = this.data
+    const topicKey = this.createStorageKey('TOPIC')
+    const cache = wx.getStorageSync(topicKey)
+    if (cache && useCache) {
+      return cache
+    }
+    let { list: data } = await getMockSubjectOne(kemuType)
+    wx.setStorageSync(topicKey, data)
+    return data
+  },
+  gotoMock() {
+    const { kemuType } = this.data
+    wx.redirectTo({
+      url: `/pages/mockOne/mockOne?kemuType=${kemuType}&from=MOCK`,
+    });
   },
   tabSelect(e) {
     this.setData({
@@ -53,8 +86,13 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)
-    const { kemuType } = options
-    this.getGradeList(kemuType)
+    const { kemuType, from } = options
+    this.setData({
+      kemuType,
+      from
+    })
+    this.getTopicList()
+    // this.getGradeList(kemuType)
   },
 
   /**

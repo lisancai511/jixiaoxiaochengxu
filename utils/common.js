@@ -1,6 +1,8 @@
 const { wxLogin, getUserInfoByOpenId } = require('../service/login')
+const { getGradeList } = require('../service/common')
 const { post } = require('../utils/request')
-const { SUBJECT_ONE_ERROR_NUMBER, SUBJECT_FOUR_ERROR_NUMBER } = require('../utils/constant')
+const { getUserStorage } = require('../utils/storage')
+import { formatTime } from '../utils/util'
 /**
  * 判断是session是否有效
  * @returns {Promise} string openid
@@ -167,4 +169,34 @@ export function getTopicListByKey(key, allList) {
 // 根据id的map过滤数组
 export function filterListByMap(list = [], map = []) {
   return list.filter(item => map[item.originId] === true)
+}
+
+function getTopGradeInfo(list = []) {
+  if (list.length) {
+    list.sort((a, b) => b.score - a.score)
+    return list[0]
+  }
+  return null
+}
+
+export async function getGradeListByKemuType(kemuType) {
+  const user = getUserStorage()
+  if (user && user.id) {
+    const { data = [] } = await getGradeList({
+      wxUserId: user.id,
+      type: kemuType === 'one' ? '1' : '4'
+    })
+    let list = data.map(item => {
+      const { createdAt, ...other } = item
+      return {
+        ...other,
+        createdAt: formatTime(createdAt)
+      }
+    })
+    const topScoreItem = getTopGradeInfo(list)
+    return {
+      list,
+      topScoreItem
+    }
+  }
 }

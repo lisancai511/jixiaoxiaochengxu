@@ -22,7 +22,7 @@
     <view class="m-b-60"></view>
   </view>
   <view class="footer">
-    <button class="cu-btn round pink" bindtap="getOpenid">
+    <button class="cu-btn round pink loading" bindtap="getOpenid">
       <text class="m-r-5">¥45</text>
       立即开通
     </button>

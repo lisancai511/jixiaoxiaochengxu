@@ -1,5 +1,6 @@
 import { getGradeList } from '../../service/common'
 import { getUserStorage } from '../../utils/storage'
+import { getGradeListByKemuType } from '../../utils/common'
 import { formatTime } from '../../utils/util'
 import { getMockSubjectOne } from '../../service/subjectone'
 Page({
@@ -9,6 +10,7 @@ Page({
   data: {
     list: [],
     topScore: '',
+    topUseTime: '',
     TabCur: '1',
     kemuType: 'one',
     from: ''
@@ -53,33 +55,18 @@ Page({
       TabCur: e.detail.currentItemId
     })
   },
-  getTopScore(list = []) {
-    if (list.length) {
-      list.sort((a, b) => b.score - a.score)
-      return list[0].score
-    }
-    return null
-  },
   async getGradeList(kemuType) {
-    const user = getUserStorage()
-    if (user && user.id) {
-      const { data = [] } = await getGradeList({
-        wxUserId: user.id,
-        type: kemuType === 'one' ? '1' : '4'
-      })
-      let list = data.map(item => {
-        const { createdAt, ...other } = item
-        return {
-          ...other,
-          createdAt: formatTime(createdAt)
-        }
-      })
-      const topScore = this.getTopScore(list)
+    const { topScoreItem } = await getGradeListByKemuType(kemuType) || {}
+    if (topScoreItem != undefined) {
+      console.log(topScoreItem)
+      const topScore = topScoreItem.score
+      const topUseTime = topScoreItem.useTime
       this.setData({
-        list,
+        topUseTime,
         topScore
       })
     }
+
   },
   /**
    * 生命周期函数--监听页面加载
@@ -92,7 +79,7 @@ Page({
       from
     })
     this.getTopicList()
-    // this.getGradeList(kemuType)
+    this.getGradeList(kemuType)
   },
 
   /**

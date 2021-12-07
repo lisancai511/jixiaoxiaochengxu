@@ -1,6 +1,4 @@
-import { getGradeList } from '../../service/common'
-import { getUserStorage } from '../../utils/storage'
-import { formatTime } from '../../utils/util'
+import { getGradeListByKemuType } from '../../utils/common'
 Page({
   /**
    * 页面的初始数据
@@ -20,28 +18,10 @@ Page({
       TabCur: e.detail.currentItemId
     })
   },
-  getTopScore(list = []) {
-    if (list.length) {
-      list.sort((a, b) => b.score - a.score)
-      return list[0].score
-    }
-    return null
-  },
   async getGradeList(kemuType) {
-    const user = getUserStorage()
-    if (user && user.id) {
-      const { data = [] } = await getGradeList({
-        wxUserId: user.id,
-        type: kemuType === 'one' ? '1' : '4'
-      })
-      let list = data.map(item => {
-        const { createdAt, ...other } = item
-        return {
-          ...other,
-          createdAt: formatTime(createdAt)
-        }
-      })
-      const topScore = this.getTopScore(list)
+    const { list = [], topScoreItem = {} } = await getGradeListByKemuType(kemuType) || {}
+    if (topScoreItem) {
+      const topScore = topScoreItem.score
       this.setData({
         list,
         topScore

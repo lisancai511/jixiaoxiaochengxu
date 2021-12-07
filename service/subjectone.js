@@ -19,6 +19,7 @@ export async function getServerTopicList(kemuType = 'one') {
       })),
     }
   });
+
   return {
     ...other,
     list: data

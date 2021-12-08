@@ -1,10 +1,6 @@
 //app.js
-const { getCurrentUser, getopenid } = require('./utils/common')
-const { addOrUpdateUser } = require('./service/login')
-const { setUserStorage } = require('./utils/storage')
 const { getTopicListByKemuType } = require('./utils/cache')
 const { setStorageSpecial, kemuType } = require('./utils/specialOne')
-
 App({
   getNavInfo() {
     wx.getSystemInfo({
@@ -20,13 +16,7 @@ App({
       }
     })
   },
-  async addOrUpdateUser() {
-    const openId = await getopenid()
-    const res = await addOrUpdateUser({
-      openId
-    })
-    setUserStorage(res.data)
-  },
+
   /**
    * 初始化科目一和科目四的本地存储
    */
@@ -40,16 +30,14 @@ App({
       }
     }
   },
-  function() {
 
-  },
   onLaunch: async function () {
     // 获取系统状态栏信息
     getTopicListByKemuType('one')
     getTopicListByKemuType('four')
     this.initSpecialStorage()
     this.getNavInfo()
-    this.addOrUpdateUser()
+    
     // await getCurrentUser(true)
     // 云开发环境初始化
     wx.cloud.init({
@@ -60,6 +48,7 @@ App({
   globalData: {
     userInfo: null,
     fiftySubject: [],
-    arrOne: []
+    arrOne: [],
+    showVip: false,
   }
 })

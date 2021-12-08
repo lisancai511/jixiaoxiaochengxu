@@ -1,15 +1,15 @@
 // pages/kemuOne/index.js
 import { getKeyFromStorage, getErrorIdLists } from '../../utils/util';
-import { SUBJECT_ONE_COLLECTION, SUBJECT_ONE_ERROR_NUMBER } from '../../utils/constant';
-
-import { getServerTopicList } from '../../service/subjectone'
 import { getUserStorage } from '../../utils/storage'
 const app = getApp();
+console.log(app.globalData)
 Page({
   /**
    * 页面的初始数据
    */
-  data: {},
+  data: {
+    showVip: false
+  },
   _gotoCollection(from) {
     const key = 'one_COLLECTION'
     const collection = getKeyFromStorage(key) || {};
@@ -100,7 +100,13 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) { },
+  onLoad: function (options) {
+    console.log('one')
+    const showVip = wx.getStorageSync('showVip')
+    this.setData({
+      showVip
+    })
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -110,7 +116,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () { },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏

@@ -6,9 +6,11 @@ Page({
   },
   NavChange(e) {
     const PageCur = e.currentTarget.dataset.cur
+    console.log('PageCur', PageCur)
     this.setData({
       PageCur,
     });
+
     let myComponent = this.selectComponent(`#${PageCur}`); // 页面获取自定义组件实例
     myComponent.onLoad && myComponent.onLoad()
   },
@@ -22,9 +24,9 @@ Page({
   onLoad() {
   },
   onShow() {
-    if (this.data.PageCur === 'mine') {
-      let myComponent = this.selectComponent('#mine'); // 页面获取自定义组件实例
-      myComponent.onLoad && myComponent.onLoad()
-    }
+    const {PageCur} = this.data
+    const id = `#${PageCur}`
+    let myComponent = this.selectComponent(id); // 页面获取自定义组件实例
+    myComponent.onLoad && myComponent.onLoad()
   }
 });

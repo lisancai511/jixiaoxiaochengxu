@@ -15,3 +15,7 @@ export function openVip(openId = '') {
   return post('/wx/openVip', { openId })
 }
 
+export function getIsShowVip() {
+  return get('/showVip')
+}
+

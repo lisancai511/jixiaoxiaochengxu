@@ -8,7 +8,7 @@
   </view>
 </view>
 <view class="wrap">
-  <view class="flex">最好成绩30分，用时2分11秒</view>
+  <view class="flex" wx:if="{{topScore > 0}}">最好成绩{{topScore}}分，用时{{topUseTime}}</view>
   <view class="cu-card article {{isCard?'no-card':''}}">
     <view class="shadow main">
       <view class="content1">

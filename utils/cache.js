@@ -30,13 +30,19 @@ export async function getTopicListByKemuType(kemuType) {
         total
       }
     }
+    wx.showLoading({
+      mask: true,
+      title: '正在初始化...',
+    })
     const res = await getServerTopicList(kemuType)
     total = res.total || 0
     wx.setStorageSync(topicKey, res.list)
     wx.setStorageSync(totalKey, total)
+    wx.hideLoading()
     return res
   } catch (e) {
     console.log('getTopicListByKemuType fail', e)
+    wx.hideLoading()
     return {
       list: [],
       total: 0

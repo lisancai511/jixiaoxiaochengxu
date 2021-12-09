@@ -15,12 +15,12 @@
 <swiper bindchange='onSlideChangeEnd' class="swiper" current="{{TabCur=='4'?1:0}}">
   <swiper-item item-id="1">
     <view>
-      <kemuOne></kemuOne>
+      <kemuOne id="kemuOne"></kemuOne>
     </view>
   </swiper-item>
   <swiper-item item-id="4">
     <view>
-      <kemuFour></kemuFour>
+      <kemuFour id="kemuFour"></kemuFour>
     </view>
   </swiper-item>
 </swiper>

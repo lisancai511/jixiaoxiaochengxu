@@ -200,3 +200,17 @@ export async function getGradeListByKemuType(kemuType) {
     }
   }
 }
+
+export function getPlatform() {
+  const sys = wx.getSystemInfoSync()
+  console.log(sys)
+  if(sys) {
+    return sys.platform
+  }
+  return 'ios'
+}
+
+export function isIos() {
+  const platform = getPlatform()
+  return platform === 'ios' || platform === 'devtools'
+}

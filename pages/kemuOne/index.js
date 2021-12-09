@@ -9,7 +9,9 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {},
+  data: {
+    openVip: false
+  },
   _gotoCollection(from) {
     const key = 'one_COLLECTION'
     const collection = getKeyFromStorage(key) || {};
@@ -97,10 +99,14 @@ Page({
         break;
     }
   },
+  showVip() {
+    console.log(123)
+  },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) { },
+  onLoad: function (options) { 
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

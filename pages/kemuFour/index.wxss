@@ -3,6 +3,7 @@
   display: flex;
   background: #fff;
   padding-bottom: 40rpx;
+  min-height: 300px;
 }
 
 .main_left,

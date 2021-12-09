@@ -9,7 +9,7 @@
       </view>
       <view class="wx_info_userName">
         <open-data wx:if="{{ isCheckPhone}}" type="userNickName" class="name"></open-data>
-        <text class="wx_info_text">找驾校 考驾照 就用驾考一练过</text>
+        <text class="wx_info_text">找驾校 考驾照 就用简易学车</text>
       </view>
     </view>
   </view>

@@ -3,7 +3,7 @@ import {
   saveCollection,
   cancelCollection,
 } from '../../utils/util.js';
-import { getTopicListByKemuType, getSubjectOneCollection } from '../../utils/cache'
+import { getSubjectOneCollection } from '../../utils/cache'
 import { topicOne, getKeyFromType, getTopicListByType } from '../../utils/specialOne'
 const { SPECIAL } = require('../../utils/constant')
 const app = getApp();

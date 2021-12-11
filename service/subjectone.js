@@ -6,7 +6,7 @@ export async function getServerTopicList(kemuType = 'one') {
     one: api.subjectOne,
     four: api.subjectFour
   }
-  let { data, ...other } = await get(apiMap[kemuType], { limit: 10000 })
+  let { data, ...other } = await get(apiMap[kemuType], { offset: 0, limit: 400 })
   data = data.map((item, i) => {
     let { options } = item
     options = options.split(', ')

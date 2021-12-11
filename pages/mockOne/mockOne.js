@@ -6,7 +6,7 @@ import {
 import { getUserStorage } from '../../utils/storage'
 import { getMockSubjectOne } from '../../service/subjectone'
 import { addGrade } from '../../service/common'
-import { getTopicListByKemuType, getSubjectOneCollection } from '../../utils/cache'
+import { getSubjectOneCollection } from '../../utils/cache'
 import { TOPIC, TOTAL, RESULT, ERROR_NUMBER, SUCCESS_NUMBER, TOPIC_INDEX, TIME } from '../../utils/constant'
 const app = getApp();
 

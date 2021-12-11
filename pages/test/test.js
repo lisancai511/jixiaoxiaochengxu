@@ -3,7 +3,7 @@ import {
   saveCollection,
   cancelCollection,
 } from '../../utils/util.js';
-import { getTopicListByKemuType, getSubjectOneCollection } from '../../utils/cache'
+import { getSubjectOneCollection } from '../../utils/cache'
 import { RESULT, TOPIC, ERROR_NUMBER, SUCCESS_NUMBER, TOPIC_INDEX, TOTAL, } from '../../utils/constant'
 import { getTopicListByKey } from '../../utils/common'
 import { one_Total, four_Total } from '../../utils/vip'

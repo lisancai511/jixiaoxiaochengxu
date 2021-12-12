@@ -15,7 +15,6 @@ Page({
     done: false
   },
   tabSelect(e) {
-    console.log(1111)
     this.setData({
       TabCur: e.target.id
     })
@@ -24,7 +23,6 @@ Page({
     this.setData({
       TabCur: e.detail.currentItemId
     })
-    this.renderKemu()
   },
   NavChange(e) {
     const PageCur = e.currentTarget.dataset.cur

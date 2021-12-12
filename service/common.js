@@ -13,8 +13,8 @@ export function getStudentGrade(data) {
   return post('/wx/getStudentGrade', data)
 }
 
-export function openVip(openId = '') {
-  return post('/wx/openVip', { openId })
+export function openVip(data) {
+  return post('/wx/openVip', data)
 }
 
 export function getIsShowVip() {

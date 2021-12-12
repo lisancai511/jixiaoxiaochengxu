@@ -59,6 +59,7 @@ Page({
       if (res && res.showVip) {
         vipOne = true
         vipFour = true
+        this.addOrUpdateUser()
       } else {
         const user = await this.addOrUpdateUser()
         if (user && user.data && user.data.vipOne) {

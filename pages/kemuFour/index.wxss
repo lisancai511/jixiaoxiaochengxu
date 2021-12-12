@@ -1,9 +1,12 @@
 /* pages/kemuOne/index.wxss */
+@import '../../colorui/main.wxss';
+@import '../../colorui/icon.wxss';
+@import '../../app.wxss';
 .main {
   display: flex;
   background: #fff;
   padding-bottom: 40rpx;
-  min-height: 300px;
+  height: 364px;
 }
 
 .main_left,

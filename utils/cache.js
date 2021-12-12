@@ -1,5 +1,7 @@
 const { getServerTopicList } = require("../service/subjectone");
 const { getSubjectFourList } = require("../service/subjectfour");
+const { getOneTotal, getFourTotal, getSubjectTopic } = require('../service/common')
+const { get } = require('../utils/request')
 const constant = require("../utils/constant");
 // 渲染已经做过的题目
 export function getTopicClassName(list, result) {
@@ -82,4 +84,53 @@ export function getSubjectOneCollection(kemuType = "one") {
 
 export function getSubjectFourCollection() {
   return wx.getStorageSync(constant.SUBJECT_FOUR_COLLECTION) || {};
+}
+
+export async function fetchCacheData(url) {
+  try {
+    const key = `/api${url}`
+    const val = wx.getStorageSync(key)
+    if (val) {
+      return val
+    }
+    const res = await get(url)
+    wx.setStorageSync(key, res.data)
+    return res.data
+  } catch (e) {
+    console.log('fetchCacheData err:', err)
+    return null
+  }
+
+}
+
+function checkTopic() {
+
+}
+
+export async function checkTopicOne() {
+  const total = await getOneTotal()
+  const firstNum = 300
+  const num = 500
+  const time = Math.ceil((total - firstNum) / num)
+  let requestList = []
+  let offset = 0
+
+  for (let i = 0; i < time + 1; i++) {
+    if (i === 0) {
+      wx.showLoading({
+        mask: true,
+        title: "初始化题目...",
+      });
+    }
+    let limit = i === 0 ? firstNum : num
+    // console.log(i, offset, limit)
+    await getSubjectTopic('one', {
+      offset,
+      limit
+    })
+    wx.hideLoading()
+    offset += limit
+
+  }
+  console.log('time', time)
 }

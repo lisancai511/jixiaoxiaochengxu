@@ -1,6 +1,8 @@
 //app.js
-const { getTopicListByKemuType } = require('./utils/cache')
+const { getTopicListByKemuType, checkTopicOne } = require('./utils/cache')
 const { setStorageSpecial, kemuType } = require('./utils/specialOne')
+const { getOneTotal, getFourTotal } = require('./service/common')
+
 App({
   getNavInfo() {
     wx.getSystemInfo({
@@ -31,18 +33,25 @@ App({
     }
   },
 
-  onLaunch: async function () {
+  async getTotal() {
+    console.log('i n')
+    const res = await getOneTotal()
+    console.log('res--', res)
+  },
+
+  onLaunch: function () {
     // 获取系统状态栏信息
+    // checkTopicOne()
+    // this.getTotal()
     getTopicListByKemuType('one')
     getTopicListByKemuType('four')
     this.initSpecialStorage()
     this.getNavInfo()
-    
     // await getCurrentUser(true)
     // 云开发环境初始化
-    wx.cloud.init({
-      env: "cloud1-7gi5jb4120c33dbf"
-    })
+    // wx.cloud.init({
+    //   env: "cloud1-7gi5jb4120c33dbf"
+    // })
 
   },
   globalData: {

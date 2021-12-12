@@ -1,3 +1,5 @@
+/* @import '../../colorui/main.wxss';
+@import '../../colorui/icon.wxss'; */
 .UCenter-bg {
   background-image: url(https://bpic.588ku.com/back_pic/04/40/46/35584f7ed697494.jpg);
   background-size: cover;

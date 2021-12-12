@@ -2,17 +2,17 @@
   <view class="cu-item shadow">
     <view class="main">
       <view class="main_left">
-        <view wx:if="{{showVip}}" bindtap="gotoSubject" id="VIP" class="left_item m-t-20 m-b-20">
-          <image class="icon vip" src="../../images/vip.png" />
-          <text class="m-t-10">vip课程</text>
+        <view class="left_item m-t-20 m-b-20" id="grade" bindtap="gotoSubject">
+          <image class="icon" src="../../images/chengji.png" />
+          <text class="m-t-10">我的成绩</text>
         </view>
         <view bindtap="gotoSubject" id="ERROR" class="left_item m-t-20 m-b-20">
           <image class="icon" src="../../images/cuoti.png" />
           <text class="m-t-10">我的错题</text>
         </view>
-        <view class="left_item m-t-20 m-b-20" id="grade" bindtap="gotoSubject">
-          <image class="icon" src="../../images/chengji.png" />
-          <text class="m-t-10">我的成绩</text>
+        <view wx:if="{{showVip}}" bindtap="gotoSubject" id="VIP" class="left_item m-t-20 m-b-20">
+          <image class="icon vip" src="../../images/vip.png" />
+          <text class="m-t-10">vip课程</text>
         </view>
       </view>
       <view class="main_mid">

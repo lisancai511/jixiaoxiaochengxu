@@ -124,6 +124,7 @@ Component({
             errorStorage[id] = true
             wx.setStorageSync(errorKey, errorStorage)
           }
+          console.log(exerciseList[index])
           exerciseList[index].className = 'error'
           exerciseList[index].options[optidx].className = 'error';
           exerciseList[index].options[item.ta - 1].className = 'success';

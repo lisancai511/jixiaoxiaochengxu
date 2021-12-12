@@ -1,6 +1,8 @@
 {
   "usingComponents": {
     "simulation": "/pages/simulation/index",
-    "mine": "/pages/mine/index"
+    "mine": "/pages/mine/index",
+    "kemuOne": "/pages/kemuOne/index",
+    "kemuFour": "/pages/kemuFour/index"
   }
 }

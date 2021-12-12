@@ -1,0 +1,29 @@
+@import '../../colorui/main.wxss';
+.active {
+  font-weight: bold;
+  font-size: 18px;
+  color: #000;
+}
+
+.topTitle {
+  width: 100%;
+  height: 2px;
+  box-shadow: 0 0px 2px rgb(150 150 150 / 30%);
+}
+
+.swiper {
+  flex: 1;
+  height: 100%;
+}
+.swiper-item {
+  height: 100%;
+}
+.container {
+  height: 100%;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.myscoure {
+  color: #000;
+}

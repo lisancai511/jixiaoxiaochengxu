@@ -5,7 +5,7 @@
 <scroll-view scroll-y class="scrollPage" style="top:{{CustomBar}}px">
   <view>
     <view>
-      <image class="img-wrap0" src="https://m.qpic.cn/psc?/V11JmdTF2fK2RN/TmEUgtj9EK6.7V8ajmQrEFG6aZhRVuvgik0kWPxvLMZN6KCJjSMHdj.KoagMj9FMV1yIxsBRBvxawCFevHt3NORLhuqiVNWpjYyTPS6ytRo!/b&bo=NgPgAgAAAAADR7U!&rf=viewer_4&t=5" />
+      <image class="img-wrap0" src="../../images/vip_01.webp" />
       <view class="center main_wrap">
         <button class="cu-btn round wrap_btn">
           限时特惠
@@ -14,11 +14,11 @@
         </button>
       </view>
     </view>
-    <image class="img-wrap" src="https://m.qpic.cn/psc?/V11JmdTF2fK2RN/TmEUgtj9EK6.7V8ajmQrEB15ESg1F5ZHxpbs*EIZ8oOZ7nzfywzZ31Z4t9d5XYS35qbBmPxI3.yw18YV7ad7s8pbKGkbbEMna2pRvuhhILQ!/b&bo=MgOWAwAAAAADJ6Y!&rf=viewer_4&t=5" />
-    <image class="img-wrap1" src="https://m.qpic.cn/psc?/V11JmdTF2fK2RN/TmEUgtj9EK6.7V8ajmQrEA.ltbAHFH4JZS7jPRrfuQMmSCCsueAXA8krISkhJjYcbahzyw*tPEa0i8yaQJfda0MMpfZih.Yiej7e1vmXZAE!/b&bo=OAPcAgAAAAADJ.c!&rf=viewer_4&t=5" />
-    <image class="img-wrap2" src="https://m.qpic.cn/psc?/V11JmdTF2fK2RN/TmEUgtj9EK6.7V8ajmQrED8bOExVjO.CVl4.ZhJQGL6CYmRa.*3m53VjKBIGB2iGp5VLV6Gj.75087M9zIhb0L8vje2TA2a83nnkdHPOZk4!/b&bo=NAN.AwAAAAADJ0g!&rf=viewer_4&t=5" />
-    <image class="img-wrap3" src="https://m.qpic.cn/psc?/V11JmdTF2fK2RN/TmEUgtj9EK6.7V8ajmQrEEt*4f6uyY.kSWhYczZ4d0GxhqZrKMEUknikQcINduz2nUKXZ.cVTsBRASSJbR7GAgrtPS8FmrZtgXNFtYHehsE!/b&bo=OANEAwAAAAADJ34!&rf=viewer_4&t=5" />
-    <image class="img-wrap4" src="https://m.qpic.cn/psc?/V11JmdTF2fK2RN/TmEUgtj9EK6.7V8ajmQrECksW3c*T*hzJsXGeJpxd4ECih7yPTGwGKm7BavmbHdf9AE3qoCv6e923DlKOlttKREKnlauts9EGB2JdUxmX3k!/b&bo=OAPwAQAAAAADJ8g!&rf=viewer_4&t=5" />
+    <image class="img-wrap" src="../../images/vip_02.webp" />
+    <image class="img-wrap1" src="../../images/vip_03.webp" />
+    <image class="img-wrap2" src="../../images/vip_04.webp" />
+    <image class="img-wrap3" src="../../images/vip_05.webp" />
+    <!-- <image class="img-wrap4" src="https://m.qpic.cn/psc?/V11JmdTF2fK2RN/TmEUgtj9EK6.7V8ajmQrECksW3c*T*hzJsXGeJpxd4ECih7yPTGwGKm7BavmbHdf9AE3qoCv6e923DlKOlttKREKnlauts9EGB2JdUxmX3k!/b&bo=OAPwAQAAAAADJ8g!&rf=viewer_4&t=5" /> -->
     <view class="m-b-60"></view>
   </view>
   <view class="footer">

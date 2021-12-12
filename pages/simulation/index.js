@@ -1,23 +1,33 @@
-const {isIos, getopenid} = require('../../utils/common')
+const { isIos, getopenid } = require('../../utils/common')
 const { addOrUpdateUser } = require('../../service/login')
-const {getIsShowVip} = require('../../service/common')
+const { getIsShowVip } = require('../../service/common')
 const { setUserStorage } = require('../../utils/storage')
-Page({
+Component({
+  // properties: {
+  //   tabIndex: {
+  //     type: String,
+  //     value: '1',
+  //   }
+  // },
   data: {
     TabCur: '1',
     showVip: false
   },
-  tabSelect(e) {
-    this.setData({
-      TabCur: e.target.id
-    })
+  methods: {
+    tabSelect(e) {
+      console.log(1111)
+      this.setData({
+        TabCur: e.target.id
+      })
+    },
+    onSlideChangeEnd(e) {
+      this.setData({
+        TabCur: e.detail.currentItemId
+      })
+      this.renderKemu()
+    },
   },
-  onSlideChangeEnd(e) {
-    this.setData({
-      TabCur: e.detail.currentItemId
-    })
-    this.renderKemu()
-  },
+
   renderKemu() {
     const idMap = {
       1: '#kemuOne',
@@ -36,13 +46,13 @@ Page({
   },
   async initIcon() {
     let showVip = false
-    if(isIos()) {
+    if (isIos()) {
       const res = await getIsShowVip()
-      if(res && res.showVip) {
+      if (res && res.showVip) {
         showVip = true
       }
       const user = await this.addOrUpdateUser()
-      if(user && user.data && user.data.isVip) {
+      if (user && user.data && user.data.isVip) {
         showVip = true
       }
     } else {
@@ -52,8 +62,8 @@ Page({
     console.log(1)
     wx.setStorageSync('showVip', showVip)
   },
-  async onLoad() {
-    await this.initIcon()
-    this.renderKemu()
-  }
+  // async onLoad() {
+  //   await this.initIcon()
+  //   this.renderKemu()
+  // }
 })

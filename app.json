@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/payPage/index",
     "pages/bfeoueExam/index",
     "pages/note/index",
     "pages/result/result",
@@ -15,7 +16,6 @@
     "pages/simulation/index",
     "pages/kemuOne/index",
     "pages/kemuFour/index",
-    "pages/payPage/index",
     "pages/grade/grade",
     "pages/mine/index",
     "pages/vipDetail/index"

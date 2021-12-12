@@ -1,4 +1,31 @@
-<simulation id="simulation" wx:if="{{PageCur=='simulation'}}"></simulation>
+<view wx:if="{{PageCur=='simulation'}}" class="container">
+  <cu-custom bgColor="bg-gradual-pink" isBack="{{false}}">
+    <view slot="content" class="myscoure">简易学车</view>
+  </cu-custom>
+  <view class="topTitle"></view>
+  <scroll-view scroll-x class="bg-white nav">
+    <view class="flex text-center">
+      <view class="cu-item flex-sub {{TabCur=='1'?'active cur':''}}" bindtap="tabSelect" id="1">
+        科一
+      </view>
+      <view class="cu-item flex-sub {{TabCur=='4'?'active cur':''}}" bindtap="tabSelect" id="4">
+        科四
+      </view>
+    </view>
+  </scroll-view>
+  <swiper bindchange='onSlideChangeEnd' class="swiper" current="{{TabCur=='4'?1:0}}">
+    <swiper-item item-id="1">
+      <view>
+        <kemuOne id="kemuOne" showVip="{{vipOne}}"></kemuOne>
+      </view>
+    </swiper-item>
+    <swiper-item item-id="4">
+      <view>
+        <kemuFour id="kemuFour" showVip="{{vipFour}}"></kemuFour>
+      </view>
+    </swiper-item>
+  </swiper>
+</view>
 <mine id="mine" wx:if="{{PageCur=='mine'}}" wx:i="{{PageCur=='mine'}}"></mine>
 <view class="cu-bar tabbar bg-white shadow foot">
   <view class="action" bindtap="NavChange" data-cur="simulation">

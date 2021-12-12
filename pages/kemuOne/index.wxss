@@ -1,4 +1,7 @@
 /* pages/kemuOne/index.wxss */
+@import '../../colorui/main.wxss';
+@import '../../colorui/icon.wxss';
+@import '../../app.wxss';
 page {
   height: 100%;
 }
@@ -6,8 +9,7 @@ page {
   display: flex;
   background: #fff;
   padding-bottom: 40rpx;
-  height: 100%;
-  min-height: 300px;
+  height: 364px;
 }
 
 .main_left,

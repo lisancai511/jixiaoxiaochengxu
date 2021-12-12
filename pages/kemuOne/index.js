@@ -29,7 +29,7 @@ Component({
     },
     _gotoVip(from) {
       const user = getUserStorage();
-      if (user && user.isVip) {
+      if (user && user.vipOne) {
         wx.navigateTo({
           url: `/pages/vipDetail/index?kemuType=one&from=${from}`,
         });

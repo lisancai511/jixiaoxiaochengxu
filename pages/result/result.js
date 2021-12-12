@@ -17,6 +17,7 @@ Page({
     hasRes: false
   },
   takeVip(openid) {
+    const { kemuType } = this.data
     const params = {
       openid,
       type: kemuType,

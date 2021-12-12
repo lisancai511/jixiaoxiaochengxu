@@ -1,6 +1,7 @@
 // pages/result/result.js
 const { openVip } = require('../../service/common')
 const { setUserStorage } = require('../../utils/storage')
+const md5 = require('../../utils/md5')
 const app = getApp();
 
 Page({

@@ -23,6 +23,9 @@
   border-radius: 10px;
   color: black;
 }
+.answer-item.warn {
+  background-color: rgb(168, 159, 159);
+}
 .answer-item.success {
   background-color: rgba(112, 182, 3, 0.223529411764706);
   color: #70b603;

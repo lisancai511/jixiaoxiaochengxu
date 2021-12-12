@@ -67,7 +67,7 @@ Page({
     const { specialType } = this.data
     const special = this.getStorageSpecial()
     let { result = {}, successNumber = 0, wrongNumber = 0, } = special[specialType]
-    if (result[topicId]) {
+    if (result[topicId] != undefined) {
       if (result[topicId] === true) {
         // 之前都是作对的题目
         if (res !== true) {

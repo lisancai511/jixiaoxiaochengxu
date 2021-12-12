@@ -22,8 +22,8 @@
               <text>{{answer.description}}</text>
             </view>
           </view>
-          <view wx:if="{{item.Type == 3 && !item.clicked}}" class="mul-btn">
-            <button type="primary" bindtap="onTap">确定</button>
+          <view wx:if="{{!isShowResult && item.Type == 3 && !item.own_res}}" class="mul-btn">
+            <button type="primary" data-index="{{index}}" bindtap="handleOk">确定</button>
           </view>
           <view wx:if="{{isShowResult || item.own_res}}">
             <view>解析：</view>

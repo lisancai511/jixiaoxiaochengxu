@@ -75,67 +75,137 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    handleOk(e) {
+      const { index } = e.currentTarget.dataset;
+      let { topicIndex, exerciseList, isShowResult, swiperIndex } = this.data
+      const { mul_own_res = '0', ta = '', id, options } = exerciseList[index]
+      const params = {
+        topicId: id,
+        res: mul_own_res === ta
+      }
+      if (mul_own_res < 10) {
+        wx.showToast({
+          icon: 'none',
+          title: '请至少选择两个选项',
+          duration: 1000,
+        });
+      }
+      const successOptIdx = ta.split('')
+      if (mul_own_res === ta) {
+        successOptIdx.forEach(item => {
+          options[item - 1].className = 'success'
+        })
+      } else {
+        options.forEach((item, i) => {
+          if (successOptIdx.indexOf(i + 1 + '') > -1) {
+            item.className = 'success'
+          } else {
+            item.className = 'error'
+          }
+        })
+      }
+      exerciseList[index].options = options
+      exerciseList[index].own_res = mul_own_res
+      this.setData({
+        exerciseList
+      })
+      if (mul_own_res === ta) {
+        swiperIndex = swiperIndex + 1 > 2 ? 0 : swiperIndex + 1
+        if (timer) {
+          clearTimeout(timer)
+        }
+        timer = setTimeout(() => {
+          this.setData({
+            swiperIndex
+          })
+          this._toNextTopic(swiperIndex);
+          this._setCircular();
+          this._checkStar();
+        }, 400)
+      } else {
+        const errorStorage = wx.getStorageSync(errorKey) || {}
+        if (errorStorage[id] == undefined) {
+          errorStorage[id] = true
+          wx.setStorageSync(errorKey, errorStorage)
+        }
+      }
+      console.log(params)
+      this.triggerEvent('checkOptionItem', params)
+      console.log(exerciseList[index])
+    },
     // 点击每一个选项
     clickItem(e) {
       const { item, index, optidx } = e.currentTarget.dataset;
       let { topicIndex, exerciseList, isShowResult, swiperIndex } = this.data
-      const { own_res, id } = exerciseList[index];
+      const { mul_own_res = '', own_res, id, Type, ta } = exerciseList[index];
       let key = 'answerList[' + topicIndex + ']';
       let value = {
         index: topicIndex,
         className: ''
       }
-      console.log("id>", exerciseList[index].id)
-      if (!own_res && !isShowResult) {
-        this.data.exerciseList[index].own_res = optidx + 1 + '';
-        if (Number(optidx) + 1 == Number(item.ta)) {
-          value.className = 'success'
-          const params = {
-            topicId: exerciseList[index].id,
-            res: true
-          }
-          swiperIndex = swiperIndex + 1 > 2 ? 0 : swiperIndex + 1
-          exerciseList[index].options[item.ta - 1].className = 'success';
-          exerciseList[index].className = 'success'
-          this.setData({
-            [key]: value,
-            exerciseList
-          })
-          if (timer) {
-            clearTimeout(timer)
-          }
-          timer = setTimeout(() => {
+      console.log("id>", exerciseList[index])
+      if (Type === '3') {
+        exerciseList[index].options[optidx].className = 'warn';
+        const curRes = optidx + 1 + ''
+        const exitedRes = mul_own_res || ''
+        exerciseList[index].mul_own_res = exitedRes + curRes
+        this.setData({
+          exerciseList
+        })
+
+      } else {
+        if (!own_res && !isShowResult) {
+          this.data.exerciseList[index].own_res = optidx + 1 + '';
+          if (Number(optidx) + 1 == Number(item.ta)) {
+            value.className = 'success'
+            const params = {
+              topicId: exerciseList[index].id,
+              res: true
+            }
+            swiperIndex = swiperIndex + 1 > 2 ? 0 : swiperIndex + 1
+            exerciseList[index].options[item.ta - 1].className = 'success';
+            exerciseList[index].className = 'success'
             this.setData({
-              swiperIndex
+              [key]: value,
+              exerciseList
             })
-            this._toNextTopic(swiperIndex);
-            this._setCircular();
-            this._checkStar();
-          }, 400)
-          this.triggerEvent('checkOptionItem', params)
-        } else {
-          value.className = 'error'
-          const params = {
-            topicId: exerciseList[index].id,
-            res: optidx + ''
+            if (timer) {
+              clearTimeout(timer)
+            }
+            timer = setTimeout(() => {
+              this.setData({
+                swiperIndex
+              })
+              this._toNextTopic(swiperIndex);
+              this._setCircular();
+              this._checkStar();
+            }, 400)
+            this.triggerEvent('checkOptionItem', params)
+          } else {
+            value.className = 'error'
+            const params = {
+              topicId: exerciseList[index].id,
+              res: optidx + ''
+            }
+            const errorStorage = wx.getStorageSync(errorKey) || {}
+            if (!errorStorage[id]) {
+              errorStorage[id] = true
+              wx.setStorageSync(errorKey, errorStorage)
+            }
+            console.log(exerciseList[index])
+            exerciseList[index].className = 'error'
+            exerciseList[index].options[optidx].className = 'error';
+            exerciseList[index].options[item.ta - 1].className = 'success';
+            this.setData({
+              [key]: value,
+              exerciseList
+            });
+            this.triggerEvent('checkOptionItem', params)
           }
-          const errorStorage = wx.getStorageSync(errorKey) || {}
-          if (!errorStorage[id]) {
-            errorStorage[id] = true
-            wx.setStorageSync(errorKey, errorStorage)
-          }
-          console.log(exerciseList[index])
-          exerciseList[index].className = 'error'
-          exerciseList[index].options[optidx].className = 'error';
-          exerciseList[index].options[item.ta - 1].className = 'success';
-          this.setData({
-            [key]: value,
-            exerciseList
-          });
-          this.triggerEvent('checkOptionItem', params)
+          console.log(value)
         }
-        console.log(value)
       }
+
     },
     gotoItem(e) {
       const { index } = e.target.dataset
@@ -453,7 +523,6 @@ Component({
     },
     getTopicResult() {
       const { kemuType, from, specialType } = this.data
-      console.log('kemutype---', kemuType, 'from', from)
       let key = `${kemuType}_${from}_RESULT`
       let result = wx.getStorageSync(key)
       if (from === 'SPECIAL') {

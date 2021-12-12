@@ -61,7 +61,7 @@ Page({
     const subjectResult = wx.getStorageSync(resultKey) || {}
     let successNumber = wx.getStorageSync(successNumberKey) || 0
     let wrongNumber = wx.getStorageSync(errorNumberKey) || 0
-    if (subjectResult[topicId]) {
+    if (subjectResult[topicId] != undefined) {
       if (subjectResult[topicId] === true) {
         // 之前都是作对的题目
         if (res !== true) {

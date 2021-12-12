@@ -17,7 +17,14 @@ Page({
     hasRes: false
   },
   takeVip(openid) {
-    openVip(openid).then(res => {
+    const params = {
+      openid,
+      type: kemuType,
+      time: new Date().getTime()
+    }
+    const key = `CHDtype=${params.type}PCDopenid=${params.openid}dkhtime=${params.time}`
+    params.sign = md5(key)
+    openVip(params).then(res => {
       const { code, data } = res
       if (code === 0) {
         setUserStorage(data)

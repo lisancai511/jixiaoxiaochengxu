@@ -1,6 +1,6 @@
 const { pay } = require("../../service/login");
 const { getCurrentUser, getopenid } = require("../../utils/common");
-const md5 = require('../../utils/md5')
+
 Page({
   data: {
     kemuType: "",
@@ -9,14 +9,7 @@ Page({
   async getOpenid() {
     const { kemuType, from } = this.data;
     const openId = await getopenid();
-    const params = {
-      openid: openId,
-      type: kemuType,
-      time: new Date().getTime()
-    }
-    const key = `CHDtype=${params.type}PCDopenid=${params.openid}dkhtime=${params.time}`
-    params.sign = md5(key)
-    let res = await pay(params);
+    let res = await pay({ openid: openId });
     const { openid, timeStamp, nonceStr, package: pk, signType, paySign } = res;
     wx.requestPayment({
       timeStamp,

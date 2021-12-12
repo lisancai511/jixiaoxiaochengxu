@@ -17,8 +17,7 @@ Page({
     title: '等待中...',
     hasRes: false
   },
-  takeVip(openid) {
-    const { kemuType } = this.data
+  takeVip(openid, kemuType) {
     const params = {
       openid,
       type: kemuType,
@@ -65,7 +64,8 @@ Page({
    */
   onLoad: function (options) {
     const { openid, kemuType, from } = options
-    this.takeVip(openid)
+    console.log('result', kemuType)
+    this.takeVip(openid, kemuType)
     this.setData({
       kemuType,
       from

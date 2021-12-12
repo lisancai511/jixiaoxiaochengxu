@@ -303,7 +303,6 @@ Component({
         this._toLastTopic(current);
       }
       // console.log(this.data.exerciseList)
-      console.log(this.data.exerciseList.map(item => item.index))
       this._setCircular();
       this._checkStar();
       console.log('item', cacheList[this.data.topicIndex])

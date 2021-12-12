@@ -206,7 +206,7 @@ Page({
           if (res.confirm) {
             this._initErrorAndSuccess()
             this._initAppData()
-            const countTime = wx.getStorageSync(timeKey)
+            const countTime = wx.getStorageSync(timeKey) || COUNT_DOWN_TIME
             this.renderCountDownTime(countTime)
           } else if (res.cancel) {
             this._resetMock()
@@ -307,7 +307,8 @@ Page({
     const { kemuType, from } = options
     this.setData({
       kemuType,
-      from
+      from,
+      total: kemuType === 'one' ? 100 : 50
     })
     this.initKey()
     this._checkCache()

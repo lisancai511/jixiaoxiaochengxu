@@ -14,6 +14,9 @@ Page({
     vipFour: false,
     done: false
   },
+  getPhoneNumber(e) {
+    console.log(e)
+  },
   tabSelect(e) {
     this.setData({
       TabCur: e.target.id
@@ -30,9 +33,11 @@ Page({
     this.setData({
       PageCur,
     });
+    if (PageCur === 'mine') {
 
-    // let myComponent = this.selectComponent(`#${PageCur}`); // 页面获取自定义组件实例
-    // myComponent.onLoad && myComponent.onLoad()
+      let myComponent = this.selectComponent(`#${PageCur}`); // 页面获取自定义组件实例
+      myComponent.onLoad && myComponent.onLoad()
+    }
   },
   onShareAppMessage() {
     return {
@@ -85,10 +90,12 @@ Page({
     this.initIcon()
   },
   onShow() {
-    const { PageCur } = this.data
-    const id = `#${PageCur}`
-    console.log('index onshow')
-    // let myComponent = this.selectComponent(id); // 页面获取自定义组件实例
-    // myComponent.onLoad && myComponent.onLoad()
+    // const { PageCur } = this.data
+    // const id = `#${PageCur}`
+    // if (id === 'mine') {
+    //   let myComponent = this.selectComponent(id); // 页面获取自定义组件实例
+    //   myComponent.onLoad && myComponent.onLoad()
+    // }
+    // console.log('index onshow')
   }
 });

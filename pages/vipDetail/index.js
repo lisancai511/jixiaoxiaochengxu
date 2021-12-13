@@ -14,6 +14,12 @@ Page({
     from: ''
   },
   // 获取精简500题
+  gotoSecret() {
+    wx.showToast({
+      title: '即将上线...',
+      icon: 'none'
+    })
+  },
   gotoExercise() {
     const { kemuType, from } = this.data
     wx.navigateTo({

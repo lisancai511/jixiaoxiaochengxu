@@ -12,7 +12,7 @@
     <text class="cuIcon-right lg text-gray fr"></text>
   </view>
 </view>
-<view class="cu-card article {{isCard?'no-card':''}}">
+<view class="cu-card article {{isCard?'no-card':''}}" bind:tap="gotoSecret">
   <view class="shadow wrap">
     <image class="icon" src="../../images/b.png" />
     <view class="detail">
@@ -22,7 +22,7 @@
     <text class="cuIcon-right lg text-gray fr"></text>
   </view>
 </view>
-<view class="cu-card article {{isCard?'no-card':''}}" bindtap = "goToNote">
+<view class="cu-card article {{isCard?'no-card':''}}" bindtap="goToNote">
   <view class="shadow wrap">
     <image class="icon" src="../../images/c.png" />
     <view class="detail">

@@ -13,6 +13,9 @@
       </view>
     </view>
   </scroll-view>
+  <!-- <button open-type="getPhoneNumber" type="primary" bindgetphonenumber="getPhoneNumber">
+    获取手机号
+  </button> -->
   <swiper bindchange='onSlideChangeEnd' class="swiper" current="{{TabCur=='4'?1:0}}">
     <swiper-item item-id="1">
       <view>

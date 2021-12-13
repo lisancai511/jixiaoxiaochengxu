@@ -23,6 +23,25 @@
   border-radius: 10px;
   color: black;
 }
+.ans {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 18px;
+  /* background: rgba(255, 255, 255, .3); */
+  margin-bottom: 20rpx;
+}
+.ans .ans-own {
+  display: inline;
+}
+.ans .success {
+  display: inline;
+  color: #70b603
+}
+.ans .error {
+  display: inline;
+  color: rgba(211, 114, 126, 0.996078431372549);
+}
+
 .answer-item.warn {
   background-color: rgb(168, 159, 159);
 }

@@ -75,6 +75,23 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    getData() {
+      return 'aaa'
+    },
+    transAnswer(ansStr) {
+      const ansList = []
+      ansStr.split('').sort((a, b) => a - b).forEach(item => {
+        console.log('ii', item)
+        const itemMap = {
+          1: 'A',
+          2: 'B',
+          3: 'C',
+          4: 'D',
+        }
+        ansList.push(itemMap[item])
+      })
+      return ansList.join('')
+    },
     handleOk(e) {
       const { index } = e.currentTarget.dataset;
       let { topicIndex, exerciseList, isShowResult, swiperIndex } = this.data
@@ -89,6 +106,7 @@ Component({
           title: '请至少选择两个选项',
           duration: 1000,
         });
+        return
       }
       const successOptIdx = ta.split('')
       if (mul_own_res === ta) {
@@ -106,6 +124,8 @@ Component({
       }
       exerciseList[index].options = options
       exerciseList[index].own_res = mul_own_res
+      const resAnswer = this.transAnswer(mul_own_res)
+      exerciseList[index].resAnswer = resAnswer
       this.setData({
         exerciseList
       })
@@ -156,6 +176,8 @@ Component({
       } else {
         if (!own_res && !isShowResult) {
           this.data.exerciseList[index].own_res = optidx + 1 + '';
+          const resAnswer = this.transAnswer(optidx + 1 + '')
+          this.data.exerciseList[index].resAnswer = resAnswer
           if (Number(optidx) + 1 == Number(item.ta)) {
             value.className = 'success'
             const params = {

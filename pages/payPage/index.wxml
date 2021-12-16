@@ -1,30 +1,18 @@
-<cu-custom bgColor="bg-white" isBack="{{true}}">
+<cu-custom bgColor="bg-gradual-black" isBack="{{true}}">
   <view slot="backText">返回</view>
+  <view slot="content">Vip</view>
 </cu-custom>
-<view class="title" style="top:{{CustomBar}}px">VIP速成课</view>
-<scroll-view scroll-y class="scrollPage" style="top:{{CustomBar}}px">
-  <view>
-    <view>
-      <image class="img-wrap0" src="../../images/vip_01.webp" />
-      <view class="center main_wrap">
-        <button class="cu-btn round wrap_btn">
-          限时特惠
-          <text class="m-r-5">¥45</text>
-          <text class="m-r-5">¥155</text>
-        </button>
-      </view>
-    </view>
-    <image class="img-wrap" src="../../images/vip_02.webp" />
-    <image class="img-wrap1" src="../../images/vip_03.webp" />
-    <image class="img-wrap2" src="../../images/vip_04.webp" />
-    <image class="img-wrap3" src="../../images/vip_05.webp" />
-    <!-- <image class="img-wrap4" src="https://m.qpic.cn/psc?/V11JmdTF2fK2RN/TmEUgtj9EK6.7V8ajmQrECksW3c*T*hzJsXGeJpxd4ECih7yPTGwGKm7BavmbHdf9AE3qoCv6e923DlKOlttKREKnlauts9EGB2JdUxmX3k!/b&bo=OAPwAQAAAAADJ8g!&rf=viewer_4&t=5" /> -->
-    <view class="m-b-60"></view>
-  </view>
-  <view class="footer">
-    <button class="cu-btn round pink loading" bindtap="getOpenid">
-      <text class="m-r-5">¥45</text>
-      立即开通
-    </button>
-  </view>
-</scroll-view>
+
+<view>
+  <image mode="widthFix" class="vipImg" src="../../images/bg.png" />
+</view>
+<view class="footer">
+ <view class="font">
+    <text class="a">¥</text>
+    <text class="b">39.9</text>
+    <text class="a">/90天</text>
+ </view>
+ <button class="btn" bindtap="getOpenid">
+    立即开通
+  </button>
+</view>

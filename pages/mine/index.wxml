@@ -53,12 +53,12 @@
         <text class="text-grey">联系我们</text>
       </button>
     </view>
-    <!-- <view class="cu-item arrow">
-      <button class="cu-btn content" open-type="feedback">
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="share">
         <text class="cuIcon-creativefill text-orange"></text>
-        <text class="text-grey">报名驾校</text>
+        <text class="text-grey">邀请好友</text>
       </button>
-    </view> -->
+    </view>
     <!-- <view class="cu-item arrow">
       <button class="cu-btn content" bindtap="goToCollect">
         <text class="cuIcon-favorfill text-yellow"></text>

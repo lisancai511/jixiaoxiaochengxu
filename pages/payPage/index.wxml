@@ -5,19 +5,19 @@
 <scroll-view scroll-y class="scrollPage" style="top:{{CustomBar}}px">
   <view>
     <view>
-      <image class="img-wrap0" src="../../images/vip_01.webp" />
+      <image class="img-wrap0" src="../../images/vip_01.jpeg" />
       <view class="center main_wrap">
         <button class="cu-btn round wrap_btn">
           限时特惠
           <text class="m-r-5">¥45</text>
-          <text class="m-r-5">¥155</text>
+          <!-- <text class="m-r-5">¥155</text> -->
         </button>
       </view>
     </view>
-    <image class="img-wrap" src="../../images/vip_02.webp" />
-    <image class="img-wrap1" src="../../images/vip_03.webp" />
-    <image class="img-wrap2" src="../../images/vip_04.webp" />
-    <image class="img-wrap3" src="../../images/vip_05.webp" />
+    <image class="img-wrap" src="../../images/vip_02.jpeg" />
+    <image class="img-wrap1" src="../../images/vip_03.jpeg" />
+    <image class="img-wrap2" src="../../images/vip_04.jpeg" />
+    <image class="img-wrap3" src="../../images/vip_05.jpeg" />
     <!-- <image class="img-wrap4" src="https://m.qpic.cn/psc?/V11JmdTF2fK2RN/TmEUgtj9EK6.7V8ajmQrECksW3c*T*hzJsXGeJpxd4ECih7yPTGwGKm7BavmbHdf9AE3qoCv6e923DlKOlttKREKnlauts9EGB2JdUxmX3k!/b&bo=OAPwAQAAAAADJ8g!&rf=viewer_4&t=5" /> -->
     <view class="m-b-60"></view>
   </view>

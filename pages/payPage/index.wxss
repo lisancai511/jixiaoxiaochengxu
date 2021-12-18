@@ -5,6 +5,10 @@ page {
   position: relative;
 }
 
+.vipImg {
+  width: 100%;
+}
+
 /* .vipImg {
   width: 100%;
   height: 1000px;

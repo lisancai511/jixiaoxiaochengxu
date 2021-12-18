@@ -2,17 +2,14 @@
   <view slot="backText">返回</view>
   <view slot="content">Vip</view>
 </cu-custom>
-
 <view>
   <image mode="widthFix" class="vipImg" src="../../images/bg.png" />
 </view>
 <view class="footer">
- <view class="font">
+  <view class="font">
     <text class="a">¥</text>
     <text class="b">39.9</text>
     <text class="a">/90天</text>
- </view>
- <button class="btn" bindtap="getOpenid">
-    立即开通
-  </button>
+  </view>
+  <button class="btn" bindtap="getOpenid">立即开通</button>
 </view>

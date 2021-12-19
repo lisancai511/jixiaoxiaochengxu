@@ -165,13 +165,16 @@ Component({
       }
       console.log("id>", exerciseList[index])
       if (Type === '3') {
-        exerciseList[index].options[optidx].className = 'warn';
-        const curRes = optidx + 1 + ''
-        const exitedRes = mul_own_res || ''
-        exerciseList[index].mul_own_res = exitedRes + curRes
-        this.setData({
-          exerciseList
-        })
+        if (!exerciseList[index].options[optidx].className) {
+
+          exerciseList[index].options[optidx].className = 'warn';
+          const curRes = optidx + 1 + ''
+          const exitedRes = mul_own_res || ''
+          exerciseList[index].mul_own_res = exitedRes + curRes
+          this.setData({
+            exerciseList
+          })
+        }
 
       } else {
         if (!own_res && !isShowResult) {

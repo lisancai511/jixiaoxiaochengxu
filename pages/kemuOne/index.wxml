@@ -41,6 +41,6 @@
   </view>
   <view class="botClass">
     <text>考驾照，就用简易学车</text>
-    <text class="bottom">www.yilianguo.com</text>
+    <!-- <text class="bottom">www.yilianguo.com</text> -->
   </view>
 </view>

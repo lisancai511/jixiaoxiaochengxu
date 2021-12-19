@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/payPage/index",
     "pages/index/index",
+    "pages/payPage/index",
     "pages/bfeoueExam/index",
     "pages/note/index",
     "pages/result/result",
@@ -23,7 +23,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "ColorUI",
+    "navigationBarTitleText": "简易学车",
     "navigationStyle": "custom",
     "navigationBarTextStyle": "white"
   },

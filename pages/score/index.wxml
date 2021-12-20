@@ -1,0 +1,29 @@
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">推广返现</view>
+</cu-custom>
+<!-- <scroll-view scroll-x class="bg-white nav">
+  <view class="flex text-center">
+    <view class="cu-item flex-sub {{TabCur=='1'?'active cur':''}}" bindtap="tabSelect" id="1">
+      考试记录
+    </view>
+    <view class="cu-item flex-sub {{TabCur=='4'?'active cur':''}}" bindtap="tabSelect" id="4">
+      总排行榜
+    </view>
+  </view>
+</scroll-view>
+<swiper bindchange='onSlideChangeEnd' class="swiper" current="{{TabCur=='4'?1:0}}">
+  <swiper-item item-id="1">
+    
+  </swiper-item>
+  <swiper-item item-id="4">
+    <view>5654</view>
+  </swiper-item>
+</swiper> -->
+<view>
+  <view class="title">加入佣金推广计划</view>
+  <input class="input" auto-focus placeholder="请输入您的真实姓名" />
+  <button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
+    加入推广计划
+  </button>
+</view>

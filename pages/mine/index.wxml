@@ -48,6 +48,12 @@
   </view>
   <view class="cu-list menu margin-top-xl margin-bottom-xl shadow-lg radius">
     <view class="cu-item arrow">
+      <button class="cu-btn content" bind:tap="gotoScore">
+        <text class="cuIcon-writefill text-cyan"></text>
+        <text class="text-grey">推广返现</text>
+      </button>
+    </view>
+    <view class="cu-item arrow">
       <button class="cu-btn content" open-type="contact">
         <text class="cuIcon-writefill text-cyan"></text>
         <text class="text-grey">联系我们</text>

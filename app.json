@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/score/index",
     "pages/index/index",
     "pages/payPage/index",
     "pages/bfeoueExam/index",

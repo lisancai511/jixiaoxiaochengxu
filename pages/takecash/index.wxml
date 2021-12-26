@@ -1,9 +1,24 @@
-<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+<cu-custom bgColor="bg-blue" isBack="{{true}}">
   <view slot="backText">返回</view>
   <view slot="content">提现</view>
 </cu-custom>
-<view>
-  请输入提现金额
-  <input class="weui-input" maxlength="3" bindinput="bindKeyInput" type="number" placeholder="请输入提现金额" />
-  <button type="primary">确定</button>
+<view class="main">
+  <view>
+    <view class="con">
+      <view class="top">
+        提现金额
+      </view>
+      <view class="input">
+        <view class="input-left">￥</view>
+        <input class="input-right" maxlength="3" placeholder-class="placeholder" bindinput="bindKeyInput" type="number" placeholder="请输入提现金额" />
+      </view>
+      <view class="all">
+        可提现金额 ￥30.00
+      </view>
+    </view>
+  </view>
+  <view>
+    
+  </view>
+  <button type="primary" class="btn">提现</button>
 </view>

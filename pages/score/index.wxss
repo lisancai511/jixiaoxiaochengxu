@@ -63,7 +63,18 @@ page {
 }
 .detail {
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
   padding-left: 24px;
+}
+.cash {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100px;
+}
+.cash-text {
+  font-size: 24px;
 }

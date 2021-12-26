@@ -1,1 +1,44 @@
-/* pages/takecash/index.wxss */
+page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #eee;
+}
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 12px;
+}
+.con {
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+.top {
+  margin-bottom: 46rpx;
+  font-size: 14px;
+}
+.input {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+.input-left {
+  font-size: 44px;
+}
+.input-right {
+  height: 44px;
+  font-size: 44px;
+}
+.placeholder {
+  font-size: 14px;
+}
+.all {
+  padding-top: 12px;
+  color: #999;
+}
+.btn {
+  background-color: #0081ff!important;
+}

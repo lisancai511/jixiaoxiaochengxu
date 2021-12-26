@@ -2,28 +2,18 @@
   <view slot="backText">返回</view>
   <view slot="content">推广返现</view>
 </cu-custom>
-<!-- <scroll-view scroll-x class="bg-white nav">
-  <view class="flex text-center">
-    <view class="cu-item flex-sub {{TabCur=='1'?'active cur':''}}" bindtap="tabSelect" id="1">
-      考试记录
-    </view>
-    <view class="cu-item flex-sub {{TabCur=='4'?'active cur':''}}" bindtap="tabSelect" id="4">
-      总排行榜
-    </view>
-  </view>
-</scroll-view>
-<swiper bindchange='onSlideChangeEnd' class="swiper" current="{{TabCur=='4'?1:0}}">
-  <swiper-item item-id="1">
-    
-  </swiper-item>
-  <swiper-item item-id="4">
-    <view>5654</view>
-  </swiper-item>
-</swiper> -->
-<view>
+
+<view class="main">
   <view class="title">加入佣金推广计划</view>
-  <input class="input" maxlength="8" bindinput="bindKeyInput" placeholder="请输入您的真实姓名" />
-  <button type="primary" open-type="{{openType}}" bindgetphonenumber="getPhoneNumber" bind:tap="joinPlan">
+  <input class="input" placeholder-class="place-input" maxlength="8" bindinput="bindKeyInput" placeholder="请输入您的真实姓名" />
+  <button class="btn" type="primary" open-type="{{openType}}" bindgetphonenumber="getPhoneNumber" bind:tap="joinPlan">
     加入推广计划
   </button>
+  <view class="tip">
+    <view>tip:</view>
+    <view>1.为了后续佣金的提现，需进行实名制!</view>
+    <view>2.请输入真实的姓名，避免提现失败!</view>
+    <view>3.请授权您的手机号，用于后续的提现!</view>
+    <view>4.上述内容暂时无法修改，请保持准确!</view>
+  </view>
 </view>

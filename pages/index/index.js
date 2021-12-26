@@ -87,6 +87,10 @@ Page({
     wx.setStorageSync("vipFour", vipFour);
   },
   onLoad(options) {
+    const { shareId } = options
+    if (shareId != undefined) {
+      wx.setStorageSync('shareId', shareId)
+    }
     console.log(options, 9000);
     this.initIcon();
   },

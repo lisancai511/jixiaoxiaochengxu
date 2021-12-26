@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/score/index",
+    "pages/takecash/index",
     "pages/joinPlan/index",
     "pages/payPage/index",
     "pages/bfeoueExam/index",
@@ -20,8 +21,7 @@
     "pages/kemuFour/index",
     "pages/grade/grade",
     "pages/mine/index",
-    "pages/vipDetail/index",
-    "pages/takecash/index"
+    "pages/vipDetail/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -2,14 +2,19 @@
   <view slot="backText">返回</view>
   <view slot="content">我的佣金</view>
 </cu-custom>
-<view class="info">
-  <view class="wx_info_wrap">
-    <open-data type="userAvatarUrl" class="login-icon"></open-data>
+<view>
+  <view class="info">
+    <view class="wx_info_wrap">
+      <open-data type="userAvatarUrl" class="login-icon"></open-data>
+    </view>
+    <view class="detail">
+      <text>张三</text>
+      <text>132****1339</text>
+    </view>
+    <view class="cash">
+      <text class="cash-text">￥30</text>
+      <button size="mini" type="primary" plain="true"  bindtap="gotoCash">提现</button>
+    </view>
   </view>
-  <view class="detail">
-    <text>张三</text>
-    <text>132****1339</text>
-  </view>
+  
 </view>
-<view>我的佣金：￥30元</view>
-<button type="primary" bindtap="gotoCash">提现</button>

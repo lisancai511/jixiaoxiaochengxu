@@ -29,6 +29,9 @@ Page({
       userName
     });
     setUserStorage(res.data);
+    wx.redirectTo({
+      url: '/pages/score/index'
+    })
     return res;
   },
   async joinPlan() {

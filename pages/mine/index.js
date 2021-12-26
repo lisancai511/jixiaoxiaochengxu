@@ -18,6 +18,18 @@ Page({
     takeRate: 0,
     scoreInfo: {}
   },
+  gotoScore() {
+    const user = getUserStorage()
+    if (user && user.phone && user.userName) {
+      wx.navigateTo({
+        url: '/pages/score/index'
+      })
+    } else {
+      wx.navigateTo({
+        url: '/pages/joinPlan/index'
+      })
+    }
+  },
   calculateNum() {
     const { activeType } = this.data
     const kemuType = activeType === '1' ? 'one' : 'four'

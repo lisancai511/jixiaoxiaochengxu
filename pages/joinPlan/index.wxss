@@ -56,14 +56,3 @@ page {
   line-height: 48px;
   margin-bottom: 24rpx;
 }
-
-.info {
-  display: flex;
-  padding: 12px 24px;
-}
-.detail {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-left: 24px;
-}

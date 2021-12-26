@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/score/index",
     "pages/index/index",
+    "pages/joinPlan/index",
+    "pages/score/index",
     "pages/payPage/index",
     "pages/bfeoueExam/index",
     "pages/note/index",

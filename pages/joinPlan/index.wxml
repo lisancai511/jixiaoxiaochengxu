@@ -22,7 +22,7 @@
 </swiper> -->
 <view>
   <view class="title">加入佣金推广计划</view>
-  <input class="input" maxlength="8" bindinput="bindKeyInput" auto-focus placeholder="请输入您的真实姓名" />
+  <input class="input" maxlength="8" bindinput="bindKeyInput" placeholder="请输入您的真实姓名" />
   <button type="primary" open-type="{{openType}}" bindgetphonenumber="getPhoneNumber" bind:tap="joinPlan">
     加入推广计划
   </button>

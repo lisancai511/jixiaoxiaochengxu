@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/joinPlan/index",
     "pages/score/index",
+    "pages/joinPlan/index",
     "pages/payPage/index",
     "pages/bfeoueExam/index",
     "pages/note/index",
@@ -20,7 +20,8 @@
     "pages/kemuFour/index",
     "pages/grade/grade",
     "pages/mine/index",
-    "pages/vipDetail/index"
+    "pages/vipDetail/index",
+    "pages/takecash/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -11,6 +11,11 @@ Page({
     openType: "getPhoneNumber",
     userName: ''
   },
+  gotoCash() {
+    wx.navigateTo({
+      url: '/pages/takecash/index',
+    })
+  },
   bindKeyInput(e) {
     this.setData({
       userName: e.detail.value

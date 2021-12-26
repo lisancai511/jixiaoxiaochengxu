@@ -9,7 +9,8 @@ Page({
    */
   data: {
     openType: "getPhoneNumber",
-    userName: ''
+    userName: '',
+    loading: false
   },
   bindKeyInput(e) {
     this.setData({
@@ -17,10 +18,12 @@ Page({
     })
   },
   async addOrUpdateUser(encryptedData, iv) {
+    wx.showLoading({
+      title: '正在申请',
+    })
     const { userName } = this.data
     const openId = await getopenid();
     const sessionKey = wx.getStorageSync('session_key')
-
     const res = await addOrUpdateUser({
       openId,
       sessionKey,
@@ -29,6 +32,7 @@ Page({
       userName
     });
     setUserStorage(res.data);
+    wx.hideLoading()
     wx.redirectTo({
       url: '/pages/score/index'
     })
@@ -39,17 +43,19 @@ Page({
     const { openType, userName } = this.data
     const encryptedData = wx.getStorageSync('encryptedData')
     const iv = wx.getStorageSync('iv')
-    if (userName.length > 1 && openType == undefined && encryptedData && iv) {
+    if (userName.length < 2) {
+      wx.showToast({
+        title: '请输入您的真实姓名',
+        icon: 'none'
+      })
+      return
+    }
+    if (openType == undefined && encryptedData && iv) {
       await this.addOrUpdateUser(encryptedData, iv)
       wx.removeStorageSync('encryptedData')
       wx.removeStorageSync('iv')
       this.setData({
         openType: 'getPhoneNumber'
-      })
-    } else {
-      wx.showToast({
-        title: '请输入您的真实姓名',
-        icon: 'none'
       })
     }
   },

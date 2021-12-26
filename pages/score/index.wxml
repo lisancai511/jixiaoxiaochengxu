@@ -12,3 +12,4 @@
   </view>
 </view>
 <view>我的佣金：￥30元</view>
+<button type="primary" bindtap="gotoCash">提现</button>
